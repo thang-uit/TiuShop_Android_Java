@@ -14,7 +14,7 @@
         android:theme="@style/Theme.TiuShop"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.IntroActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true">
             <intent-filter>
