@@ -2,15 +2,25 @@
     <!-- Base application theme. -->
     <style name="Theme.TiuShop" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryLightColor</item>
+        <item name="colorOnPrimary">@color/white</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+
         <!-- Customize your theme here. -->
+<!--        <item name="color_main_1">@color/color_main_1</item>-->
+<!--        <item name="color_light_1">@color/color_light_1</item>-->
+<!--        <item name="color_light_2">@color/color_light_2</item>-->
+<!--        <item name="color_light_3">@color/color_light_3</item>-->
+<!--        <item name="color_light_4">@color/color_light_4</item>-->
+<!--        <item name="color_light_5">@color/color_light_5</item>-->
     </style>
 </resources>
