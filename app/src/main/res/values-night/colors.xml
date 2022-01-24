@@ -36,16 +36,16 @@
     <color name="color_success">#17B978</color>
     <color name="color_info">#0004FF</color>
 
-    <color name="color_1">#FFFFFF</color> // Main background (Trắng sữa, tinh khiết)
-    <color name="color_2">#FFFFFF</color> // Background phụ
-    <color name="color_3">#000000</color> // Main Text color (Chính) (Có thay đổi)
-    <color name="color_4">#4D4E4E</color> // Text color (Phụ)
+    <color name="color_1">#1E1E1E</color> // Main background (Trắng sữa, tinh khiết)
+    <color name="color_2">#353535</color> // Background phụ
+    <color name="color_3">#FFFFFF</color> // Main Text color (Chính) (Có thay đổi)
+    <color name="color_4">#CACACA</color> // Text color (Phụ)
     <color name="color_5">#000000</color> // For button, edittext, icon, tab, toolbar, ... (No change)
 
 
 
 
-<!--    <color name="color_light_4">#C4C4C4</color> // Setup User Avatar-->
+    <!--    <color name="color_light_4">#C4C4C4</color> // Setup User Avatar-->
     <color name="color_6">#F4F4F4</color> // EditText Box Chat
     <color name="color_7">#A6A6A6</color> // EditText Color hint
 
@@ -53,23 +53,23 @@
     <color name="color_9">#C1C1C1</color> // Background reactions icon
     <color name="color_10">#8A8787</color> // BText for time message
     <color name="color_11">#BCBCBC</color> // Shimmer
-<!--    <color name="color_light_11">#3CD561</color> // Status online-->
+    <!--    <color name="color_light_11">#3CD561</color> // Status online-->
     <color name="color_12">#9F9E9E</color> // Bottom sheet chat
 
 
 
-<!--    <color name="color_1">#FFFFFF</color> // Main Text color (Chính) (Có thay đổi)-->
-<!--    <color name="color_2">#000000</color> // For button, edittext, icon, tab, toolbar, ... (No change)-->
-<!--    <color name="color_3">#CACACA</color> // Text color (Phụ)-->
-<!--    <color name="color_4">#C4C4C4</color> // Setup User Avatar-->
-<!--    <color name="color_5">#1E1E1E</color> // Main background ()-->
-<!--    <color name="color_6">#F4F4F4</color> // EditText Box Chat-->
-<!--    <color name="color_7">#E2EBF0</color> // Text receive-->
-<!--    <color name="color_8">#C1C1C1</color> // Background reactions icon-->
-<!--    <color name="color_9">#8A8787</color> // BText for time message-->
-<!--    <color name="color_10">#BCBCBC</color> // Shimmer-->
-<!--    <color name="color_11">#3CD561</color> // Status online-->
-<!--    <color name="color_12">#9F9E9E</color> // Bottom sheet chat-->
-<!--    <color name="color_13">#A6A6A6</color> // EditText Color hint-->
-<!--    <color name="color_14">#353535</color> // Background phụ-->
+    <!--    <color name="color_1">#FFFFFF</color> // Main Text color (Chính) (Có thay đổi)-->
+    <!--    <color name="color_2">#000000</color> // For button, edittext, icon, tab, toolbar, ... (No change)-->
+    <!--    <color name="color_3">#CACACA</color> // Text color (Phụ)-->
+    <!--    <color name="color_4">#C4C4C4</color> // Setup User Avatar-->
+    <!--    <color name="color_5">#1E1E1E</color> // Main background ()-->
+    <!--    <color name="color_6">#F4F4F4</color> // EditText Box Chat-->
+    <!--    <color name="color_7">#E2EBF0</color> // Text receive-->
+    <!--    <color name="color_8">#C1C1C1</color> // Background reactions icon-->
+    <!--    <color name="color_9">#8A8787</color> // BText for time message-->
+    <!--    <color name="color_10">#BCBCBC</color> // Shimmer-->
+    <!--    <color name="color_11">#3CD561</color> // Status online-->
+    <!--    <color name="color_12">#9F9E9E</color> // Bottom sheet chat-->
+    <!--    <color name="color_13">#A6A6A6</color> // EditText Color hint-->
+    <!--    <color name="color_14">#353535</color> // Background phụ-->
 </resources>

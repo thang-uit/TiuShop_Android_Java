@@ -6,8 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.thanguit.tiushop.R;
+import com.thanguit.tiushop.adapter.IntroAdapter;
+import com.thanguit.tiushop.databinding.ActivityIntroBinding;
+import com.thanguit.tiushop.model.Intro;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IntroActivity extends AppCompatActivity {
+    private ActivityIntroBinding binding;
+    private IntroAdapter introAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +34,22 @@ public class IntroActivity extends AppCompatActivity {
         // Hide the status bar.
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_intro);
+        binding = ActivityIntroBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        initializeView();
+    }
+
+    private void initializeView() {
+        introAdapter = new IntroAdapter(this, getIntroList());
+        binding.vpgIntro.setAdapter(introAdapter);
+    }
+
+    private List<Intro> getIntroList() {
+        List<Intro> introList = new ArrayList<>();
+        introList.add(new Intro(R.raw.animation_success, "Shopping", getString(R.string.tvHint)));
+        introList.add(new Intro(R.raw.animation_empty_cart, "Easy Payment", getString(R.string.tvHint)));
+
+        return introList;
     }
 }
