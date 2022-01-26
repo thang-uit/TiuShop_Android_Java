@@ -3,6 +3,7 @@ package com.thanguit.tiushop.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.thanguit.tiushop.R;
@@ -12,6 +13,13 @@ import com.thanguit.tiushop.model.Intro;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class IntroActivity extends AppCompatActivity {
     private ActivityIntroBinding binding;
@@ -41,14 +49,40 @@ public class IntroActivity extends AppCompatActivity {
     }
 
     private void initializeView() {
-        introAdapter = new IntroAdapter(this, getIntroList());
-        binding.vpgIntro.setAdapter(introAdapter);
+        Observable.fromArray(getIntroList())
+                .observeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Intro>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(@NonNull List<Intro> intros) {
+                        introAdapter = new IntroAdapter(IntroActivity.this, getIntroList());
+                        binding.vpgIntro.setAdapter(introAdapter);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+//        introAdapter = new IntroAdapter(this, getIntroList());
+//        binding.vpgIntro.setAdapter(introAdapter);
     }
 
     private List<Intro> getIntroList() {
         List<Intro> introList = new ArrayList<>();
-        introList.add(new Intro(R.raw.animation_success, "Shopping", getString(R.string.tvHint)));
-        introList.add(new Intro(R.raw.animation_empty_cart, "Easy Payment", getString(R.string.tvHint)));
+        introList.add(new Intro(R.raw.animation_intro_1, getResources().getStringArray(R.array.tvTitle)[0], getResources().getStringArray(R.array.tvHint)[0]));
+        introList.add(new Intro(R.raw.animation_intro_2, getResources().getStringArray(R.array.tvTitle)[1], getResources().getStringArray(R.array.tvHint)[1]));
+        introList.add(new Intro(R.raw.animation_intro_3, getResources().getStringArray(R.array.tvTitle)[2], getResources().getStringArray(R.array.tvHint)[2]));
 
         return introList;
     }

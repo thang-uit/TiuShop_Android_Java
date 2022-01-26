@@ -17,7 +17,7 @@ import java.util.List;
 
 public class IntroAdapter extends PagerAdapter {
     private Context context;
-    private List<Intro> introList;
+    private final List<Intro> introList;
 
     public IntroAdapter(Context context, List<Intro> introList) {
         this.context = context;
@@ -56,5 +56,8 @@ public class IntroAdapter extends PagerAdapter {
         return view == object;
     }
 
-
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        container.removeView((View) object);
+    }
 }

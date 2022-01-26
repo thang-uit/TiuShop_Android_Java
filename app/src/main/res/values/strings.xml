@@ -1,11 +1,23 @@
 <resources>
     <string name="app_name">TiuShop</string>
 
-
+    <!-- Intro screen -->
     <string name="tvSkip">Skip</string>
     <string name="btnNext">Next</string>
-
     <string name="tvTitle">Title</string>
-    <string name="tvHint">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
+
+    <string-array name="tvTitle">
+        <item>Shopping Online</item>
+        <item>Easy Search</item>
+        <item>Easy Payment</item>
+    </string-array>
+
+    <string-array name="tvHint">
+        <item>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in augue nec ligula condimentum vestibulum. Donec cursus justo non elit sollicitudin sagittis. Donec blandit lorem eget nunc pellentesque.</item>
+        <item>Pellentesque in augue nec ligula condimentum vestibulum. Donec cursus justo non elit sollicitudin sagittis. Donec blandit lorem eget nunc pellentesque, vel sagittis leo cursus. Aliquam erat volutpat.</item>
+        <item>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in augue nec ligula condimentum vestibulum. Donec cursus justo non elit sollicitudin sagittis. Donec blandit.</item>
+    </string-array>
+    <!--    <string name="tvHint">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>-->
+    <!-- Intro screen -->
 
 </resources>
