@@ -10,6 +10,8 @@ import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.adapter.IntroAdapter;
 import com.thanguit.tiushop.databinding.ActivityIntroBinding;
 import com.thanguit.tiushop.model.Intro;
+import com.thanguit.tiushop.rxjava.DisposableManager;
+import com.thanguit.tiushop.rxjava.DisposingObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class IntroActivity extends AppCompatActivity {
+    private static final String TAG = "IntroActivity";
     private ActivityIntroBinding binding;
     private IntroAdapter introAdapter;
 
@@ -48,29 +51,39 @@ public class IntroActivity extends AppCompatActivity {
         initializeView();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        DisposableManager.dispose();
+    }
+
     private void initializeView() {
         Observable.fromArray(getIntroList())
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Intro>>() {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposingObserver<List<Intro>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
+                        Log.d(TAG, "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull List<Intro> intros) {
+                        Log.d(TAG, "onNext");
+
                         introAdapter = new IntroAdapter(IntroActivity.this, getIntroList());
                         binding.vpgIntro.setAdapter(introAdapter);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-
+                        Log.d(TAG, "onError: " + e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-
+                        Log.d(TAG, "onComplete");
                     }
                 });
 
