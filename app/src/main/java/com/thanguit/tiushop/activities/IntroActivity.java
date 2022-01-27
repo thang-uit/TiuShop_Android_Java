@@ -1,17 +1,18 @@
 package com.thanguit.tiushop.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.material.tabs.TabLayout;
 import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.adapter.IntroAdapter;
 import com.thanguit.tiushop.databinding.ActivityIntroBinding;
 import com.thanguit.tiushop.model.Intro;
-import com.thanguit.tiushop.rxjava.DisposableManager;
-import com.thanguit.tiushop.rxjava.DisposingObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class IntroActivity extends AppCompatActivity {
 
     private ActivityIntroBinding binding;
     private IntroAdapter introAdapter;
+
+    private int position = 0;
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -52,7 +55,8 @@ public class IntroActivity extends AppCompatActivity {
         binding = ActivityIntroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        initializeView();
+        initializeViews();
+        listeners();
     }
 
     @Override
@@ -63,7 +67,7 @@ public class IntroActivity extends AppCompatActivity {
         Log.d(TAG, "Dispose: " + compositeDisposable.isDisposed());
     }
 
-    private void initializeView() {
+    private void initializeViews() {
         Observable.fromArray(getIntroList())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -94,11 +98,107 @@ public class IntroActivity extends AppCompatActivity {
                         Log.d(TAG, "onComplete");
                     }
                 });
+    }
 
+    private void listeners() {
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                position = binding.vpgIntro.getCurrentItem();
 
+                if (position < getIntroList().size()) {
+                    position++;
+                    binding.vpgIntro.setCurrentItem(position);
+                }
 
-//        introAdapter = new IntroAdapter(this, getIntroList());
-//        binding.vpgIntro.setAdapter(introAdapter);
+                if (position == getIntroList().size() - 1) {
+                    lastPage();
+                }
+            }
+        });
+
+        binding.tvSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.vpgIntro.setCurrentItem(getIntroList().size() - 1);
+                lastPage();
+            }
+        });
+
+        binding.tabIndicatorIntro.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.d(TAG, "Tab Position: " + tab.getPosition());
+
+                if (tab.getPosition() == getIntroList().size() - 1) {
+                    lastPage();
+                } else {
+                    notLastPage();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+
+        binding.vpgIntro.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d(TAG, "ViewPager Position: " + position);
+
+                if (position == getIntroList().size() - 1) {
+                    lastPage();
+                } else {
+                    notLastPage();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
+    private void lastPage() {
+        binding.btnNext.setText(getString(R.string.btnStart));
+        binding.tvSkip.setVisibility(View.GONE);
+
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+    }
+
+    private void notLastPage() {
+        binding.btnNext.setText(getString(R.string.btnNext));
+
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                position = binding.vpgIntro.getCurrentItem();
+
+                if (position < getIntroList().size()) {
+                    position++;
+                    binding.vpgIntro.setCurrentItem(position);
+                }
+
+                if (position == getIntroList().size() - 1) {
+                    lastPage();
+                }
+            }
+        });
     }
 
     private List<Intro> getIntroList() {
@@ -106,6 +206,8 @@ public class IntroActivity extends AppCompatActivity {
         introList.add(new Intro(R.raw.animation_intro_1, getResources().getStringArray(R.array.tvTitle)[0], getResources().getStringArray(R.array.tvHint)[0]));
         introList.add(new Intro(R.raw.animation_intro_2, getResources().getStringArray(R.array.tvTitle)[1], getResources().getStringArray(R.array.tvHint)[1]));
         introList.add(new Intro(R.raw.animation_intro_3, getResources().getStringArray(R.array.tvTitle)[2], getResources().getStringArray(R.array.tvHint)[2]));
+        introList.add(new Intro(R.raw.animation_intro_4, getResources().getStringArray(R.array.tvTitle)[3], getResources().getStringArray(R.array.tvHint)[3]));
+        introList.add(new Intro(R.raw.animation_intro_5, "", ""));
 
         return introList;
     }

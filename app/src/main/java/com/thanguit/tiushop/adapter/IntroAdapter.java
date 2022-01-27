@@ -38,6 +38,12 @@ public class IntroAdapter extends PagerAdapter {
         tvTitle.setText(introList.get(position).getTitle());
         tvHint.setText(introList.get(position).getHint());
 
+        if (position == introList.size() - 1) {
+            tvTitle.setVisibility(View.GONE);
+            tvHint.setVisibility(View.GONE);
+        } else {
+        }
+
         container.addView(view);
 
         return view;

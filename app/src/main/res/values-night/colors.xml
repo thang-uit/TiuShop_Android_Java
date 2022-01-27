@@ -9,9 +9,9 @@
     <color name="white">#FFFFFFFF</color>
 
 
-<!--    <color name="primaryColor">#ffd000</color>-->
-<!--    <color name="primaryLightColor">#ffff51</color>-->
-<!--    <color name="primaryDarkColor">#c79f00</color>-->
+    <color name="primaryColor">#ffd000</color>
+    <color name="primaryLightColor">#ffff51</color>
+    <color name="primaryDarkColor">#c79f00</color>
 
     <color name="color_main_1">#FFD000</color>
     <color name="color_main_2">#21FFC107</color>
@@ -25,7 +25,7 @@
     <color name="btnLoginGoogle">#333333</color>
 
     <color name="colorGradient1">#FFD000</color>
-    <color name="colorGradient2">#FECE2F</color>
+    <color name="colorGradient2">#FFFF51</color>
     <color name="colorGradient3">#CFD9DF</color>
     <color name="colorGradient4">#E2EBF0</color>
 
@@ -41,15 +41,12 @@
     <color name="color_4">#CACACA</color> // Text color (Phụ)
     <color name="color_5">#000000</color> // For button, edittext, icon, tab, toolbar, ... (No change)
 
-
-
-
     <!--    <color name="color_light_4">#C4C4C4</color> // Setup User Avatar-->
     <color name="color_6">#F4F4F4</color> // EditText Box Chat
     <color name="color_7">#A6A6A6</color> // EditText Color hint
 
     <color name="color_8">#E2EBF0</color> // Text receive
-    <color name="color_9">#C1C1C1</color> // Background reactions icon
+    <color name="color_9">#C1C1C1</color> // Background indicator
     <color name="color_10">#8A8787</color> // BText for time message
     <color name="color_11">#BCBCBC</color> // Shimmer
     <!--    <color name="color_light_11">#3CD561</color> // Status online-->

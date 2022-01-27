@@ -1,10 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.TiuShop" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!--        &lt;!&ndash; Primary brand color. &ndash;&gt;-->
-        <!--        <item name="colorPrimary">@color/primaryColor</item>-->
-        <!--        <item name="colorPrimaryVariant">@color/primaryLightColor</item>-->
-        <!--        <item name="colorOnPrimary">@color/white</item>-->
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryLightColor</item>
+        <item name="colorOnPrimary">@color/white</item>
 
         <!--        &lt;!&ndash; Secondary brand color. &ndash;&gt;-->
         <!--        <item name="colorSecondary">@color/teal_200</item>-->
@@ -17,10 +17,27 @@
 
         <!-- Customize your theme here. -->
         <item name="color_main_1">@color/color_main_1</item>
+        <item name="color_main_2">@color/color_main_2</item>
+        <item name="color_main_3">@color/color_main_3</item>
+        <item name="color_main_4">@color/color_main_4</item>
+        <item name="color_main_5">@color/color_main_5</item>
+        <item name="color_main_6">@color/color_main_6</item>
+        <item name="color_main_7">@color/color_main_7</item>
+
+        <item name="colorGradient1">@color/colorGradient1</item>
+        <item name="colorGradient2">@color/colorGradient2</item>
+
         <item name="color_1">@color/color_1</item>
         <item name="color_2">@color/color_2</item>
         <item name="color_3">@color/color_3</item>
         <item name="color_4">@color/color_4</item>
         <item name="color_5">@color/color_5</item>
+        <item name="color_6">@color/color_6</item>
+        <item name="color_7">@color/color_7</item>
+        <item name="color_8">@color/color_8</item>
+        <item name="color_9">@color/color_9</item>
+        <item name="color_10">@color/color_10</item>
+        <item name="color_11">@color/color_11</item>
+        <item name="color_12">@color/color_12</item>
     </style>
 </resources>
