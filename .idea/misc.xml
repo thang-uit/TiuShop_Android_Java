@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_btn_corner_10dp.xml" value="0.2703125" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_indicator_intro.xml" value="0.24444444444444444" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_indicator_intro_selected.xml" value="0.24444444444444444" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_indicator_intro_selector.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_arrow_small_right.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_intro.xml" value="0.264" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_main.xml" value="0.11651469098277609" />

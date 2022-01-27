@@ -62,7 +62,11 @@
                 android:layout_marginBottom="10dp"
                 android:layout_toStartOf="@+id/btnNext"
                 android:background="@android:color/transparent"
-                android:elevation="0dp" />
+                android:elevation="0dp"
+
+                app:tabBackground="@drawable/bg_indicator_intro_selector"
+                app:tabGravity="center"
+                app:tabIndicator="@null" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnNext"
@@ -84,6 +88,4 @@
         </RelativeLayout>
 
     </RelativeLayout>
-
-
 </LinearLayout>

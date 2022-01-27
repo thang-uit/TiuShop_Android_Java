@@ -9,6 +9,13 @@ public class DisposableManager {
     private DisposableManager() {
     }
 
+    private static CompositeDisposable getCompositeDisposable() {
+        if (compositeDisposable == null || compositeDisposable.isDisposed()) {
+            compositeDisposable = new CompositeDisposable();
+        }
+        return compositeDisposable;
+    }
+
     public static void add(Disposable disposable) {
         getCompositeDisposable().add(disposable);
     }
@@ -17,10 +24,7 @@ public class DisposableManager {
         getCompositeDisposable().dispose();
     }
 
-    private static CompositeDisposable getCompositeDisposable() {
-        if (compositeDisposable == null || compositeDisposable.isDisposed()) {
-            compositeDisposable = new CompositeDisposable();
-        }
-        return compositeDisposable;
+    public static boolean isDispose() {
+        return getCompositeDisposable().isDisposed();
     }
 }

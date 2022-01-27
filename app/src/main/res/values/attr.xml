@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="color_main_1" format="color" />
+    <attr name="color_main_2" format="color" />
+    <attr name="color_main_3" format="color" />
+    <attr name="color_main_4" format="color" />
+    <attr name="color_main_5" format="color" />
+    <attr name="color_main_6" format="color" />
+    <attr name="color_main_7" format="color" />
 
     <attr name="color_1" format="color" />
     <attr name="color_2" format="color" />

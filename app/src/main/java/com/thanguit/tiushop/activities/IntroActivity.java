@@ -20,13 +20,17 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class IntroActivity extends AppCompatActivity {
     private static final String TAG = "IntroActivity";
+
     private ActivityIntroBinding binding;
     private IntroAdapter introAdapter;
+
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +59,19 @@ public class IntroActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        DisposableManager.dispose();
+        compositeDisposable.dispose();
+        Log.d(TAG, "Dispose: " + compositeDisposable.isDisposed());
     }
 
     private void initializeView() {
         Observable.fromArray(getIntroList())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposingObserver<List<Intro>>() {
+                .subscribe(new Observer<List<Intro>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         Log.d(TAG, "onSubscribe");
+                        compositeDisposable.add(d);
                     }
 
                     @Override
@@ -74,6 +80,8 @@ public class IntroActivity extends AppCompatActivity {
 
                         introAdapter = new IntroAdapter(IntroActivity.this, getIntroList());
                         binding.vpgIntro.setAdapter(introAdapter);
+
+                        binding.tabIndicatorIntro.setupWithViewPager(binding.vpgIntro);
                     }
 
                     @Override
@@ -86,6 +94,8 @@ public class IntroActivity extends AppCompatActivity {
                         Log.d(TAG, "onComplete");
                     }
                 });
+
+
 
 //        introAdapter = new IntroAdapter(this, getIntroList());
 //        binding.vpgIntro.setAdapter(introAdapter);
