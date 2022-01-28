@@ -26,5 +26,8 @@
 
     <!-- Login screen -->
     <string name="tvWelcome">Welcome to TiuShop</string>
+    <string name="tvLogin">Login</string>
+    <string name="tvSignup">Sign up</string>
+    <!-- Login screen -->
 
 </resources>

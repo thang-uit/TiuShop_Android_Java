@@ -41,11 +41,10 @@
                 android:id="@+id/tabLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/color_main_3"
+                android:background="@drawable/bg_corner_gradient_20dp_topleft_topright"
                 android:textAlignment="center"
-                app:tabIndicatorAnimationMode="elastic"
-                app:tabIndicatorFullWidth="false"
-                app:tabMode="scrollable" />
+                app:tabGravity="fill"
+                app:tabIndicatorAnimationMode="elastic" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vpgPage"
