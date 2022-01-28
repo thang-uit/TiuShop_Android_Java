@@ -35,16 +35,11 @@
     <color name="color_success">#17B978</color>
     <color name="color_info">#0004FF</color>
 
-    <color name="color_1">#FFFFFF</color>
-    // Main background (Trắng sữa, tinh khiết)
-    <color name="color_2">#FFFFFF</color>
-    // Background phụ
-    <color name="color_3">#000000</color>
-    // Main Text color (Chính) (Có thay đổi)
-    <color name="color_4">#4D4E4E</color>
-    // Text color (Phụ)
-    <color name="color_5">#000000</color>
-    // For button, edittext, icon, tab, toolbar, ... (No change)
+    <color name="color_1">#FFFFFF</color> // Main background (Trắng sữa, tinh khiết)
+    <color name="color_2">#FFFFFF</color> // Background phụ
+    <color name="color_3">#000000</color> // Main Text color (Chính) (Có thay đổi)
+    <color name="color_4">#4D4E4E</color> // Text color (Phụ)
+    <color name="color_5">#000000</color> // For button, edittext, icon, tab, toolbar, ... (No change)
 
     <!--    <color name="color_light_4">#C4C4C4</color> // Setup User Avatar-->
     <color name="color_6">#F4F4F4</color>

@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.adapter.IntroAdapter;
 import com.thanguit.tiushop.databinding.ActivityIntroBinding;
+import com.thanguit.tiushop.local.DataLocalManager;
 import com.thanguit.tiushop.model.Intro;
 
 import java.util.ArrayList;
@@ -55,8 +56,20 @@ public class IntroActivity extends AppCompatActivity {
         binding = ActivityIntroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        DataLocalManager.init(this);
+
         initializeViews();
         listeners();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (DataLocalManager.getFirstRun()) {
+            startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+            finish();
+        }
     }
 
     @Override
@@ -177,6 +190,7 @@ public class IntroActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(IntroActivity.this, LoginActivity.class));
                 finish();
+                DataLocalManager.setFirstRun(true);
             }
         });
     }

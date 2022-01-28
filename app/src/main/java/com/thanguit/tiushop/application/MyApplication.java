@@ -10,6 +10,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.core.ImageTranscoderType;
 import com.facebook.imagepipeline.core.MemoryChunkType;
+import com.thanguit.tiushop.local.DataLocalManager;
 
 public class MyApplication extends Application {
     private static MyApplication instance;
@@ -21,6 +22,8 @@ public class MyApplication extends Application {
         if (instance == null) {
             instance = this;
         }
+
+//        DataLocalManager.init(this); // init context for SharedPreferences
 
         Fresco.initialize(
                 this,
