@@ -28,6 +28,11 @@
     <string name="tvWelcome">Welcome to TiuShop</string>
     <string name="tvLogin">Login</string>
     <string name="tvSignup">Sign up</string>
+
+    <string name="tilEmail">Email</string>
+    <string name="tilPassword">Password</string>
+    <string name="btnLogin">Login</string>
+    <string name="tvOr">Or</string>
     <!-- Login screen -->
 
 </resources>

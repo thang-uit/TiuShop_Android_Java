@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_btn_corner_10dp.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_btn_gradient_corner.xml" value="0.2703125" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_btn_gradient_corner_10dp.xml" value="0.1495" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_btn_gradient_corner_20dp.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_btn_gradient_corner_50dp.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_corner_gradient_20dp_topleft_topright.xml" value="0.2703125" />
@@ -14,20 +15,22 @@
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_indicator_intro_selector.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_arrow_small_right.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_logo1.xml" value="0.2703125" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_logo_google.xml" value="0.159" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_logot.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/shape_corner_gradient_15dp_topleft_topright.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout-hdpi/item_intro.xml" value="0.2536231884057971" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout-sw320dp/item_intro.xml" value="0.2536231884057971" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout-sw480dp/item_intro.xml" value="0.190625" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout-sw720dp/item_intro.xml" value="0.264" />
-        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout-xhdpi/item_intro.xml" value="0.2536231884057971" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout-xhdpi/item_intro.xml" value="0.2" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout-xxhdpi/item_intro.xml" value="0.2536231884057971" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout-xxxhdpi/item_intro.xml" value="0.24230072463768115" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_intro.xml" value="0.176" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_login.xml" value="0.2536231884057971" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_main.xml" value="0.11651469098277609" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/fragment_login.xml" value="0.2463768115942029" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/fragment_signup.xml" value="0.24010416666666667" />
-        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_intro.xml" value="0.264" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_intro.xml" value="0.72" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2703125" />
       </map>

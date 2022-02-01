@@ -42,22 +42,14 @@
     <color name="color_5">#000000</color> // For button, edittext, icon, tab, toolbar, ... (No change)
 
     <!--    <color name="color_light_4">#C4C4C4</color> // Setup User Avatar-->
-    <color name="color_6">#F4F4F4</color>
-    // EditText Box Chat
-    <color name="color_7">#A6A6A6</color>
-    // EditText Color hint
-
-    <color name="color_8">#E2EBF0</color>
-    // Text receive
-    <color name="color_9">#C1C1C1</color>
-    // Background indicator
-    <color name="color_10">#8A8787</color>
-    // BText for time message
-    <color name="color_11">#BCBCBC</color>
-    // Shimmer
+    <color name="color_6">#F4F4F4</color> // EditText Box Chat
+    <color name="color_7">#A6A6A6</color> // EditText Color hint
+    <color name="color_8">#E2EBF0</color> // Text receive
+    <color name="color_9">#C1C1C1</color> // Background indicator
+    <color name="color_10">#8A8787</color> // BText for time message
+    <color name="color_11">#BCBCBC</color> // Shimmer
     <!--    <color name="color_light_11">#3CD561</color> // Status online-->
-    <color name="color_12">#9F9E9E</color>
-    // Bottom sheet chat
+    <color name="color_12">#9F9E9E</color> // Bottom sheet chat
 
 
     <!--    <color name="color_1">#FFFFFF</color> // Main Text color (Chính) (Có thay đổi)-->
