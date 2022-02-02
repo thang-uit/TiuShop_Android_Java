@@ -35,4 +35,9 @@
     <string name="tvOr">Or</string>
     <!-- Login screen -->
 
+    <!-- Signup screen -->
+    <string name="tilName">Display name</string>
+    <string name="btnSignup">Sign Up</string>
+    <string name="tilConfirmPassword">Confirm Password</string>
+
 </resources>
