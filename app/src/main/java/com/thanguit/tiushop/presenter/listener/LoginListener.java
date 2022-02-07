@@ -8,7 +8,6 @@ public interface LoginListener {
     }
 
     interface Presenter {
-        void handleLogin();
+        void handleLogin(String email, String password);
     }
-
 }

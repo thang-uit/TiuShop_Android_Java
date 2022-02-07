@@ -1,11 +1,6 @@
 package com.thanguit.tiushop.fragment;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -13,18 +8,21 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.thanguit.tiushop.R;
-import com.thanguit.tiushop.base.MyToast;
 import com.thanguit.tiushop.databinding.FragmentLoginBinding;
+import com.thanguit.tiushop.presenter.LoginPresenter;
+import com.thanguit.tiushop.presenter.listener.LoginListener;
 
-import java.util.Objects;
-
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements LoginListener.View {
     private static final String TAG = "LoginFragment";
     private FragmentLoginBinding binding;
+
+    private LoginPresenter loginPresenter;
 
     private boolean flag1 = false;
     private boolean flag2 = false;
@@ -60,7 +58,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void initializeViews() {
-
+        loginPresenter = new LoginPresenter(this);
     }
 
     private void listeners() {
@@ -135,7 +133,18 @@ public class LoginFragment extends Fragment {
         }
 
         if (flag1 && flag2) {
-            MyToast.makeText(getContext(), MyToast.TYPE.SUCCESS, "OK em", Toast.LENGTH_LONG).show();
+            loginPresenter.handleLogin(email, password);
+//            MyToast.makeText(getContext(), MyToast.TYPE.SUCCESS, "OK em", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void loginSuccess() {
+
+    }
+
+    @Override
+    public void loginFail(String error) {
+
     }
 }

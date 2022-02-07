@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.thanguit.tiushop.R;
 
-public class MyToast extends Toast{
+public class MyToast extends Toast {
     public MyToast(Context context) {
         super(context);
     }
@@ -41,6 +41,7 @@ public class MyToast extends Toast{
                 ivIconToast.setImageResource(R.drawable.ic_success_1);
                 break;
             }
+
             case ERROR: {
                 ivIconToast.setImageResource(R.drawable.ic_error);
                 break;

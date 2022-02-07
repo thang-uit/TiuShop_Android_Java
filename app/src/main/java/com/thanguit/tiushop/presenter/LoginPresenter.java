@@ -5,13 +5,11 @@ import com.thanguit.tiushop.presenter.listener.LoginListener;
 public class LoginPresenter implements LoginListener.Presenter {
     private LoginListener.View view;
 
-    public void setView(LoginListener.View mView) {
-        view = mView;
+    public LoginPresenter(LoginListener.View view) {
+        this.view = view;
     }
 
-
     @Override
-    public void handleLogin() {
-
+    public void handleLogin(String email, String password) {
     }
 }
