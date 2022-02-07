@@ -27,6 +27,11 @@
         <item name="colorGradient1">@color/colorGradient1</item>
         <item name="colorGradient2">@color/colorGradient2</item>
 
+        <item name="color_success">@color/color_success</item>
+        <item name="color_info">@color/color_info</item>
+        <item name="color_warning">@color/color_warning</item>
+        <item name="color_error">@color/color_error</item>
+
         <item name="color_1">@color/color_1</item>
         <item name="color_2">@color/color_2</item>
         <item name="color_3">@color/color_3</item>

@@ -13,7 +13,7 @@ import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.adapter.IntroAdapter;
 import com.thanguit.tiushop.databinding.ActivityIntroBinding;
 import com.thanguit.tiushop.local.DataLocalManager;
-import com.thanguit.tiushop.model.Intro;
+import com.thanguit.tiushop.model.repository.Intro;
 
 import java.util.ArrayList;
 import java.util.List;

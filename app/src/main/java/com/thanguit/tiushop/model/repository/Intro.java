@@ -1,4 +1,4 @@
-package com.thanguit.tiushop.model;
+package com.thanguit.tiushop.model.repository;
 
 public class Intro {
     private int image;

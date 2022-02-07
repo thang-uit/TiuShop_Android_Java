@@ -11,6 +11,11 @@
     <attr name="colorGradient1" format="color" />
     <attr name="colorGradient2" format="color" />
 
+    <attr name="color_success" format="color" />
+    <attr name="color_info" format="color" />
+    <attr name="color_warning" format="color" />
+    <attr name="color_error" format="color" />
+
     <attr name="color_1" format="color" />
     <attr name="color_2" format="color" />
     <attr name="color_3" format="color" />

@@ -11,7 +11,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.thanguit.tiushop.R;
-import com.thanguit.tiushop.model.Intro;
+import com.thanguit.tiushop.model.repository.Intro;
 
 import java.util.List;
 

@@ -33,6 +33,13 @@
     <string name="tilPassword">Password</string>
     <string name="btnLogin">Login</string>
     <string name="tvOr">Or</string>
+
+
+    <string name="tvError1">* Email invalid</string>
+    <string name="tvError2">* Please enter email</string>
+    <string name="tvError3">* Please enter password</string>
+
+
     <!-- Login screen -->
 
     <!-- Signup screen -->
