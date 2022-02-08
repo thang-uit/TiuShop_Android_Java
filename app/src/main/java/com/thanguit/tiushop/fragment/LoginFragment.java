@@ -106,20 +106,20 @@ public class LoginFragment extends Fragment implements LoginListener.View {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = binding.edtUsername.getText().toString();
+                String username = binding.edtUsername.getText().toString();
                 String password = binding.edtPassword.getText().toString();
 
-                handleLogin(email, password);
+                handleLogin(username, password);
             }
         });
     }
 
-    private void handleLogin(String email, String password) {
-        if (TextUtils.isEmpty(email)) {
-            binding.edtUsername.setError(getString(R.string.tvError2));
+    private void handleLogin(String username, String password) {
+        if (TextUtils.isEmpty(username)) {
+            binding.tilUsername.setError(getString(R.string.tvError2));
         } else {
             flag1 = true;
-            binding.edtUsername.setError(null);
+            binding.tilUsername.setError(null);
         }
 
         if (TextUtils.isEmpty(password)) {
@@ -130,7 +130,7 @@ public class LoginFragment extends Fragment implements LoginListener.View {
         }
 
         if (flag1 && flag2) {
-            loginPresenter.handleLogin(email, password);
+            loginPresenter.handleLogin(username, password);
 //            MyToast.makeText(getContext(), MyToast.TYPE.SUCCESS, "OK em", Toast.LENGTH_LONG).show();
         }
     }

@@ -19,27 +19,29 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilEmail"
+                android:id="@+id/tilUsername"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="20dp"
-                android:hint="@string/tilEmail"
+                android:hint="@string/tilUsername"
                 app:boxCornerRadiusBottomEnd="10dp"
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:endIconMode="clear_text"
-                app:startIconDrawable="@drawable/ic_email">
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:helperTextTextColor="?attr/color_main_5"
+                app:startIconDrawable="@drawable/ic_user">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtEmail"
+                    android:id="@+id/edtUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:maxLength="100"
+                    android:maxLength="50"
+                    android:maxLines="1"
                     android:textColor="?attr/color_3">
 
                 </com.google.android.material.textfield.TextInputEditText>
@@ -60,15 +62,16 @@
                 app:boxCornerRadiusTopStart="10dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="100"
-                app:endIconMode="clear_text"
-                app:startIconDrawable="@drawable/ic_user">
+                app:helperTextTextColor="?attr/color_main_5"
+                app:startIconDrawable="@drawable/ic_user_1">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="textCapSentences|textAutoCorrect"
                     android:maxLength="100"
+                    android:maxLines="1"
                     android:textColor="?attr/color_3">
 
                 </com.google.android.material.textfield.TextInputEditText>
@@ -90,6 +93,7 @@
                 app:counterEnabled="true"
                 app:counterMaxLength="100"
                 app:endIconMode="password_toggle"
+                app:helperTextTextColor="?attr/color_main_5"
                 app:startIconDrawable="@drawable/ic_password1">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -98,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:maxLength="100"
+                    android:maxLines="1"
                     android:textColor="?attr/color_3">
 
                 </com.google.android.material.textfield.TextInputEditText>
@@ -119,6 +124,7 @@
                 app:counterEnabled="true"
                 app:counterMaxLength="100"
                 app:endIconMode="password_toggle"
+                app:helperTextTextColor="?attr/color_main_5"
                 app:startIconDrawable="@drawable/ic_password">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -127,6 +133,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:maxLength="100"
+                    android:maxLines="1"
                     android:textColor="?attr/color_3">
 
                 </com.google.android.material.textfield.TextInputEditText>

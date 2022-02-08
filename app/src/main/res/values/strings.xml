@@ -35,9 +35,14 @@
     <string name="tvOr">Or</string>
 
 
-<!--    <string name="tvError1">* Email invalid</string>-->
+    <string name="tvError1">* Username invalid</string>-->
     <string name="tvError2">* Please enter username</string>
     <string name="tvError3">* Please enter password</string>
+    <string name="tvError4">* Please enter name</string>
+    <string name="tvError5">* Please enter confirm password</string>
+
+    <string name="tvError6">* Password invalid</string>
+    <string name="tvError7">* Password not match</string>
 
 
     <!-- Login screen -->
