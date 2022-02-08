@@ -29,14 +29,14 @@
     <string name="tvLogin">Login</string>
     <string name="tvSignup">Sign up</string>
 
-    <string name="tilEmail">Email</string>
+    <string name="tilUsername">Username</string>
     <string name="tilPassword">Password</string>
     <string name="btnLogin">Login</string>
     <string name="tvOr">Or</string>
 
 
-    <string name="tvError1">* Email invalid</string>
-    <string name="tvError2">* Please enter email</string>
+<!--    <string name="tvError1">* Email invalid</string>-->
+    <string name="tvError2">* Please enter username</string>
     <string name="tvError3">* Please enter password</string>
 
 

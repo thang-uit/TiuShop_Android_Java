@@ -53,7 +53,6 @@ public class LoginFragment extends Fragment implements LoginListener.View {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         binding = null;
     }
 
@@ -62,7 +61,7 @@ public class LoginFragment extends Fragment implements LoginListener.View {
     }
 
     private void listeners() {
-        binding.edtEmail.addTextChangedListener(new TextWatcher() {
+        binding.edtUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -73,12 +72,12 @@ public class LoginFragment extends Fragment implements LoginListener.View {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String email = editable.toString();
+                String username = editable.toString();
 
-                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    binding.tilEmail.setError(getString(R.string.tvError1));
+                if (TextUtils.isEmpty(username)) {
+                    binding.tilUsername.setError(getString(R.string.tvError2));
                 } else {
-                    binding.tilEmail.setError(null);
+                    binding.tilUsername.setError(null);
                 }
             }
         });
@@ -107,7 +106,7 @@ public class LoginFragment extends Fragment implements LoginListener.View {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = binding.edtEmail.getText().toString();
+                String email = binding.edtUsername.getText().toString();
                 String password = binding.edtPassword.getText().toString();
 
                 handleLogin(email, password);
@@ -117,12 +116,10 @@ public class LoginFragment extends Fragment implements LoginListener.View {
 
     private void handleLogin(String email, String password) {
         if (TextUtils.isEmpty(email)) {
-            binding.tilEmail.setError(getString(R.string.tvError2));
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.tilEmail.setError(getString(R.string.tvError1));
+            binding.edtUsername.setError(getString(R.string.tvError2));
         } else {
             flag1 = true;
-            binding.tilEmail.setError(null);
+            binding.edtUsername.setError(null);
         }
 
         if (TextUtils.isEmpty(password)) {
