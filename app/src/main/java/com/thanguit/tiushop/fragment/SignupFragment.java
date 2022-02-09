@@ -1,5 +1,8 @@
 package com.thanguit.tiushop.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -14,17 +17,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.thanguit.tiushop.R;
+import com.thanguit.tiushop.activities.LoginActivity;
+import com.thanguit.tiushop.activities.MainActivity;
 import com.thanguit.tiushop.base.MyToast;
 import com.thanguit.tiushop.databinding.FragmentSignupBinding;
 import com.thanguit.tiushop.presenter.SignupPresenter;
 import com.thanguit.tiushop.presenter.listener.SignupListener;
 import com.thanguit.tiushop.util.Common;
+import com.thanguit.tiushop.util.LoadingDialog;
 
 public class SignupFragment extends Fragment implements SignupListener.View {
     private static final String TAG = "SignupFragment";
     private FragmentSignupBinding binding;
 
     private SignupPresenter signupPresenter;
+    private LoadingDialog loadingDialog;
 
     private boolean flag1 = false;
     private boolean flag2 = false;
@@ -61,6 +68,7 @@ public class SignupFragment extends Fragment implements SignupListener.View {
 
     private void initializeViews() {
         signupPresenter = new SignupPresenter(this);
+        loadingDialog = LoadingDialog.getInstance();
     }
 
     private void listeners() {
@@ -208,18 +216,33 @@ public class SignupFragment extends Fragment implements SignupListener.View {
         }
 
         if (flag1 && flag2 && flag3 && flag4) {
-            MyToast.makeText(getContext(), MyToast.TYPE.SUCCESS, "OK em", Toast.LENGTH_LONG).show();
+            loadingDialog.startLoading(getContext(), false);
+            signupPresenter.handleSignup(username, displayName, password);
         }
-
     }
 
     @Override
     public void signupSuccess() {
-
+        loadingDialog.cancelLoading();
+        startActivity(new Intent(getContext(), LoginActivity.class));
     }
 
     @Override
     public void signupFail(String error) {
+        loadingDialog.cancelLoading();
 
+        new AlertDialog.Builder(getContext())
+                .setTitle("Notice")
+                .setMessage(error)
+                .setCancelable(true)
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }
