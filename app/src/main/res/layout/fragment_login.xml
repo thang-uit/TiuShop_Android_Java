@@ -40,6 +40,7 @@
                     android:layout_height="wrap_content"
                     android:maxLength="100"
                     android:maxLines="1"
+                    android:scrollHorizontally="true"
                     android:textColor="?attr/color_3">
 
                 </com.google.android.material.textfield.TextInputEditText>
@@ -69,6 +70,7 @@
                     android:inputType="textPassword"
                     android:maxLength="100"
                     android:maxLines="1"
+                    android:scrollHorizontally="true"
                     android:textColor="?attr/color_3">
 
                 </com.google.android.material.textfield.TextInputEditText>

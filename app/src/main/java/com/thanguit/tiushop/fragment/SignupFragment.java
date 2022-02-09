@@ -1,20 +1,20 @@
 package com.thanguit.tiushop.fragment;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.thanguit.tiushop.R;
-import com.thanguit.tiushop.databinding.FragmentLoginBinding;
+import com.thanguit.tiushop.base.MyToast;
 import com.thanguit.tiushop.databinding.FragmentSignupBinding;
 import com.thanguit.tiushop.presenter.SignupPresenter;
 import com.thanguit.tiushop.presenter.listener.SignupListener;
@@ -25,6 +25,11 @@ public class SignupFragment extends Fragment implements SignupListener.View {
     private FragmentSignupBinding binding;
 
     private SignupPresenter signupPresenter;
+
+    private boolean flag1 = false;
+    private boolean flag2 = false;
+    private boolean flag3 = false;
+    private boolean flag4 = false;
 
     public SignupFragment() {
     }
@@ -73,9 +78,9 @@ public class SignupFragment extends Fragment implements SignupListener.View {
                 String username = editable.toString();
 
                 if (TextUtils.isEmpty(username)) {
-                    binding.tilUsername.setError(getString(R.string.tvError2));
-                } else if (!username.matches(Common.REGEX_USERNAME)) {
                     binding.tilUsername.setError(getString(R.string.tvError1));
+                } else if (!username.matches(Common.REGEX_USERNAME)) {
+                    binding.tilUsername.setError(getString(R.string.tvError5));
                 } else {
                     binding.tilUsername.setError(null);
                 }
@@ -96,7 +101,9 @@ public class SignupFragment extends Fragment implements SignupListener.View {
                 String name = editable.toString();
 
                 if (TextUtils.isEmpty(name)) {
-                    binding.tilName.setError(getString(R.string.tvError4));
+                    binding.tilName.setError(getString(R.string.tvError3));
+                } else if (name.length() < 6) {
+                    binding.tilName.setError(getString(R.string.tvError6));
                 } else {
                     binding.tilName.setError(null);
                 }
@@ -106,12 +113,10 @@ public class SignupFragment extends Fragment implements SignupListener.View {
         binding.edtPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -119,9 +124,9 @@ public class SignupFragment extends Fragment implements SignupListener.View {
                 String password = editable.toString();
 
                 if (TextUtils.isEmpty(password)) {
-                    binding.tilPassword.setError(getString(R.string.tvError3));
-                } else if (!password.matches(Common.REGEX_USERNAME)) {
-                    binding.tilPassword.setError(getString(R.string.tvError6));
+                    binding.tilPassword.setError(getString(R.string.tvError2));
+                } else if (!password.matches(Common.REGEX_PASSWORD)) {
+                    binding.tilPassword.setError(getString(R.string.tvError7));
                 } else {
                     binding.tilPassword.setError(null);
                 }
@@ -131,12 +136,10 @@ public class SignupFragment extends Fragment implements SignupListener.View {
         binding.edtConfirmPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -144,11 +147,9 @@ public class SignupFragment extends Fragment implements SignupListener.View {
                 String confirmPassword = editable.toString();
 
                 if (TextUtils.isEmpty(confirmPassword)) {
-                    binding.tilConfirmPassword.setError(getString(R.string.tvError5));
-                } else if (!confirmPassword.matches(Common.REGEX_USERNAME)) {
-                    binding.tilConfirmPassword.setError(getString(R.string.tvError6));
-                } else if (!binding.edtPassword.getText().equals(confirmPassword)) {
-                    binding.tilConfirmPassword.setError(getString(R.string.tvError7));
+                    binding.tilConfirmPassword.setError(getString(R.string.tvError4));
+                } else if (!binding.edtPassword.getEditableText().toString().equals(confirmPassword)) {
+                    binding.tilConfirmPassword.setError(getString(R.string.tvError8));
                 } else {
                     binding.tilConfirmPassword.setError(null);
                 }
@@ -159,9 +160,57 @@ public class SignupFragment extends Fragment implements SignupListener.View {
         binding.btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                handleSignup();
             }
         });
+    }
+
+    private void handleSignup() {
+        String username = binding.edtUsername.getEditableText().toString();
+        String displayName = binding.edtName.getEditableText().toString();
+        String password = binding.edtPassword.getEditableText().toString();
+        String confirmPassword = binding.edtConfirmPassword.getEditableText().toString();
+
+        if (TextUtils.isEmpty(username)) {
+            binding.tilUsername.setError(getString(R.string.tvError1));
+        } else if (!username.matches(Common.REGEX_USERNAME)) {
+            binding.tilUsername.setError(getString(R.string.tvError5));
+        } else {
+            flag1 = true;
+            binding.tilUsername.setError(null);
+        }
+
+        if (TextUtils.isEmpty(displayName)) {
+            binding.tilName.setError(getString(R.string.tvError3));
+        } else if (displayName.length() < 6) {
+            binding.tilName.setError(getString(R.string.tvError6));
+        } else {
+            flag2 = true;
+            binding.tilName.setError(null);
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            binding.tilPassword.setError(getString(R.string.tvError2));
+        } else if (!password.matches(Common.REGEX_PASSWORD)) {
+            binding.tilPassword.setError(getString(R.string.tvError7));
+        } else {
+            flag3 = true;
+            binding.tilPassword.setError(null);
+        }
+
+        if (TextUtils.isEmpty(confirmPassword)) {
+            binding.tilConfirmPassword.setError(getString(R.string.tvError4));
+        } else if (!binding.edtPassword.getEditableText().toString().equals(confirmPassword)) {
+            binding.tilConfirmPassword.setError(getString(R.string.tvError8));
+        } else {
+            flag4 = true;
+            binding.tilConfirmPassword.setError(null);
+        }
+
+        if (flag1 && flag2 && flag3 && flag4) {
+            MyToast.makeText(getContext(), MyToast.TYPE.SUCCESS, "OK em", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override

@@ -35,14 +35,17 @@
     <string name="tvOr">Or</string>
 
 
-    <string name="tvError1">* Username invalid</string>-->
-    <string name="tvError2">* Please enter username</string>
-    <string name="tvError3">* Please enter password</string>
-    <string name="tvError4">* Please enter name</string>
-    <string name="tvError5">* Please enter confirm password</string>
+    <string name="tvError0">Error. Please try again</string>
 
-    <string name="tvError6">* Password invalid</string>
-    <string name="tvError7">* Password not match</string>
+    <string name="tvError1">* Please enter username</string>
+    <string name="tvError2">* Please enter password</string>
+    <string name="tvError3">* Please enter name</string>
+    <string name="tvError4">* Please enter confirm password</string>
+
+    <string name="tvError5">* Username invalid</string>-->
+    <string name="tvError6">* Display name must be at least 6 characters long</string>-->
+    <string name="tvError7">* Password invalid (Password must be at least 6 characters, no white spaces, must contain at least one numeric char, must contain 1 capital letter)</string>
+    <string name="tvError8">* Confirm password doesn\'t match</string>
 
 
     <!-- Login screen -->

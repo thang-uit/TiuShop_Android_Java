@@ -14,7 +14,7 @@ public interface DataClient {
     // https://stackoverflow.com/a/28712275
 
     @POST("/User/Login.php")
-    Observable<APIResponse<Account>> login(@Body RequestBody requestBody);
+    Call<APIResponse<Account>> login(@Body RequestBody requestBody);
 
     @POST("/User/Register.php")
     Call<APIResponse<Account>> signup(@Body RequestBody requestBody);
