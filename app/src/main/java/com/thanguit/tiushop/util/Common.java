@@ -13,6 +13,26 @@ public class Common {
     public static final String REGEX_USERNAME = "^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){5,50}";
     public static final String REGEX_PASSWORD = "^(?!.* )(?=.*\\d)(?=.*[A-Z]).{6,100}$";
 
+    public static final String STATUS_SUCCESS = "Success";
+    public static final String STATUS_FAIL = "Fail";
+
+    public static final String LAYOUT_REGISTER = "REGISTER";
+    public static final String LAYOUT_ORDER = "ORDER";
+
+    public static final String NEW_PRODUCT = "new";
+    public static final String DISCOUNT_PRODUCT = "discount";
+
+    public static final String MAN_PRODUCT = "man";
+    public static final String WOMAN_PRODUCT = "woman";
+    public static final String BOTH_PRODUCT = "both";
+    public static final String ALL_PRODUCT = "all";
+
+    public static final int WAITING_CONFIRM = 0;
+    public static final int WAITING_GOOD = 1;
+    public static final int DELIVERING = 2;
+    public static final int ORDER_SUCCESS = 3;
+    public static final int ORDER_CANCEL = 4;
+
     public static RequestBody getRequestBody(HashMap<String, Object> jsonBody) {
         return RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (new JSONObject(jsonBody)).toString());
     }
