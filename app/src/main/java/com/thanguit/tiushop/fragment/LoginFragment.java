@@ -22,6 +22,8 @@ import com.thanguit.tiushop.presenter.LoginPresenter;
 import com.thanguit.tiushop.presenter.listener.LoginListener;
 import com.thanguit.tiushop.util.LoadingDialog;
 
+import java.util.Objects;
+
 public class LoginFragment extends Fragment implements LoginListener.View {
     private static final String TAG = "LoginFragment";
     private FragmentLoginBinding binding;
@@ -112,8 +114,8 @@ public class LoginFragment extends Fragment implements LoginListener.View {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = binding.edtUsername.getEditableText().toString();
-                String password = binding.edtPassword.getEditableText().toString();
+                String username = binding.edtUsername.getText().toString();
+                String password = binding.edtPassword.getText().toString();
 
                 handleLogin(username, password);
             }
@@ -146,6 +148,7 @@ public class LoginFragment extends Fragment implements LoginListener.View {
     public void loginSuccess() {
         loadingDialog.cancelLoading();
         startActivity(new Intent(getContext(), MainActivity.class));
+        requireActivity().finish();
     }
 
     @Override

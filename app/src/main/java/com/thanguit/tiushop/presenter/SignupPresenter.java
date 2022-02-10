@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class SignupPresenter implements SignupListener.Presenter{
+public class SignupPresenter implements SignupListener.Presenter {
     private SignupListener.View view;
 
     public SignupPresenter(SignupListener.View view) {
@@ -42,19 +42,16 @@ public class SignupPresenter implements SignupListener.Presenter{
 
                     @Override
                     public void onNext(@NonNull APIResponse<Account> accountAPIResponse) {
-                        if (accountAPIResponse.getData() != null) {
-                            if (accountAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
-                                view.signupSuccess();
-                            } else {
-                                view.signupFail(MyApplication.getResource().getString(R.string.tvError9));
-                            }
+                        if (accountAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
+                            view.signupSuccess();
                         } else {
-                            view.signupFail(MyApplication.getResource().getString(R.string.tvError9));
+                            view.signupFail(accountAPIResponse.getMessage());
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        view.signupFail(MyApplication.getResource().getString(R.string.tvError0));
                     }
 
                     @Override

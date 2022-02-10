@@ -19,6 +19,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".activities.IntroActivity"

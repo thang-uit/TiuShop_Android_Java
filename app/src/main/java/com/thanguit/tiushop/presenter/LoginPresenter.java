@@ -19,6 +19,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -44,33 +45,41 @@ public class LoginPresenter implements LoginListener.Presenter {
         dataClient.login(Common.getRequestBody(jsonBody))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<APIResponse<Account>>() {
+                .subscribe(new Consumer<APIResponse<Account>>() {
                     @Override
-                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<Account> accountAPIResponse) {
-                        if (accountAPIResponse.getData() != null) {
-                            if (accountAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
-                                view.loginSuccess();
-                            } else {
-                                view.loginFail(MyApplication.getResource().getString(R.string.tvError9));
-                            }
+                    public void accept(APIResponse<Account> accountAPIResponse) throws Throwable {
+                        if (accountAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
+                            view.loginSuccess();
                         } else {
                             view.loginFail(MyApplication.getResource().getString(R.string.tvError9));
                         }
                     }
-
-                    @Override
-                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                        view.loginFail(MyApplication.getResource().getString(R.string.tvError9));
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
                 });
+
+//                .subscribe(new Observer<APIResponse<Account>>() {
+//                    @Override
+//                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+//                    }
+//
+//                    @Override
+//                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<Account> accountAPIResponse) {
+//                        if (accountAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
+//                            view.loginSuccess();
+//                        } else {
+//                            view.loginFail(MyApplication.getResource().getString(R.string.tvError9));
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+//                        Log.d(TAG, e.getMessage());
+//                        view.loginFail(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                    }
+//                });
 
 
 //        call.enqueue(new Callback<APIResponse<Account>>() {

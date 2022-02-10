@@ -24,7 +24,7 @@
     <!-- Intro screen -->
 
 
-    <!-- Login screen -->
+    <!-- Login screen, Signup screen -->
     <string name="tvWelcome">Welcome to TiuShop</string>
     <string name="tvLogin">Login</string>
     <string name="tvSignup">Sign up</string>
@@ -48,12 +48,14 @@
     <string name="tvError8">* Confirm password doesn\'t match</string>
     <string name="tvError9">Login fail! Please check your username and password again</string>
 
-
-    <!-- Login screen -->
-
-    <!-- Signup screen -->
     <string name="tilName">Display name</string>
     <string name="btnSignup">Sign Up</string>
     <string name="tilConfirmPassword">Confirm Password</string>
+
+    <string name="toast1">Signup successfully!</string>
+
+    <!-- Login screen, Signup screen -->
+
+
 
 </resources>

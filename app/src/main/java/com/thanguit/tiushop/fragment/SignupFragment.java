@@ -135,6 +135,8 @@ public class SignupFragment extends Fragment implements SignupListener.View {
                     binding.tilPassword.setError(getString(R.string.tvError2));
                 } else if (!password.matches(Common.REGEX_PASSWORD)) {
                     binding.tilPassword.setError(getString(R.string.tvError7));
+                } else if (password.equals(binding.edtConfirmPassword.getEditableText().toString())) {
+                    binding.tilConfirmPassword.setError(null);
                 } else {
                     binding.tilPassword.setError(null);
                 }
@@ -224,7 +226,8 @@ public class SignupFragment extends Fragment implements SignupListener.View {
     @Override
     public void signupSuccess() {
         loadingDialog.cancelLoading();
-        startActivity(new Intent(getContext(), LoginActivity.class));
+        MyToast.makeText(getContext(), MyToast.TYPE.SUCCESS, getString(R.string.toast1), Toast.LENGTH_LONG).show();
+//        startActivity(new Intent(getContext(), LoginActivity.class));
     }
 
     @Override
