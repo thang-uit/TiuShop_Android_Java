@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuActionShop"
+        android:icon="@drawable/ic_shoppingbag"
+        android:title="@string/menuActionShop" />
+
+    <item
+        android:id="@+id/menuActionCollection"
+        android:icon="@drawable/ic_collection"
+        android:title="@string/menuActionCollection" />
+
+    <item
+        android:id="@+id/menuActionUser"
+        android:icon="@drawable/ic_user"
+        android:title="@string/menuActionUser" />
+</menu>

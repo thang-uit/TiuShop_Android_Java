@@ -4,14 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="?attr/color_1"
     android:orientation="vertical"
     tools:context=".activities.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Home" />
+    <RelativeLayout
+        android:id="@+id/topNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="?attr/color_2"
+        android:gravity="center">
 
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_alignTop="@+id/cslCart"
+            android:layout_alignBottom="@+id/cslCart"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/cslCart"
+
+            android:background="@drawable/shape_background_edt_corner_20dp"
+            android:cursorVisible="false"
+            android:drawableEnd="@drawable/ic_search"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="@string/edtHint1"
+            android:lines="1"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColorHint="?attr/color_7"
+            android:textSize="16sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cslCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp">
+
+            <ImageView
+                android:id="@+id/ivBell"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:padding="3dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_cart" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/flMain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="?attr/color_1">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpgMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnvNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/color_2"
+        app:elevation="20dp"
+        app:itemIconTint="@drawable/bottom_navigation_color_selector"
+        app:itemTextColor="@drawable/bottom_navigation_color_selector"
+        app:menu="@menu/menu" />
 </LinearLayout>

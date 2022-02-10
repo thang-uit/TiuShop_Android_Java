@@ -53,9 +53,18 @@
     <string name="tilConfirmPassword">Confirm Password</string>
 
     <string name="toast1">Signup successfully!</string>
-
     <!-- Login screen, Signup screen -->
 
+
+    <!-- MainActivity screen -->
+    <string name="edtHint1">TiuShop</string>
+    <string name="menuActionShop">Shop</string>
+    <string name="menuActionCollection">Collections</string>
+    <string name="menuActionUser">Me</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- MainActivity screen -->
 
 
 </resources>

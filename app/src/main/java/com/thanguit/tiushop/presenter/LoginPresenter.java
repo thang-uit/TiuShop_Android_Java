@@ -1,9 +1,5 @@
 package com.thanguit.tiushop.presenter;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
 import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.application.MyApplication;
 import com.thanguit.tiushop.model.APIResponse;
@@ -16,20 +12,12 @@ import com.thanguit.tiushop.util.Common;
 import java.util.HashMap;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginPresenter implements LoginListener.Presenter {
     private static final String TAG = "LoginPresenter";
-    private LoginListener.View view;
-
+    private final LoginListener.View view;
 
     public LoginPresenter(LoginListener.View view) {
         this.view = view;
