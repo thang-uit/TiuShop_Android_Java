@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.thanguit.tiushop.retrofit.APIClient;
 import com.thanguit.tiushop.retrofit.DataClient;
 import com.thanguit.tiushop.util.Common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -31,7 +33,10 @@ public class ShopFragment extends Fragment {
 
     private SliderAdapter sliderAdapter;
 
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
+
+    private List<Slider> sliderList = new ArrayList<>();
+    private Handler handler;
 
     public ShopFragment() {
         // Required empty public constructor
@@ -61,9 +66,13 @@ public class ShopFragment extends Fragment {
         super.onDestroyView();
 
         compositeDisposable.dispose();
+        binding = null;
     }
 
     private void initializeViews() {
+        compositeDisposable = new CompositeDisposable();
+        handler = new Handler();
+
         DataClient dataClient = APIClient.getData();
         dataClient.getSlider(5)
                 .subscribeOn(Schedulers.io())
@@ -77,10 +86,11 @@ public class ShopFragment extends Fragment {
                     @Override
                     public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<List<Slider>> listAPIResponse) {
                         if (listAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
-
                             sliderAdapter = new SliderAdapter(getContext(), listAPIResponse.getData());
-                            binding.vpg2Banner.setAdapter(sliderAdapter);
-                            binding.tabIndicatorBanner.setupWithViewPager(binding.vpg2Banner);
+                            sliderList = listAPIResponse.getData();
+
+                            binding.vpgBanner.setAdapter(sliderAdapter);
+                            binding.tabIndicatorBanner.setupWithViewPager(binding.vpgBanner);
                         }
                     }
 
@@ -95,6 +105,16 @@ public class ShopFragment extends Fragment {
     }
 
     private void listeners() {
-
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (binding.vpgBanner.getCurrentItem() == sliderList.size() - 1) {
+                    binding.vpgBanner.setCurrentItem(0);
+                } else {
+                    binding.vpgBanner.setCurrentItem(binding.vpgBanner.getCurrentItem() + 1);
+                }
+                handler.postDelayed(this, 4000);
+            }
+        }, 4000);
     }
 }

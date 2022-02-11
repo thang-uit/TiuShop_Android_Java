@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vpg2Banner"
+            android:id="@+id/vpgBanner"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,8 +26,8 @@
             android:background="@android:color/transparent"
             android:elevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/vpg2Banner"
-            app:layout_constraintStart_toStartOf="@+id/vpg2Banner"
+            app:layout_constraintEnd_toEndOf="@+id/vpgBanner"
+            app:layout_constraintStart_toStartOf="@+id/vpgBanner"
             app:tabBackground="@drawable/bg_indicator_intro_selector"
             app:tabIndicator="@null" />
     </androidx.constraintlayout.widget.ConstraintLayout>
