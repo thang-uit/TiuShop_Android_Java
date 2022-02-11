@@ -36,6 +36,9 @@ public class User {
     @Expose
     private String address;
 
+    public User() {
+    }
+
     public User(String userID, String username, String role, String name, String email, String gender, String phone, String address) {
         this.userID = userID;
         this.username = username;

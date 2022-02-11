@@ -16,6 +16,9 @@ public class Account {
     @Expose
     private String role;
 
+    public Account() {
+    }
+
     public Account(String userID, String username, String role) {
         this.userID = userID;
         this.username = username;

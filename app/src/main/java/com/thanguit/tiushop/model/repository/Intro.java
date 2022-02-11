@@ -5,6 +5,9 @@ public class Intro {
     private String title;
     private String hint;
 
+    public Intro() {
+    }
+
     public Intro(int image, String title, String hint) {
         this.image = image;
         this.title = title;
