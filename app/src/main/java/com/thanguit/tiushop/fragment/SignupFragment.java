@@ -218,16 +218,40 @@ public class SignupFragment extends Fragment implements SignupListener.View {
         }
 
         if (flag1 && flag2 && flag3 && flag4) {
-            loadingDialog.startLoading(getContext(), false);
-            signupPresenter.handleSignup(username, displayName, password);
+            new AlertDialog.Builder(getContext())
+                    .setTitle(getString(R.string.tvAlertTitle))
+                    .setMessage(getString(R.string.tvAlertMessage))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setCancelable(true)
+                    .setPositiveButton(getString(R.string.tvAlertButton1), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            loadingDialog.startLoading(getContext(), false);
+                            signupPresenter.handleSignup(username, displayName, password);
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.tvAlertButton2), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    }).show();
         }
+    }
+
+    private void clearForm() {
+        binding.edtUsername.setText("");
+        binding.edtName.setText("");
+        binding.edtPassword.setText("");
+        binding.edtConfirmPassword.setText("");
     }
 
     @Override
     public void signupSuccess() {
         loadingDialog.cancelLoading();
+        clearForm();
         MyToast.makeText(getContext(), MyToast.TYPE.SUCCESS, getString(R.string.toast1), Toast.LENGTH_LONG).show();
-//        startActivity(new Intent(getContext(), LoginActivity.class));
+        startActivity(new Intent(getContext(), LoginActivity.class));
     }
 
     @Override
@@ -235,7 +259,7 @@ public class SignupFragment extends Fragment implements SignupListener.View {
         loadingDialog.cancelLoading();
 
         new AlertDialog.Builder(getContext())
-                .setTitle("Notice")
+                .setTitle(getString(R.string.tvAlertTitle))
                 .setMessage(error)
                 .setCancelable(true)
                 // Specifying a listener allows you to take an action before dismissing the dialog.

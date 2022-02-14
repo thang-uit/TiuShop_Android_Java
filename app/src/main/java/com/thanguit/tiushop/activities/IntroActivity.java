@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -66,8 +67,13 @@ public class IntroActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        if (!TextUtils.isEmpty(DataLocalManager.getUserID())) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+
         if (DataLocalManager.getFirstRun()) {
-            startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
     }

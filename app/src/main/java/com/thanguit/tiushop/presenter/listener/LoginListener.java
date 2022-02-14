@@ -2,7 +2,7 @@ package com.thanguit.tiushop.presenter.listener;
 
 public interface LoginListener {
     interface View {
-        void loginSuccess();
+        void loginSuccess(String userID);
 
         void loginFail(String error);
     }

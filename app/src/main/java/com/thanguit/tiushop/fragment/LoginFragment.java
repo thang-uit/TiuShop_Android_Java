@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.activities.MainActivity;
 import com.thanguit.tiushop.databinding.FragmentLoginBinding;
+import com.thanguit.tiushop.local.DataLocalManager;
 import com.thanguit.tiushop.presenter.LoginPresenter;
 import com.thanguit.tiushop.presenter.listener.LoginListener;
 import com.thanguit.tiushop.util.LoadingDialog;
@@ -64,6 +65,8 @@ public class LoginFragment extends Fragment implements LoginListener.View {
     }
 
     private void initializeViews() {
+        DataLocalManager.init(getContext());
+
         loginPresenter = new LoginPresenter(this);
         loadingDialog = LoadingDialog.getInstance();
     }
@@ -145,7 +148,9 @@ public class LoginFragment extends Fragment implements LoginListener.View {
     }
 
     @Override
-    public void loginSuccess() {
+    public void loginSuccess(String userID) {
+        DataLocalManager.setUserID(userID);
+
         loadingDialog.cancelLoading();
         startActivity(new Intent(getContext(), MainActivity.class));
         requireActivity().finish();
@@ -156,8 +161,9 @@ public class LoginFragment extends Fragment implements LoginListener.View {
         loadingDialog.cancelLoading();
 
         new AlertDialog.Builder(getContext())
-                .setTitle("Notice")
+                .setTitle(getString(R.string.tvAlertTitle))
                 .setMessage(error)
+                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setCancelable(true)
                 // Specifying a listener allows you to take an action before dismissing the dialog.
                 // The dialog is automatically dismissed when a dialog button is clicked.
@@ -166,7 +172,6 @@ public class LoginFragment extends Fragment implements LoginListener.View {
                         dialog.dismiss();
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
 }

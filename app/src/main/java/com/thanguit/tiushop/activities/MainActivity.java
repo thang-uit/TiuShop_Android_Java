@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private FragmentPagerAdapter fragmentPagerAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +28,15 @@ public class MainActivity extends AppCompatActivity {
         listeners();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     private void initializeViews() {
         fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager());
         binding.vpgMain.setCurrentItem(0);
         binding.vpgMain.setAdapter(fragmentPagerAdapter);
-
     }
 
     private void listeners() {

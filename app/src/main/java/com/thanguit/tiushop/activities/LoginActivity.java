@@ -2,7 +2,9 @@ package com.thanguit.tiushop.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.thanguit.tiushop.R;
@@ -10,6 +12,7 @@ import com.thanguit.tiushop.adapter.LoginAdapter;
 import com.thanguit.tiushop.databinding.ActivityLoginBinding;
 import com.thanguit.tiushop.fragment.LoginFragment;
 import com.thanguit.tiushop.fragment.SignupFragment;
+import com.thanguit.tiushop.local.DataLocalManager;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
@@ -41,8 +44,20 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        DataLocalManager.init(this);
+
         initializeViews();
         listeners();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (!TextUtils.isEmpty(DataLocalManager.getUserID())) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
     }
 
     private void initializeViews() {

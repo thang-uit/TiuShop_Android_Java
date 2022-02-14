@@ -113,8 +113,8 @@ public class ShopFragment extends Fragment {
                 } else {
                     binding.vpgBanner.setCurrentItem(binding.vpgBanner.getCurrentItem() + 1);
                 }
-                handler.postDelayed(this, 4000);
+                handler.postDelayed(this, 5000);
             }
-        }, 4000);
+        }, 5000);
     }
 }

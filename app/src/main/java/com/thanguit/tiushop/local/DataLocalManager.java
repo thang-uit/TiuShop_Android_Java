@@ -7,6 +7,7 @@ public class DataLocalManager {
     private SharedPreferencesManager sharedPreferencesManager;
 
     private static final String FIRST_RUN = "FIRST_RUN";
+    private static final String USER_ID = "USER_ID";
     private static final String THEME = "THEME";
     private static final String LANGUAGE = "LANGUAGE";
 
@@ -51,5 +52,13 @@ public class DataLocalManager {
 
     public static boolean getFirstRun() {
         return DataLocalManager.getInstance().sharedPreferencesManager.getBooleanValue(FIRST_RUN);
+    }
+
+    public static void setUserID(String userID) {
+        DataLocalManager.getInstance().sharedPreferencesManager.putStringValue(USER_ID, userID);
+    }
+
+    public static String getUserID() {
+        return DataLocalManager.getInstance().sharedPreferencesManager.getStringValue(USER_ID);
     }
 }

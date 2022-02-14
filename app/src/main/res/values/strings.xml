@@ -61,8 +61,11 @@
     <string name="menuActionShop">Shop</string>
     <string name="menuActionCollection">Collections</string>
     <string name="menuActionUser">Me</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="tvAlertTitle">Notice</string>
+    <string name="tvAlertMessage">Are you sure you want to sign up?</string>
+    <string name="tvAlertButton1">OK</string>
+    <string name="tvAlertButton2">Cancel</string>
 
     <!-- MainActivity screen -->
 
