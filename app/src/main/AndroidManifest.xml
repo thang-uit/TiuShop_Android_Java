@@ -18,7 +18,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"

@@ -2,7 +2,6 @@ package com.thanguit.tiushop.fragment;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,10 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.thanguit.tiushop.R;
-import com.thanguit.tiushop.databinding.FragmentCollectionBinding;
 
 public class CollectionFragment extends Fragment {
-    private FragmentCollectionBinding binding;
 
     public CollectionFragment() {
         // Required empty public constructor
@@ -25,8 +22,8 @@ public class CollectionFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentCollectionBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_collection, container, false);
     }
 }

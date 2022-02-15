@@ -6,10 +6,11 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.navigation.NavigationBarView;
 import com.thanguit.tiushop.R;
-import com.thanguit.tiushop.base.FragmentPagerAdapter;
+import com.thanguit.tiushop.adapter.FragmentPagerAdapter;
 import com.thanguit.tiushop.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,19 +35,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager());
+        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), getLifecycle());
         binding.vpgMain.setCurrentItem(0);
         binding.vpgMain.setAdapter(fragmentPagerAdapter);
     }
 
     private void listeners() {
-        binding.vpgMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        binding.vpgMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
 
             @Override
             public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
                 switch (position) {
                     case 0: {
                         binding.bnvNav.getMenu().findItem(R.id.menuActionShop).setChecked(true);
@@ -65,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
             }
         });
-
 
         binding.bnvNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

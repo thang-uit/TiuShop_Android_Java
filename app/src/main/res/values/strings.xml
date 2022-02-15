@@ -66,8 +66,17 @@
     <string name="tvAlertMessage">Are you sure you want to sign up?</string>
     <string name="tvAlertButton1">OK</string>
     <string name="tvAlertButton2">Cancel</string>
-
     <!-- MainActivity screen -->
+
+    <!-- Fragment Home -->
+    <string name="tvMan">Man</string>
+    <string name="tvWoman">Woman</string>
+    <string name="tvMW">Man and Woman</string>
+
+    <string name="tvNew">New</string>
+    <string name="tvSale">Sale</string>
+
+    <!-- Fragment Home -->
 
 
 </resources>

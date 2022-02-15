@@ -5,14 +5,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.adapter.SliderAdapter;
-import com.thanguit.tiushop.databinding.FragmentShopBinding;
+import com.thanguit.tiushop.databinding.FragmentHomeBinding;
 import com.thanguit.tiushop.model.APIResponse;
 import com.thanguit.tiushop.model.repository.Slider;
 import com.thanguit.tiushop.retrofit.APIClient;
@@ -28,17 +31,22 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class ShopFragment extends Fragment {
-    private FragmentShopBinding binding;
+public class HomeFragment extends Fragment {
+    private static final String TAG = "HomeFragment";
+    private FragmentHomeBinding binding;
+
+    private static final int TIME = 5000;
+
 
     private SliderAdapter sliderAdapter;
 
     private CompositeDisposable compositeDisposable;
 
-    private List<Slider> sliderList = new ArrayList<>();
+    private List<Slider> sliderList;
     private Handler handler;
+    private Runnable runnable;
 
-    public ShopFragment() {
+    public HomeFragment() {
         // Required empty public constructor
     }
 
@@ -49,7 +57,7 @@ public class ShopFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentShopBinding.inflate(inflater, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -57,8 +65,26 @@ public class ShopFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        compositeDisposable = new CompositeDisposable();
+        sliderList = new ArrayList<>();
+        handler = new Handler();
+
         initializeViews();
         listeners();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        handler.postDelayed(runnable, TIME);
     }
 
     @Override
@@ -70,9 +96,6 @@ public class ShopFragment extends Fragment {
     }
 
     private void initializeViews() {
-        compositeDisposable = new CompositeDisposable();
-        handler = new Handler();
-
         DataClient dataClient = APIClient.getData();
         dataClient.getSlider(5)
                 .subscribeOn(Schedulers.io())
@@ -89,13 +112,14 @@ public class ShopFragment extends Fragment {
                             sliderAdapter = new SliderAdapter(getContext(), listAPIResponse.getData());
                             sliderList = listAPIResponse.getData();
 
-                            binding.vpgBanner.setAdapter(sliderAdapter);
                             binding.tabIndicatorBanner.setupWithViewPager(binding.vpgBanner);
+                            binding.vpgBanner.setAdapter(sliderAdapter);
                         }
                     }
 
                     @Override
                     public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        Log.d(TAG, e.getMessage());
                     }
 
                     @Override
@@ -105,7 +129,7 @@ public class ShopFragment extends Fragment {
     }
 
     private void listeners() {
-        handler.postDelayed(new Runnable() {
+        runnable = new Runnable() {
             @Override
             public void run() {
                 if (binding.vpgBanner.getCurrentItem() == sliderList.size() - 1) {
@@ -113,8 +137,25 @@ public class ShopFragment extends Fragment {
                 } else {
                     binding.vpgBanner.setCurrentItem(binding.vpgBanner.getCurrentItem() + 1);
                 }
-                handler.postDelayed(this, 5000);
             }
-        }, 5000);
+        };
+
+        handler.postDelayed(runnable, TIME);
+
+        binding.vpgBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                handler.removeCallbacks(runnable);
+                handler.postDelayed(runnable, TIME);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 }

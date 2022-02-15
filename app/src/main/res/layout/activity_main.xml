@@ -60,18 +60,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/flMain"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpgMain"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="?attr/color_1">
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vpgMain"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
+        android:background="?attr/color_1" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnvNav"
