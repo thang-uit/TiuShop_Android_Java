@@ -7,7 +7,7 @@
     android:background="?attr/color_1"
     tools:context=".fragment.HomeFragment">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -19,7 +19,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="?attr/color_2">
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/vpgBanner"
@@ -193,12 +194,17 @@
                     app:srcCompat="@drawable/ic_new" />
             </LinearLayout>
 
+<!--            <androidx.viewpager2.widget.ViewPager2-->
+<!--                android:id="@+id/vpg2New"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp" />-->
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvNew"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp" />
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -228,8 +234,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvSale"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>

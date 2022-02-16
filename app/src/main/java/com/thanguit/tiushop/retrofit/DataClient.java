@@ -38,17 +38,20 @@ public interface DataClient {
     @GET("Product/GetSlider.php")
     Observable<APIResponse<List<Slider>>> getSlider(@Query("amount") int amount);
 
-    @GET("Product/GetGroupProduct.php?amount={amount}&option={option}")
-    Observable<APIResponse<List<Product>>> getGroupProduct(@Path("option") String option, @Path("amount") int amount);
+    @GET("Product/GetGroupProduct.php")
+    Observable<APIResponse<List<Product>>> getGroupProduct(@Query("amount") int amount, @Query("option") String option);
 
-    @GET("Product/GetCategoryProduct.php?categoryID={categoryID}")
-    Observable<APIResponse<List<Product>>> getCategoryProduct(@Path("categoryID") String categoryID);
 
-    @GET("Product/GetCollectionsProduct.php?collectionsID={collectionsID}")
-    Observable<APIResponse<List<Product>>> getCollectionsProduct(@Path("collectionsID") String collectionsID);
 
-    @GET("Product/SearchProduct.php?keyword={keyword}")
-    Observable<APIResponse<List<Product>>> searchProduct(@Path("keyword") String keyword);
+
+    @GET("Product/GetCategoryProduct.php")
+    Observable<APIResponse<List<Product>>> getCategoryProduct(@Query("categoryID") int categoryID);
+
+    @GET("Product/GetCollectionsProduct.php")
+    Observable<APIResponse<List<Product>>> getCollectionsProduct(@Query("collectionsID") int collectionsID);
+
+    @GET("Product/SearchProduct.php")
+    Observable<APIResponse<List<Product>>> searchProduct(@Query("keyword") String keyword);
 
     @GET("/Category/GetCategory.php")
     Observable<APIResponse<List<Category>>> getCategory();

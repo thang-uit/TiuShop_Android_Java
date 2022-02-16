@@ -76,8 +76,12 @@
     <string name="tvNew">New</string>
     <string name="tvSale">Sale</string>
     <string name="tvName">Name</string>
-
     <!-- Fragment Home -->
+
+
+    <!-- Item Product -->
+    <string name="tvPrice"><strike>000000</strike></string>
+    <string name="tvFinalPrice">000000</string>
 
 
 </resources>

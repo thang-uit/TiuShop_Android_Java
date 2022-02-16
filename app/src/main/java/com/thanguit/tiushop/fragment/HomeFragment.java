@@ -5,19 +5,26 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.thanguit.tiushop.R;
+import com.thanguit.tiushop.adapter.ProductAdapter;
 import com.thanguit.tiushop.adapter.SliderAdapter;
 import com.thanguit.tiushop.databinding.FragmentHomeBinding;
 import com.thanguit.tiushop.model.APIResponse;
+import com.thanguit.tiushop.model.repository.Product;
 import com.thanguit.tiushop.model.repository.Slider;
+import com.thanguit.tiushop.presenter.GroupProductPresenter;
+import com.thanguit.tiushop.presenter.listener.GroupProductListener;
 import com.thanguit.tiushop.retrofit.APIClient;
 import com.thanguit.tiushop.retrofit.DataClient;
 import com.thanguit.tiushop.util.Common;
@@ -31,12 +38,13 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements GroupProductListener.View {
     private static final String TAG = "HomeFragment";
     private FragmentHomeBinding binding;
 
     private static final int TIME = 5000;
 
+    private GroupProductPresenter groupProductPresenter;
 
     private SliderAdapter sliderAdapter;
 
@@ -68,6 +76,7 @@ public class HomeFragment extends Fragment {
         compositeDisposable = new CompositeDisposable();
         sliderList = new ArrayList<>();
         handler = new Handler();
+        groupProductPresenter = new GroupProductPresenter(this);
 
         initializeViews();
         listeners();
@@ -126,6 +135,9 @@ public class HomeFragment extends Fragment {
                     public void onComplete() {
                     }
                 });
+
+        groupProductPresenter.optionProduct(6, Common.NEW_PRODUCT);
+        groupProductPresenter.optionProduct(6, Common.DISCOUNT_PRODUCT);
     }
 
     private void listeners() {
@@ -157,5 +169,76 @@ public class HomeFragment extends Fragment {
             public void onPageScrollStateChanged(int state) {
             }
         });
+    }
+
+    @Override
+    public void newProductSuccess(List<Product> newProducts) {
+        binding.rvNew.setHasFixedSize(true);
+        binding.rvNew.setNestedScrollingEnabled(false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        binding.rvNew.setLayoutManager(layoutManager);
+        binding.rvNew.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                int action = e.getAction();
+
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        rv.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+        binding.rvNew.setAdapter(new ProductAdapter(getContext(), newProducts));
+    }
+
+    @Override
+    public void saleProductSuccess(List<Product> saleProducts) {
+        binding.rvSale.setHasFixedSize(true);
+        binding.rvSale.setNestedScrollingEnabled(false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        binding.rvSale.setLayoutManager(layoutManager);
+
+        binding.rvSale.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                int action = e.getAction();
+
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        rv.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+        binding.rvSale.setAdapter(new ProductAdapter(getContext(), saleProducts));
+    }
+
+    @Override
+    public void productFail(String error) {
     }
 }
