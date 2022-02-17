@@ -82,15 +82,17 @@
     <!-- Item Product -->
     <string name="tvPrice"><strike>000000</strike></string>
     <string name="tvFinalPrice">000000</string>
-    <string name="title_activity_success">SuccessActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <!-- Item Product -->
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- SuccessActivity -->
+    <string name="tvContent">Content</string>
+    <string name="tvSCSignUp">Signup successfully!</string>
+    <string name="btnOK1">Login Now!</string>
+    <!-- SuccessActivity -->
 
+
+    <!-- ProductDetail Activity -->
+    <string name="tvName">Name</string>
+    <!-- ProductDetail Activity -->
 
 </resources>

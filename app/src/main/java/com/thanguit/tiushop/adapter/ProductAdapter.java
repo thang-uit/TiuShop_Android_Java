@@ -1,6 +1,7 @@
 package com.thanguit.tiushop.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.thanguit.tiushop.R;
+import com.thanguit.tiushop.activities.ProductDetailActivity;
 import com.thanguit.tiushop.databinding.ItemProductBinding;
 import com.thanguit.tiushop.model.repository.Product;
 import com.thanguit.tiushop.util.Common;
@@ -52,6 +54,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(10, 0, 0, 0);
             holder.binding.tvFinalPrice.setLayoutParams(params);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context.startActivity(new Intent(context, ProductDetailActivity.class));
+                }
+            });
         }
     }
 

@@ -17,7 +17,7 @@ public class Common {
     public static final String STATUS_SUCCESS = "Success";
     public static final String STATUS_FAIL = "Fail";
 
-    public static final String LAYOUT_REGISTER = "REGISTER";
+    public static final String LAYOUT_SIGNUP = "SIGNUP";
     public static final String LAYOUT_ORDER = "ORDER";
 
     public static final String NEW_PRODUCT = "new";

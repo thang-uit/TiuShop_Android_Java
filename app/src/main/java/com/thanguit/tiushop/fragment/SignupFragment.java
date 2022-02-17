@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.activities.LoginActivity;
 import com.thanguit.tiushop.activities.MainActivity;
+import com.thanguit.tiushop.activities.SuccessActivity;
 import com.thanguit.tiushop.base.MyToast;
 import com.thanguit.tiushop.databinding.FragmentSignupBinding;
 import com.thanguit.tiushop.presenter.SignupPresenter;
@@ -251,7 +252,11 @@ public class SignupFragment extends Fragment implements SignupListener.View {
         loadingDialog.cancelLoading();
         clearForm();
         MyToast.makeText(getContext(), MyToast.TYPE.SUCCESS, getString(R.string.toast1), Toast.LENGTH_LONG).show();
-        startActivity(new Intent(getContext(), LoginActivity.class));
+
+        Intent intent = new Intent(getContext(), SuccessActivity.class);
+        intent.putExtra(Common.LAYOUT_SIGNUP, Common.LAYOUT_SIGNUP);
+        startActivity(intent);
+        requireActivity().finish();
     }
 
     @Override
