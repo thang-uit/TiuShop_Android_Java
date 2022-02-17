@@ -1,56 +1,48 @@
 package com.thanguit.tiushop.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Handler;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.adapter.ProductAdapter;
 import com.thanguit.tiushop.adapter.SliderAdapter;
 import com.thanguit.tiushop.databinding.FragmentHomeBinding;
-import com.thanguit.tiushop.model.APIResponse;
 import com.thanguit.tiushop.model.repository.Product;
 import com.thanguit.tiushop.model.repository.Slider;
 import com.thanguit.tiushop.presenter.GroupProductPresenter;
+import com.thanguit.tiushop.presenter.SliderPresenter;
 import com.thanguit.tiushop.presenter.listener.GroupProductListener;
-import com.thanguit.tiushop.retrofit.APIClient;
-import com.thanguit.tiushop.retrofit.DataClient;
+import com.thanguit.tiushop.presenter.listener.SliderListener;
 import com.thanguit.tiushop.util.Common;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class HomeFragment extends Fragment implements GroupProductListener.View {
+public class HomeFragment extends Fragment implements GroupProductListener.View, SliderListener.View {
     private static final String TAG = "HomeFragment";
     private FragmentHomeBinding binding;
 
     private static final int TIME = 5000;
 
+    private SliderPresenter sliderPresenter;
     private GroupProductPresenter groupProductPresenter;
-
-    private SliderAdapter sliderAdapter;
 
     private CompositeDisposable compositeDisposable;
 
-    private List<Slider> sliderList;
+    private List<Slider> sliderLists;
     private Handler handler;
     private Runnable runnable;
 
@@ -74,8 +66,10 @@ public class HomeFragment extends Fragment implements GroupProductListener.View 
         super.onViewCreated(view, savedInstanceState);
 
         compositeDisposable = new CompositeDisposable();
-        sliderList = new ArrayList<>();
+        sliderLists = new ArrayList<>();
         handler = new Handler();
+
+        sliderPresenter = new SliderPresenter(this);
         groupProductPresenter = new GroupProductPresenter(this);
 
         initializeViews();
@@ -105,37 +99,7 @@ public class HomeFragment extends Fragment implements GroupProductListener.View 
     }
 
     private void initializeViews() {
-        DataClient dataClient = APIClient.getData();
-        dataClient.getSlider(5)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<APIResponse<List<Slider>>>() {
-                    @Override
-                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                        compositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<List<Slider>> listAPIResponse) {
-                        if (listAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
-                            sliderAdapter = new SliderAdapter(getContext(), listAPIResponse.getData());
-                            sliderList = listAPIResponse.getData();
-
-                            binding.tabIndicatorBanner.setupWithViewPager(binding.vpgBanner);
-                            binding.vpgBanner.setAdapter(sliderAdapter);
-                        }
-                    }
-
-                    @Override
-                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                        Log.d(TAG, e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-
+        sliderPresenter.handleSlider(5);
         groupProductPresenter.optionProduct(6, Common.NEW_PRODUCT);
         groupProductPresenter.optionProduct(6, Common.DISCOUNT_PRODUCT);
     }
@@ -144,7 +108,7 @@ public class HomeFragment extends Fragment implements GroupProductListener.View 
         runnable = new Runnable() {
             @Override
             public void run() {
-                if (binding.vpgBanner.getCurrentItem() == sliderList.size() - 1) {
+                if (binding.vpgBanner.getCurrentItem() == sliderLists.size() - 1) {
                     binding.vpgBanner.setCurrentItem(0);
                 } else {
                     binding.vpgBanner.setCurrentItem(binding.vpgBanner.getCurrentItem() + 1);
@@ -169,76 +133,112 @@ public class HomeFragment extends Fragment implements GroupProductListener.View 
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+        binding.srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                sliderPresenter.handleSlider(5);
+                groupProductPresenter.optionProduct(6, Common.NEW_PRODUCT);
+                groupProductPresenter.optionProduct(6, Common.DISCOUNT_PRODUCT);
+
+                binding.srlRefresh.setRefreshing(false);
+            }
+        });
     }
 
     @Override
     public void newProductSuccess(List<Product> newProducts) {
-        binding.rvNew.setHasFixedSize(true);
-        binding.rvNew.setNestedScrollingEnabled(false);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        binding.rvNew.setLayoutManager(layoutManager);
-        binding.rvNew.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                int action = e.getAction();
+        if (newProducts != null) {
+            binding.rvNew.setHasFixedSize(true);
+            binding.rvNew.setNestedScrollingEnabled(false);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+            binding.rvNew.setLayoutManager(layoutManager);
+            binding.rvNew.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                @Override
+                public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                    int action = e.getAction();
 
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        rv.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
+                    switch (action) {
+                        case MotionEvent.ACTION_DOWN:
+                            rv.getParent().requestDisallowInterceptTouchEvent(true);
+                            break;
+                    }
+                    return false;
                 }
-                return false;
-            }
 
-            @Override
-            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                @Override
+                public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                }
 
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });
-        binding.rvNew.setAdapter(new ProductAdapter(getContext(), newProducts));
+                @Override
+                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+                }
+            });
+            binding.rvNew.setAdapter(new ProductAdapter(getContext(), newProducts));
+            binding.pbNew.setVisibility(View.GONE);
+            binding.rvNew.setVisibility(View.VISIBLE);
+        } else {
+            binding.rvNew.setVisibility(View.GONE);
+            binding.pbNew.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void saleProductSuccess(List<Product> saleProducts) {
-        binding.rvSale.setHasFixedSize(true);
-        binding.rvSale.setNestedScrollingEnabled(false);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        binding.rvSale.setLayoutManager(layoutManager);
+        if (saleProducts != null) {
+            binding.rvSale.setHasFixedSize(true);
+            binding.rvSale.setNestedScrollingEnabled(false);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+            binding.rvSale.setLayoutManager(layoutManager);
 
-        binding.rvSale.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                int action = e.getAction();
+            binding.rvSale.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                @Override
+                public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                    int action = e.getAction();
 
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        rv.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
+                    switch (action) {
+                        case MotionEvent.ACTION_DOWN:
+                            rv.getParent().requestDisallowInterceptTouchEvent(true);
+                            break;
+                    }
+                    return false;
                 }
-                return false;
-            }
 
-            @Override
-            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                @Override
+                public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
 
-            }
+                }
 
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+                @Override
+                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
-            }
-        });
-        binding.rvSale.setAdapter(new ProductAdapter(getContext(), saleProducts));
+                }
+            });
+            binding.rvSale.setAdapter(new ProductAdapter(getContext(), saleProducts));
+            binding.pbSale.setVisibility(View.GONE);
+            binding.rvSale.setVisibility(View.VISIBLE);
+        } else {
+            binding.rvSale.setVisibility(View.GONE);
+            binding.pbSale.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void productFail(String error) {
+        binding.rvSale.setVisibility(View.GONE);
+        binding.pbSale.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void sliderSuccess(List<Slider> sliderList) {
+        sliderLists = sliderList;
+        binding.tabIndicatorBanner.setupWithViewPager(binding.vpgBanner);
+        binding.vpgBanner.setAdapter(new SliderAdapter(getContext(), sliderList));
+    }
+
+    @Override
+    public void sliderFail(String error) {
     }
 }

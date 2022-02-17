@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TiuShop"
         android:usesCleartextTraffic="true">
-
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
@@ -26,13 +25,11 @@
         <activity
             android:name=".activities.IntroActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

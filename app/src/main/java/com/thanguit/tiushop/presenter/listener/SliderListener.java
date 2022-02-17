@@ -12,6 +12,6 @@ public interface SliderListener {
     }
 
     interface Presenter {
-        void optionProduct(int amount, String option);
+        void handleSlider(int amount);
     }
 }

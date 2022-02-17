@@ -8,7 +8,7 @@ import okhttp3.RequestBody;
 
 public class Common {
 //    public static final String ipUrl = "http://192.168.1.8";
-    public static final String ipUrl = "http://192.168.1.19";
+    public static final String ipUrl = "http://192.168.1.42";
 
     // https://mkyong.com/regular-expressions/how-to-validate-username-with-regular-expression/
     public static final String REGEX_USERNAME = "^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){5,50}";

@@ -15,16 +15,36 @@
         android:background="?attr/color_2"
         android:gravity="center">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cslWishList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp">
+
+            <ImageView
+                android:id="@+id/ivWishList"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:padding="3dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_wishlist" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <EditText
             android:id="@+id/edtSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:layout_alignTop="@+id/cslCart"
             android:layout_alignBottom="@+id/cslCart"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_toStartOf="@+id/cslCart"
+            android:layout_toEndOf="@+id/cslWishList"
 
             android:background="@drawable/shape_background_edt_corner_20dp"
             android:cursorVisible="false"
@@ -47,7 +67,7 @@
             android:layout_marginEnd="10dp">
 
             <ImageView
-                android:id="@+id/ivBell"
+                android:id="@+id/ivCart"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:gravity="center"
