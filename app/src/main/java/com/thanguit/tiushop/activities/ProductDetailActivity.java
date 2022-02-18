@@ -27,6 +27,8 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
 
     private LoadingDialog loadingDialog;
 
+    private int quantity = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +75,39 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        binding.fabCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProductDetailActivity.this, CartActivity.class));
+            }
+        });
+
+        binding.fabDecrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Integer.parseInt(binding.tvQuantity.getText().toString()) == 1) {
+                    quantity = 1;
+                } else {
+                    quantity = quantity - 1;
+                }
+
+                binding.tvQuantity.setText(String.valueOf(quantity));
+            }
+        });
+
+        binding.fabIncrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Integer.parseInt(binding.tvQuantity.getText().toString()) == 10) {
+                    quantity = 10;
+                } else {
+                    quantity = quantity + 1;
+                }
+
+                binding.tvQuantity.setText(String.valueOf(quantity));
             }
         });
     }

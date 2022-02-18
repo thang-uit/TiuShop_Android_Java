@@ -101,5 +101,9 @@
     <string name="tvCollection">Collection</string>
     <!-- Item Collection -->
 
+    <!-- Cart Activity -->
+    <string name="tbCart">Cart</string>
+    <!-- Cart Activity -->
+
 
 </resources>

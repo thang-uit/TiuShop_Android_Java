@@ -15,6 +15,9 @@
         android:theme="@style/Theme.TiuShop"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.CartActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ProductDetailActivity"
             android:exported="false" />
         <activity
