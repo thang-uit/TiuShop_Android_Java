@@ -150,7 +150,6 @@ public class HomeFragment extends Fragment implements GroupProductListener.View,
     public void newProductSuccess(List<Product> newProducts) {
         if (newProducts != null) {
             binding.rvNew.setHasFixedSize(true);
-            binding.rvNew.setNestedScrollingEnabled(false);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             layoutManager.setOrientation(RecyclerView.HORIZONTAL);
             binding.rvNew.setLayoutManager(layoutManager);
@@ -188,7 +187,6 @@ public class HomeFragment extends Fragment implements GroupProductListener.View,
     public void saleProductSuccess(List<Product> saleProducts) {
         if (saleProducts != null) {
             binding.rvSale.setHasFixedSize(true);
-            binding.rvSale.setNestedScrollingEnabled(false);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             layoutManager.setOrientation(RecyclerView.HORIZONTAL);
             binding.rvSale.setLayoutManager(layoutManager);

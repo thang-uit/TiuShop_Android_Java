@@ -58,7 +58,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    context.startActivity(new Intent(context, ProductDetailActivity.class));
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    intent.putExtra(Common.PRODUCT_ID, productList.get(holder.getLayoutPosition()).getProductID());
+                    context.startActivity(intent);
                 }
             });
         }

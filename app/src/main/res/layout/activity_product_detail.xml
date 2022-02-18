@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".activities.ProductDetailActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/flAction"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <androidx.viewpager2.widget.ViewPager2
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vpgProductImage"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="550dp"
                 android:background="?attr/color_main_2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +39,34 @@
                 app:tabGravity="start"
                 app:tabIndicator="@null" />
 
+            <LinearLayout
+                android:id="@+id/llSale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="?attr/color_main_5"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/llContent"
+                app:layout_constraintEnd_toEndOf="@+id/llContent">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_sale_1" />
+
+                <TextView
+                    android:id="@+id/tvSale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/tvSale"
+                    android:textAlignment="center"
+                    android:textColor="?attr/color_main_3"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabBack"
                 android:layout_width="wrap_content"
@@ -46,7 +74,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:background="?attr/color_2"
-                android:elevation="20dp"
+                android:elevation="10dp"
                 app:backgroundTint="?attr/color_2"
                 app:fabSize="mini"
                 app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +89,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:background="?attr/color_2"
-                android:elevation="20dp"
+                android:elevation="10dp"
                 app:backgroundTint="?attr/color_2"
                 app:fabSize="mini"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -69,33 +97,164 @@
                 app:srcCompat="@drawable/ic_cart"
                 app:tint="@null" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:id="@+id/llContent"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_corner_gradient_20dp_topleft_topright"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tabIndicatorImage">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/tvProductName"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/tvName"-->
-<!--                    android:textColor="?attr/color_3"-->
-<!--                    android:textSize="18sp"-->
-<!--                    android:textStyle="bold" />-->
+                <TextView
+                    android:id="@+id/tvProductName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toStartOf="@+id/fabWishList"
+                    android:text="@string/tvName"
+                    android:textAlignment="textStart"
+                    android:textColor="?attr/color_3"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-<!--                <Spinner-->
-<!--                    android:id="@+id/spinner"-->
-<!--                    android:layout_width="391dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    tools:layout_editor_absoluteX="1dp"-->
-<!--                    tools:layout_editor_absoluteY="54dp" />-->
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabWishList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="?attr/color_2"
+                    android:elevation="10dp"
+                    app:backgroundTint="?attr/color_2"
+                    app:fabSize="normal"
+                    app:srcCompat="@drawable/ic_wishlist"
+                    app:tint="@null" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvProductName"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:text="@string/tvPrice"
+                        android:textColor="?attr/color_7"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvFinalPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:text="@string/tvFinalPrice"
+                        android:textColor="?attr/color_main_5"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/snSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fabWishList"
+                    android:layout_alignStart="@+id/fabWishList"
+                    android:layout_alignEnd="@+id/fabWishList"
+                    android:layout_marginTop="20dp" />
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/snSize"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/flAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/color_main_2"
+                android:gravity="center">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabDecrease"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/color_main_1"
+                    android:elevation="5dp"
+                    app:backgroundTint="?attr/color_main_1"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_minus"
+                    app:tint="@null" />
+
+                <TextView
+                    android:id="@+id/tvQuantity"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxWidth="30dp"
+                    android:text="@string/tvQuantity"
+                    android:textColor="?attr/color_3"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabIncrease"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/color_main_1"
+                    android:elevation="5dp"
+                    app:backgroundTint="?attr/color_main_1"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_plus"
+                    app:tint="@null" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddToCart"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_gradient"
+                android:text="@string/btnAddToCart" />
+        </LinearLayout>
+    </FrameLayout>
+</RelativeLayout>

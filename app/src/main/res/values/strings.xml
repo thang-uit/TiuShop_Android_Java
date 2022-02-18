@@ -92,7 +92,14 @@
 
 
     <!-- ProductDetail Activity -->
-    <string name="tvName">Name</string>
+    <string name="btnAddToCart">Add To Cart</string>
+    <string name="tvQuantity">1</string>
     <!-- ProductDetail Activity -->
+
+
+    <!-- Item Collection -->
+    <string name="tvCollection">Collection</string>
+    <!-- Item Collection -->
+
 
 </resources>

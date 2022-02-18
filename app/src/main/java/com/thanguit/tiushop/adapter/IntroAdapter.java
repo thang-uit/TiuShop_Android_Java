@@ -16,11 +16,9 @@ import com.thanguit.tiushop.model.repository.Intro;
 import java.util.List;
 
 public class IntroAdapter extends PagerAdapter {
-    private Context context;
     private final List<Intro> introList;
 
-    public IntroAdapter(Context context, List<Intro> introList) {
-        this.context = context;
+    public IntroAdapter(List<Intro> introList) {
         this.introList = introList;
     }
 

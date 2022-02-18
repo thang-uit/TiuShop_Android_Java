@@ -32,7 +32,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_wishlist" />
+                app:srcCompat="@drawable/ic_wishlist_full" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText

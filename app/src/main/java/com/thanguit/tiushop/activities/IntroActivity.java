@@ -101,7 +101,7 @@ public class IntroActivity extends AppCompatActivity {
                     public void onNext(@NonNull List<Intro> intros) {
                         Log.d(TAG, "onNext");
 
-                        introAdapter = new IntroAdapter(IntroActivity.this, getIntroList());
+                        introAdapter = new IntroAdapter(getIntroList());
                         binding.vpgIntro.setAdapter(introAdapter);
 
                         binding.tabIndicatorIntro.setupWithViewPager(binding.vpgIntro);

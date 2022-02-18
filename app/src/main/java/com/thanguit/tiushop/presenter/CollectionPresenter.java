@@ -2,12 +2,9 @@ package com.thanguit.tiushop.presenter;
 
 import android.util.Log;
 
-import com.thanguit.tiushop.R;
-import com.thanguit.tiushop.application.MyApplication;
 import com.thanguit.tiushop.model.APIResponse;
-import com.thanguit.tiushop.model.repository.Account;
-import com.thanguit.tiushop.model.repository.Product;
-import com.thanguit.tiushop.presenter.listener.GroupProductListener;
+import com.thanguit.tiushop.model.repository.Collection;
+import com.thanguit.tiushop.presenter.listener.CollectionListener;
 import com.thanguit.tiushop.retrofit.APIClient;
 import com.thanguit.tiushop.retrofit.DataClient;
 import com.thanguit.tiushop.util.Common;
@@ -20,47 +17,45 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class GroupProductPresenter implements GroupProductListener.Presenter {
-    private static final String TAG = "GPPresenter";
-    private GroupProductListener.View view;
+public class CollectionPresenter implements CollectionListener.Presenter {
+    private static final String TAG = "CollectionPresenter";
+    private CollectionListener.View view;
 
-    public GroupProductPresenter(GroupProductListener.View view) {
+    public CollectionPresenter(CollectionListener.View view) {
         this.view = view;
     }
 
     @Override
-    public void optionProduct(int amount, String option) {
+    public void handleCollection() {
         DataClient dataClient = APIClient.getData();
-        dataClient.getGroupProduct(amount, option)
+        dataClient.getCollections()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<APIResponse<List<Product>>>() {
+                .subscribe(new Observer<APIResponse<List<Collection>>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
+
                     }
 
                     @Override
-                    public void onNext(@NonNull APIResponse<List<Product>> listAPIResponse) {
+                    public void onNext(@NonNull APIResponse<List<Collection>> listAPIResponse) {
                         if (listAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
-                            if (option.equals(Common.NEW_PRODUCT)) {
-                                view.newProductSuccess(listAPIResponse.getData());
-                            } else if (option.equals(Common.DISCOUNT_PRODUCT)) {
-                                view.saleProductSuccess(listAPIResponse.getData());
-                            }
+                            view.collectionSuccess(listAPIResponse.getData());
                         } else {
-                            view.productFail(MyApplication.getResource().getString(R.string.tvError9));
+                            view.collectionFail(listAPIResponse.getMessage());
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         Log.d(TAG, e.getMessage());
-                        view.productFail(e.getMessage());
+                        view.collectionFail(e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
                     }
                 });
+
     }
 }
