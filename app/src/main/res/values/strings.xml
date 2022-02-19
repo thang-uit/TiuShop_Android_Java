@@ -94,6 +94,15 @@
     <!-- ProductDetail Activity -->
     <string name="btnAddToCart">Add To Cart</string>
     <string name="tvQuantity">1</string>
+    <string name="tvSize">Size:</string>
+
+    <string-array name="size">
+        <item>M</item>
+        <item>L</item>
+        <item>XL</item>
+        <item>XXL</item>
+        <item>XXXL</item>
+    </string-array>
     <!-- ProductDetail Activity -->
 
 

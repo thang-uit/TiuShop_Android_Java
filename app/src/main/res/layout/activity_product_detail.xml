@@ -176,9 +176,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/fabWishList"
-                    android:layout_alignStart="@+id/fabWishList"
                     android:layout_alignEnd="@+id/fabWishList"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_btn_gradient_corner_10dp"
+                    android:padding="10dp"
+                    android:textAlignment="center"
+                    android:tooltipText="Size" />
 
                 <TextView
                     android:id="@+id/tvDescription"
@@ -254,7 +257,11 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/bg_btn_gradient"
-                android:text="@string/btnAddToCart" />
+                android:drawableEnd="@drawable/ic_cart_full"
+                android:text="@string/btnAddToCart"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                app:backgroundTint="@null" />
         </LinearLayout>
     </FrameLayout>
 </RelativeLayout>

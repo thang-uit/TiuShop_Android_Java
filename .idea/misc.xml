@@ -21,6 +21,7 @@
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_arrow_small_right.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_back.xml" value="0.183" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_cart.xml" value="0.2055" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_cart_full.xml" value="0.183" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_email.xml" value="0.159" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_error.xml" value="0.159" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_info.xml" value="0.159" />
@@ -69,7 +70,7 @@
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/fragment_shop.xml" value="0.264" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/fragment_signup.xml" value="0.24010416666666667" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_banner.xml" value="0.2391304347826087" />
-        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_cart.xml" value="0.21981981981981982" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_cart.xml" value="0.264" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_collection.xml" value="0.21981981981981982" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_image_list.xml" value="0.21981981981981982" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_intro.xml" value="0.176" />

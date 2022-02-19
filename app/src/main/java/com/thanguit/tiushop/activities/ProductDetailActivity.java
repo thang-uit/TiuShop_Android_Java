@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +20,10 @@ import com.thanguit.tiushop.presenter.listener.ProductDetailListener;
 import com.thanguit.tiushop.util.Common;
 import com.thanguit.tiushop.util.LoadingDialog;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ProductDetailActivity extends AppCompatActivity implements ProductDetailListener.View {
     private static final String TAG = "ProductDetailActivity";
     private ActivityProductDetailBinding binding;
@@ -28,6 +33,8 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     private LoadingDialog loadingDialog;
 
     private int quantity = 1;
+
+    private String[] size = {"M", "L", "XL", "XXL", "XXL"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,10 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
                 productDetailPresenter.handleProduct(intent.getStringExtra(Common.PRODUCT_ID), DataLocalManager.getUserID());
             }
         }
+
+        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.size, android.R.layout.simple_spinner_item);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.snSize.setAdapter(arrayAdapter);
 
         binding.tvPrice.setPaintFlags(binding.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     }

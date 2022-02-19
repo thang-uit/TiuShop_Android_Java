@@ -11,7 +11,7 @@
         android:id="@+id/tbCart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/color_1"
+        android:background="?attr/color_2"
         android:elevation="5dp"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/tbCart" />
@@ -19,5 +19,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="?attr/color_1" />
 </LinearLayout>
