@@ -5,19 +5,15 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GestureDetectorCompat;
-
 import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.adapter.ImageProductDetailAdapter;
 import com.thanguit.tiushop.base.MyToast;
+import com.thanguit.tiushop.base.SwipeToBackActivity;
 import com.thanguit.tiushop.databinding.ActivityProductDetailBinding;
 import com.thanguit.tiushop.local.DataLocalManager;
 import com.thanguit.tiushop.model.APIResponse;
@@ -38,10 +34,8 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class ProductDetailActivity extends AppCompatActivity implements ProductDetailListener.View {
+public class ProductDetailActivity extends SwipeToBackActivity implements ProductDetailListener.View {
     private static final String TAG = "ProductDetailActivity";
-    private static final String DEBUG_TAG = "Gestures";
-    private static final String GTAG = "GESTURE";
     private ActivityProductDetailBinding binding;
 
     private ProductDetailPresenter productDetailPresenter;
@@ -52,8 +46,6 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     private int quantity = 1;
 
     private String[] size = {"M", "L", "XL", "XXL", "XXL"};
-
-    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +71,6 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         DataLocalManager.init(this);
         productDetailPresenter = new ProductDetailPresenter(this);
         loadingDialog = LoadingDialog.getInstance();
-
-        gestureDetector = new GestureDetector(this, new SwipeDetector());
 
         initializeViews();
         listeners();
@@ -274,50 +264,4 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     public void productFail(String error) {
         loadingDialog.cancelLoading();
     }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        // TouchEvent dispatcher.
-        if (gestureDetector != null) {
-            if (gestureDetector.onTouchEvent(ev))
-                // If the gestureDetector handles the event, a swipe has been
-                // executed and no more needs to be done.
-                return true;
-        }
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return this.gestureDetector.onTouchEvent(event);
-    }
-
-    private class SwipeDetector extends GestureDetector.SimpleOnGestureListener { // https://stackoverflow.com/a/38442055
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            Log.d(DEBUG_TAG, "onFling: " + e1.getX() + "|" + e2.getX() + "|");
-
-            if ((e2.getX() - e1.getX()) > 0 && Math.abs(e2.getX() - e1.getX()) > 600) {
-                finish();
-                return true;
-            } else {
-                return false;
-            }
-
-
-//            // Check movement along the Y-axis. If it exceeds SWIPE_MAX_OFF_PATH,
-//            // then dismiss the swipe.
-//            if (Math.abs(e1.getY() - e2.getY()) > 250)
-//                return false;
-//
-//            // Swipe from left to right.
-//            // The swipe needs to exceed a certain distance (SWIPE_MIN_DISTANCE)
-//            // and a certain velocity (SWIPE_THRESHOLD_VELOCITY).
-//            if (e2.getX() - e1.getX() > 120 && Math.abs(velocityX) > 200) {
-//                finish();
-//                return true;
-//            }
-        }
-    }
-
 }

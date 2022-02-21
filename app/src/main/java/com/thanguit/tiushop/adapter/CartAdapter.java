@@ -1,6 +1,7 @@
 package com.thanguit.tiushop.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,14 +37,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         if (cartList != null) {
             Cart cart = cartList.get(position);
 
-            holder.binding.sdvProductImage.setImageURI(cart.getImage().get(0));
+            holder.binding.sdvProductImage.setImageURI(Common.ipUrl + cart.getImage().get(0));
             holder.binding.tvProductName.setText(cart.getName());
             holder.binding.tvSize.setText(cart.getSize());
-            holder.binding.tvQuantity.setText(cart.getQuantity());
+            holder.binding.tvQuantity.setText(String.valueOf(cart.getQuantity()));
+            holder.binding.tvProductFinalPrice.setText(cart.getFinalPrice());
 
             if (cart.getIsSale().equals(Common.TRUE)) {
                 holder.binding.tvProductPrice.setText(cart.getPrice());
-                holder.binding.tvProductFinalPrice.setText(cart.getFinalPrice());
                 holder.binding.tvSale.setText(cart.getSale());
             } else {
                 holder.binding.tvProductPrice.setVisibility(View.GONE);
@@ -69,6 +70,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             binding = ItemCartBinding.bind(itemView);
 
             binding.tvProductName.setSelected(true);
+            binding.tvProductPrice.setPaintFlags(binding.tvProductPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
     }
 }
