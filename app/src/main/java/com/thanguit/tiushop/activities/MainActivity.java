@@ -1,7 +1,9 @@
 package com.thanguit.tiushop.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,6 +86,13 @@ public class MainActivity extends AppCompatActivity {
                     binding.vpgMain.setCurrentItem(2);
                 }
                 return false;
+            }
+        });
+
+        binding.ivCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, CartActivity.class));
             }
         });
     }

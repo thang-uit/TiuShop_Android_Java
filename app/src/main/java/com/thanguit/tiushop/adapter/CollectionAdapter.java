@@ -54,7 +54,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         return 0;
     }
 
-    protected static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         private ItemCollectionBinding binding;
 
         public ViewHolder(@NonNull View itemView) {

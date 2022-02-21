@@ -1,9 +1,12 @@
 package com.thanguit.tiushop.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.thanguit.tiushop.adapter.ProductAdapter;
 import com.thanguit.tiushop.databinding.ActivityCartBinding;
 
 public class CartActivity extends AppCompatActivity {
@@ -21,7 +24,9 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-
+        binding.rvCart.setHasFixedSize(true);
+        binding.rvCart.setLayoutManager(new LinearLayoutManager(this));
+//        binding.rvCart.setAdapter(new ProductAdapter(this, cartList));
     }
 
     private void listeners() {

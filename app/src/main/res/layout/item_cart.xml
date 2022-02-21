@@ -13,31 +13,65 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
         android:text="@null" />
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sdvProductImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cslProductImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/cbProductCart"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        app:cardCornerRadius="5dp" />
+        android:layout_toEndOf="@+id/cbProductCart">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvProductImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/llSale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_sale_corner_10dp_bottomleft_topright"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvSale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/tvSale"
+                android:textAlignment="center"
+                android:textColor="?attr/color_main_3"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <RelativeLayout
         android:id="@+id/llProductInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/sdvProductImage"
-        android:layout_alignBottom="@+id/sdvProductImage"
+        android:layout_alignTop="@+id/cslProductImage"
+        android:layout_alignBottom="@+id/cslProductImage"
         android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
-        android:layout_toEndOf="@+id/sdvProductImage">
+        android:layout_toEndOf="@+id/cslProductImage">
 
         <TextView
             android:id="@+id/tvProductName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:ellipsize="marquee"

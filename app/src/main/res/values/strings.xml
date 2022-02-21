@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">TiuShop</string>
 
+    <!-- Toast -->
+    <string name="toast1">Signup successfully!</string>
+    <string name="toast2">Product added to wishlist ❤</string>
+    <string name="toast3">Product removed from wishlist</string>
+    <string name="toast4">Product added to cart</string>
+    <!-- Toast -->
+
+
     <!-- Intro screen -->
     <string name="tvSkip">Skip</string>
     <string name="btnNext">Next</string>
@@ -52,7 +60,6 @@
     <string name="btnSignup">Sign Up</string>
     <string name="tilConfirmPassword">Confirm Password</string>
 
-    <string name="toast1">Signup successfully!</string>
     <!-- Login screen, Signup screen -->
 
 

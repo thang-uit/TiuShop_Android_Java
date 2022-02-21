@@ -67,11 +67,6 @@ public class IntroActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        if (!TextUtils.isEmpty(DataLocalManager.getUserID())) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
-
         if (DataLocalManager.getFirstRun()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
