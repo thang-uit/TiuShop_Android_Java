@@ -10,7 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SwipeToBackActivity extends AppCompatActivity {
     private static final String DEBUG_TAG = "GESTURE";
+
     private GestureDetector gestureDetector;
+
+    private static final int LEFT_SCREEN = 50;
+    private static final int SWIPE_MAX = 400;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,9 +43,9 @@ public class SwipeToBackActivity extends AppCompatActivity {
     private class SwipeDetector extends GestureDetector.SimpleOnGestureListener { // https://stackoverflow.com/a/38442055
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            Log.d(DEBUG_TAG, "onFling: " + e1.getX() + "|" + e2.getX() + "|");
+            Log.d(DEBUG_TAG, "onFling: " + e1.getX() + " | " + e2.getX());
 
-            if ((e2.getX() - e1.getX()) > 0 && Math.abs(e2.getX() - e1.getX()) > 500) {
+            if (e1.getX() < LEFT_SCREEN && (e2.getX() - e1.getX()) > 0 && Math.abs(e2.getX() - e1.getX()) > SWIPE_MAX) {
                 finish();
                 return true;
             } else {

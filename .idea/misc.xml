@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg__circle_btn_corner.xml" value="0.159" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_amount_cart_circle.xml" value="0.165" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_btn_corner_10dp.xml" value="0.2703125" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_btn_gradient.xml" value="0.183" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/bg_btn_gradient_corner.xml" value="0.2703125" />
@@ -39,7 +40,9 @@
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_sale_1.xml" value="0.174" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_search.xml" value="0.2055" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_shoppingbag.xml" value="0.2055" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_success_1.xml" value="0.184" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_success_2.xml" value="0.159" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_trash.xml" value="0.184" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_user.xml" value="0.159" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_user_1.xml" value="0.1825" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/drawable/ic_warning.xml" value="0.159" />
@@ -59,7 +62,7 @@
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_cart.xml" value="0.21981981981981982" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_intro.xml" value="0.176" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_login.xml" value="0.2536231884057971" />
-        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_main.xml" value="0.2793709528214616" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_product_detail.xml" value="0.264" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/activity_success.xml" value="0.2" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/fragment_collection.xml" value="0.2" />
@@ -70,7 +73,7 @@
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/fragment_shop.xml" value="0.264" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/fragment_signup.xml" value="0.24010416666666667" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_banner.xml" value="0.2391304347826087" />
-        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_cart.xml" value="0.264" />
+        <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_cart.xml" value="0.2" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_collection.xml" value="0.21981981981981982" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_image_list.xml" value="0.21981981981981982" />
         <entry key="..\:/mobile/Java/TiuShop/Source/app/src/main/res/layout/item_intro.xml" value="0.176" />

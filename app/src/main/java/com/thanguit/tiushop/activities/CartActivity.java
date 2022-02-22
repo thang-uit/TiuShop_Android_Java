@@ -3,12 +3,8 @@ package com.thanguit.tiushop.activities;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.thanguit.tiushop.adapter.CartAdapter;
@@ -18,7 +14,6 @@ import com.thanguit.tiushop.local.DataLocalManager;
 import com.thanguit.tiushop.model.repository.Cart;
 import com.thanguit.tiushop.presenter.CartPresenter;
 import com.thanguit.tiushop.presenter.listener.CartListener;
-import com.thanguit.tiushop.util.Common;
 
 import java.util.List;
 
@@ -28,7 +23,6 @@ public class CartActivity extends SwipeToBackActivity implements CartListener.Vi
 
     private CartPresenter cartPresenter;
     private CartAdapter cartAdapter;
-    private ItemTouchHelper.SimpleCallback simpleItemTouchCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +39,6 @@ public class CartActivity extends SwipeToBackActivity implements CartListener.Vi
 
     private void initializeViews() {
         cartPresenter.handleCart(DataLocalManager.getUserID());
-
-        simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-            }
-        };
     }
 
     private void listeners() {
@@ -78,9 +60,6 @@ public class CartActivity extends SwipeToBackActivity implements CartListener.Vi
                 binding.rvCart.setHasFixedSize(true);
                 binding.rvCart.setLayoutManager(new LinearLayoutManager(this));
                 binding.rvCart.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
-                new ItemTouchHelper(simpleItemTouchCallback).attachToRecyclerView(binding.rvCart);
-
                 cartAdapter = new CartAdapter(this, cartList);
                 binding.rvCart.setAdapter(cartAdapter);
 

@@ -12,12 +12,14 @@ import android.widget.Toast;
 
 import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.adapter.ImageProductDetailAdapter;
+import com.thanguit.tiushop.application.MyApplication;
 import com.thanguit.tiushop.base.MyToast;
 import com.thanguit.tiushop.base.SwipeToBackActivity;
 import com.thanguit.tiushop.databinding.ActivityProductDetailBinding;
 import com.thanguit.tiushop.local.DataLocalManager;
 import com.thanguit.tiushop.model.APIResponse;
 import com.thanguit.tiushop.model.repository.Cart;
+import com.thanguit.tiushop.model.repository.CartModel;
 import com.thanguit.tiushop.model.repository.Product;
 import com.thanguit.tiushop.presenter.ProductDetailPresenter;
 import com.thanguit.tiushop.presenter.listener.ProductDetailListener;
@@ -26,7 +28,10 @@ import com.thanguit.tiushop.retrofit.DataClient;
 import com.thanguit.tiushop.util.Common;
 import com.thanguit.tiushop.util.LoadingDialog;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
+import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -74,6 +79,16 @@ public class ProductDetailActivity extends SwipeToBackActivity implements Produc
 
         initializeViews();
         listeners();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     private void initializeViews() {
@@ -210,6 +225,36 @@ public class ProductDetailActivity extends SwipeToBackActivity implements Produc
                             @Override
                             public void onNext(@NonNull APIResponse<Cart> cartAPIResponse) {
                                 if (cartAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
+
+                                    HashMap<String, Object> jsonBody1 = new HashMap<>();
+                                    jsonBody1.put("userID", DataLocalManager.getUserID());
+
+                                    DataClient dataClient = APIClient.getData();
+                                    dataClient.getCart(Common.getRequestBody(jsonBody1))
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new Observer<APIResponse<List<Cart>>>() {
+                                                @Override
+                                                public void onSubscribe(@NonNull Disposable d) {
+                                                }
+
+                                                @Override
+                                                public void onNext(@NonNull APIResponse<List<Cart>> listAPIResponse) {
+                                                    if (listAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
+                                                        EventBus.getDefault().post(new CartModel(listAPIResponse.getData()));
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onError(@NonNull Throwable e) {
+                                                    Log.d(TAG, e.getMessage());
+                                                }
+
+                                                @Override
+                                                public void onComplete() {
+                                                }
+                                            });
+
                                     loadingDialog.cancelLoading();
                                     MyToast.makeText(ProductDetailActivity.this, MyToast.TYPE.SUCCESS, getString(R.string.toast4), Toast.LENGTH_LONG).show();
                                 } else {
