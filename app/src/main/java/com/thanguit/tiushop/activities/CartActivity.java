@@ -28,6 +28,7 @@ public class CartActivity extends SwipeToBackActivity implements CartListener.Vi
 
     private CartPresenter cartPresenter;
     private CartAdapter cartAdapter;
+    private ItemTouchHelper.SimpleCallback simpleItemTouchCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,18 @@ public class CartActivity extends SwipeToBackActivity implements CartListener.Vi
 
     private void initializeViews() {
         cartPresenter.handleCart(DataLocalManager.getUserID());
+
+        simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            }
+        };
     }
 
     private void listeners() {
@@ -66,23 +79,7 @@ public class CartActivity extends SwipeToBackActivity implements CartListener.Vi
                 binding.rvCart.setLayoutManager(new LinearLayoutManager(this));
                 binding.rvCart.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-                ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
-
-                    @Override
-                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                        return false;
-                    }
-
-                    @Override
-                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int swipeDir) {
-//                        int position = viewHolder.getAdapterPosition();
-//                        arrayList.remove(position);
-//                        adapter.notifyDataSetChanged();
-
-                    }
-                };
-                ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-                itemTouchHelper.attachToRecyclerView(binding.rvCart);
+                new ItemTouchHelper(simpleItemTouchCallback).attachToRecyclerView(binding.rvCart);
 
                 cartAdapter = new CartAdapter(this, cartList);
                 binding.rvCart.setAdapter(cartAdapter);
