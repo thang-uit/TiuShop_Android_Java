@@ -8,8 +8,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:background="?selectableItemBackground">
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -199,8 +197,5 @@
                 app:srcCompat="@drawable/ic_plus"
                 app:tint="@null" />
         </LinearLayout>
-
     </RelativeLayout>
-
-
 </RelativeLayout>

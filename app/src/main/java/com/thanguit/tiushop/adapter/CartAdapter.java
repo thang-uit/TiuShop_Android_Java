@@ -1,6 +1,7 @@
 package com.thanguit.tiushop.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.thanguit.tiushop.R;
+import com.thanguit.tiushop.activities.ProductDetailActivity;
 import com.thanguit.tiushop.databinding.ItemCartBinding;
 import com.thanguit.tiushop.model.repository.Cart;
 import com.thanguit.tiushop.util.Common;
@@ -50,6 +52,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 holder.binding.tvProductPrice.setVisibility(View.GONE);
                 holder.binding.llSale.setVisibility(View.GONE);
             }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    intent.putExtra(Common.PRODUCT_ID, cartList.get(holder.getLayoutPosition()).getProductID());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 
