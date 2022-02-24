@@ -90,8 +90,8 @@
 
 
     <!-- Item Product -->
-    <string name="tvPrice"><strike>000000</strike></string>
-    <string name="tvFinalPrice">000000</string>
+    <string name="tvPrice"><strike>0</strike></string>
+    <string name="tvFinalPrice">0</string>
     <!-- Item Product -->
 
     <!-- SuccessActivity -->
@@ -122,6 +122,9 @@
     <!-- Cart Activity -->
     <string name="tbCart">Cart</string>
     <string name="tvDelete">Delete</string>
+    <string name="cbAll">All</string>
+    <string name="btnCheckOut">Checkout</string>
+    <string name="tvTotal">Total:</string>
     <!-- Cart Activity -->
 
 

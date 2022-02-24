@@ -60,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:buttonTint="?attr/color_main_1"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:text="@null" />

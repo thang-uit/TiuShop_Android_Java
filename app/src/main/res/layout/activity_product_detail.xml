@@ -262,6 +262,7 @@
                 android:text="@string/btnAddToCart"
                 android:textAlignment="center"
                 android:textAllCaps="true"
+                android:textColor="?attr/color_main_4"
                 app:backgroundTint="@null" />
         </LinearLayout>
     </FrameLayout>

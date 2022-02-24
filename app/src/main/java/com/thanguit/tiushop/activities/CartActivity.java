@@ -37,6 +37,13 @@ public class CartActivity extends SwipeToBackActivity implements CartListener.Vi
         listeners();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+//        cartPresenter.handleCart(DataLocalManager.getUserID());
+    }
+
     private void initializeViews() {
         cartPresenter.handleCart(DataLocalManager.getUserID());
     }
@@ -47,8 +54,14 @@ public class CartActivity extends SwipeToBackActivity implements CartListener.Vi
         binding.srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                cartPresenter.handleCart(DataLocalManager.getUserID());
+//                cartPresenter.handleCart(DataLocalManager.getUserID());
                 binding.srlRefresh.setRefreshing(false);
+            }
+        });
+
+        binding.cbAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
             }
         });
     }
@@ -60,7 +73,7 @@ public class CartActivity extends SwipeToBackActivity implements CartListener.Vi
                 binding.rvCart.setHasFixedSize(true);
                 binding.rvCart.setLayoutManager(new LinearLayoutManager(this));
                 binding.rvCart.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-                cartAdapter = new CartAdapter(this, cartList);
+                cartAdapter = new CartAdapter(this, cartList, binding.tvTotalPrice, false);
                 binding.rvCart.setAdapter(cartAdapter);
 
                 binding.lavAnimation.setVisibility(View.GONE);

@@ -19,9 +19,11 @@
             android:exported="false" />
         <activity
             android:name=".activities.ProductDetailActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".activities.SuccessActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"

@@ -1,9 +1,12 @@
 package com.thanguit.tiushop.model.repository;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Cart {
     @SerializedName("cartID")
@@ -140,5 +143,29 @@ public class Cart {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "cartID='" + cartID + '\'' +
+                ", productID='" + productID + '\'' +
+                ", name='" + name + '\'' +
+                ", image=" + image +
+                ", price='" + price + '\'' +
+                ", sale='" + sale + '\'' +
+                ", isSale='" + isSale + '\'' +
+                ", finalPrice='" + finalPrice + '\'' +
+                ", size='" + size + '\'' +
+                ", quantity=" + quantity +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart = (Cart) o;
+        return getQuantity() == cart.getQuantity() && getCartID().equals(cart.getCartID()) && getProductID().equals(cart.getProductID()) && getName().equals(cart.getName()) && getImage().equals(cart.getImage()) && getPrice().equals(cart.getPrice()) && getSale().equals(cart.getSale()) && getIsSale().equals(cart.getIsSale()) && getFinalPrice().equals(cart.getFinalPrice()) && getSize().equals(cart.getSize());
     }
 }

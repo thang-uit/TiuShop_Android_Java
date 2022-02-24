@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.activities.ProductDetailActivity;
-import com.thanguit.tiushop.application.MyApplication;
 import com.thanguit.tiushop.base.MyToast;
 import com.thanguit.tiushop.databinding.ItemCartBinding;
 import com.thanguit.tiushop.model.APIResponse;
@@ -39,15 +39,45 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private static final String TAG = "CartAdapter";
 
     private int quantity = 0;
+    private int totalPrice = 0;
 
     private Context context;
     private List<Cart> cartList;
+    private TextView tvTotalPrice;
+    private boolean isCheckAll = false;
+
+    private OnClickCheckOutListener onClickCheckOutListener;
 
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public CartAdapter(Context context, List<Cart> cartList) {
+//    public CartAdapter(Context context, List<Cart> cartList) {
+//        this.context = context;
+//        this.cartList = cartList;
+//    }
+
+    public CartAdapter(Context context, List<Cart> cartList, TextView tvTotalPrice, boolean isCheckAll) {
         this.context = context;
         this.cartList = cartList;
+        this.tvTotalPrice = tvTotalPrice;
+        this.isCheckAll = isCheckAll;
+
+//        try {
+//            this.onClickCheckOutListener = ((OnClickCheckOutListener) context);
+//        } catch (Exception e) {
+//            throw new ClassCastException(e.getMessage());
+//        }
+    }
+
+    public boolean isCheckAll() {
+        return isCheckAll;
+    }
+
+    public void setCheckAll(boolean checkAll) {
+        isCheckAll = checkAll;
+    }
+
+    interface OnClickCheckOutListener {
+        void onCheckOutListener(List<Cart> cartList);
     }
 
     @NonNull
@@ -79,6 +109,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 holder.binding.llSale.setVisibility(View.GONE);
             }
 
+            holder.binding.cbProductCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int money = Integer.parseInt(holder.binding.tvQuantity.getText().toString()) * Integer.parseInt(holder.binding.tvProductFinalPrice.getText().toString().replace(".", ""));
+                    boolean check = holder.binding.cbProductCart.isChecked();
+                    if (check) {
+                        totalPrice = totalPrice + money;
+                    } else {
+                        totalPrice = totalPrice - money;
+                    }
+
+                    tvTotalPrice.setText(String.valueOf(totalPrice));
+                }
+            });
+
             holder.binding.fabDecrease.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -108,6 +153,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                                     public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<Cart> cartAPIResponse) {
                                         if (cartAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
                                             holder.binding.tvQuantity.setText(String.valueOf(quantity));
+
+                                            boolean check = holder.binding.cbProductCart.isChecked();
+
+                                            if (check) {
+                                                cartList.remove(holder.getLayoutPosition());
+                                                cartList.add(cart);
+
+                                                refreshTotalPrice();
+                                            }
                                         }
                                         loadingDialog.cancelLoading();
                                     }
@@ -157,6 +211,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                                     public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<Cart> cartAPIResponse) {
                                         if (cartAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
                                             holder.binding.tvQuantity.setText(String.valueOf(quantity));
+
+                                            boolean check = holder.binding.cbProductCart.isChecked();
+                                            if (check) {
+                                                cartList.remove(holder.getLayoutPosition());
+                                                cartList.add(cart);
+                                                refreshTotalPrice();
+                                            }
                                         }
                                         loadingDialog.cancelLoading();
                                     }
@@ -177,13 +238,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
             });
 
-            holder.binding.flProductInfo.setOnClickListener(new View.OnClickListener() {
+            holder.binding.sdvProductImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ProductDetailActivity.class);
                     intent.putExtra(Common.PRODUCT_ID, cartList.get(holder.getLayoutPosition()).getProductID());
                     context.startActivity(intent);
                 }
+            });
+
+            holder.binding.flProductInfo.setOnClickListener(view -> {
             });
 
             holder.binding.flDelete.setOnClickListener(new View.OnClickListener() {
@@ -219,6 +283,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
                                                         cartList.remove(holder.getLayoutPosition());
                                                         notifyItemRemoved(holder.getLayoutPosition());
+
+                                                        if (holder.binding.cbProductCart.isChecked()) {
+                                                            int money = Integer.parseInt(holder.binding.tvQuantity.getText().toString()) * Integer.parseInt(holder.binding.tvProductFinalPrice.getText().toString().replace(".", ""));
+                                                            totalPrice = totalPrice - money;
+                                                            tvTotalPrice.setText(String.valueOf(totalPrice));
+                                                        }
                                                     } else {
                                                         dialogInterface.dismiss();
                                                         loadingDialog.cancelLoading();
@@ -250,6 +320,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
             });
         }
+    }
+
+    private void refreshTotalPrice() {
+        int refreshTotalPrice = 0;
+        for (Cart cart : cartList) {
+            refreshTotalPrice = refreshTotalPrice + (cart.getQuantity() * Integer.parseInt(cart.getFinalPrice().replace(".", "")));
+        }
+        this.tvTotalPrice.setText(String.valueOf(refreshTotalPrice));
     }
 
     @Override
