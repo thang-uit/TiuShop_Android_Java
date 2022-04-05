@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -20,25 +22,25 @@ import com.thanguit.tiushop.adapter.SliderAdapter;
 import com.thanguit.tiushop.databinding.FragmentHomeBinding;
 import com.thanguit.tiushop.model.repository.Product;
 import com.thanguit.tiushop.model.repository.Slider;
-import com.thanguit.tiushop.presenter.GroupProductPresenter;
 import com.thanguit.tiushop.presenter.SliderPresenter;
-import com.thanguit.tiushop.presenter.listener.GroupProductListener;
 import com.thanguit.tiushop.presenter.listener.SliderListener;
-import com.thanguit.tiushop.util.Common;
+import com.thanguit.tiushop.viewmodel.ShopViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
-public class HomeFragment extends Fragment implements GroupProductListener.View, SliderListener.View {
+public class HomeFragment extends Fragment implements SliderListener.View {
     private static final String TAG = "HomeFragment";
     private FragmentHomeBinding binding;
 
     private static final int TIME = 5000;
 
     private SliderPresenter sliderPresenter;
-    private GroupProductPresenter groupProductPresenter;
+//    private GroupProductPresenter groupProductPresenter;
+
+    private ShopViewModel shopViewModel;
 
     private CompositeDisposable compositeDisposable;
 
@@ -70,7 +72,9 @@ public class HomeFragment extends Fragment implements GroupProductListener.View,
         handler = new Handler();
 
         sliderPresenter = new SliderPresenter(this);
-        groupProductPresenter = new GroupProductPresenter(this);
+//        groupProductPresenter = new GroupProductPresenter(this);
+
+        shopViewModel = new ViewModelProvider(requireActivity()).get(ShopViewModel.class);
 
         initializeViews();
         listeners();
@@ -100,8 +104,91 @@ public class HomeFragment extends Fragment implements GroupProductListener.View,
 
     private void initializeViews() {
         sliderPresenter.handleSlider(5);
-        groupProductPresenter.optionProduct(6, Common.NEW_PRODUCT);
-        groupProductPresenter.optionProduct(6, Common.DISCOUNT_PRODUCT);
+//        groupProductPresenter.optionProduct(6, Common.NEW_PRODUCT);
+//        groupProductPresenter.optionProduct(6, Common.DISCOUNT_PRODUCT);
+
+        initProduct();
+    }
+
+    private void initProduct() {
+        shopViewModel.getNewProduct(6).observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> productList) {
+                if (productList != null) {
+                    binding.rvNew.setHasFixedSize(true);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                    layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+                    binding.rvNew.setLayoutManager(layoutManager);
+                    binding.rvNew.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                        @Override
+                        public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                            int action = e.getAction();
+
+                            switch (action) {
+                                case MotionEvent.ACTION_DOWN:
+                                    rv.getParent().requestDisallowInterceptTouchEvent(true);
+                                    break;
+                            }
+                            return false;
+                        }
+
+                        @Override
+                        public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                        }
+
+                        @Override
+                        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+                        }
+                    });
+                    binding.rvNew.setAdapter(new ProductAdapter(getContext(), productList));
+                    binding.pbNew.setVisibility(View.GONE);
+                    binding.rvNew.setVisibility(View.VISIBLE);
+                } else {
+                    binding.rvNew.setVisibility(View.GONE);
+                    binding.pbNew.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        shopViewModel.getSaleProduct(6).observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> productList) {
+                if (productList != null) {
+                    binding.rvSale.setHasFixedSize(true);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                    layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+                    binding.rvSale.setLayoutManager(layoutManager);
+
+                    binding.rvSale.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                        @Override
+                        public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                            int action = e.getAction();
+
+                            switch (action) {
+                                case MotionEvent.ACTION_DOWN:
+                                    rv.getParent().requestDisallowInterceptTouchEvent(true);
+                                    break;
+                            }
+                            return false;
+                        }
+
+                        @Override
+                        public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                        }
+
+                        @Override
+                        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+                        }
+                    });
+                    binding.rvSale.setAdapter(new ProductAdapter(getContext(), productList));
+                    binding.pbSale.setVisibility(View.GONE);
+                    binding.rvSale.setVisibility(View.VISIBLE);
+                } else {
+                    binding.rvSale.setVisibility(View.GONE);
+                    binding.pbSale.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private void listeners() {
@@ -138,96 +225,95 @@ public class HomeFragment extends Fragment implements GroupProductListener.View,
             @Override
             public void onRefresh() {
                 sliderPresenter.handleSlider(5);
-                groupProductPresenter.optionProduct(6, Common.NEW_PRODUCT);
-                groupProductPresenter.optionProduct(6, Common.DISCOUNT_PRODUCT);
+                initProduct();
 
                 binding.srlRefresh.setRefreshing(false);
             }
         });
     }
 
-    @Override
-    public void newProductSuccess(List<Product> newProducts) {
-        if (newProducts != null) {
-            binding.rvNew.setHasFixedSize(true);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-            binding.rvNew.setLayoutManager(layoutManager);
-            binding.rvNew.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-                @Override
-                public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                    int action = e.getAction();
-
-                    switch (action) {
-                        case MotionEvent.ACTION_DOWN:
-                            rv.getParent().requestDisallowInterceptTouchEvent(true);
-                            break;
-                    }
-                    return false;
-                }
-
-                @Override
-                public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                }
-
-                @Override
-                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-                }
-            });
-            binding.rvNew.setAdapter(new ProductAdapter(getContext(), newProducts));
-            binding.pbNew.setVisibility(View.GONE);
-            binding.rvNew.setVisibility(View.VISIBLE);
-        } else {
-            binding.rvNew.setVisibility(View.GONE);
-            binding.pbNew.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void saleProductSuccess(List<Product> saleProducts) {
-        if (saleProducts != null) {
-            binding.rvSale.setHasFixedSize(true);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-            binding.rvSale.setLayoutManager(layoutManager);
-
-            binding.rvSale.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-                @Override
-                public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                    int action = e.getAction();
-
-                    switch (action) {
-                        case MotionEvent.ACTION_DOWN:
-                            rv.getParent().requestDisallowInterceptTouchEvent(true);
-                            break;
-                    }
-                    return false;
-                }
-
-                @Override
-                public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-
-                }
-
-                @Override
-                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-                }
-            });
-            binding.rvSale.setAdapter(new ProductAdapter(getContext(), saleProducts));
-            binding.pbSale.setVisibility(View.GONE);
-            binding.rvSale.setVisibility(View.VISIBLE);
-        } else {
-            binding.rvSale.setVisibility(View.GONE);
-            binding.pbSale.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void productFail(String error) {
-        binding.rvSale.setVisibility(View.GONE);
-        binding.pbSale.setVisibility(View.VISIBLE);
-    }
+//    @Override
+//    public void newProductSuccess(List<Product> newProducts) {
+//        if (newProducts != null) {
+//            binding.rvNew.setHasFixedSize(true);
+//            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+//            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+//            binding.rvNew.setLayoutManager(layoutManager);
+//            binding.rvNew.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+//                @Override
+//                public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+//                    int action = e.getAction();
+//
+//                    switch (action) {
+//                        case MotionEvent.ACTION_DOWN:
+//                            rv.getParent().requestDisallowInterceptTouchEvent(true);
+//                            break;
+//                    }
+//                    return false;
+//                }
+//
+//                @Override
+//                public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+//                }
+//
+//                @Override
+//                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+//                }
+//            });
+//            binding.rvNew.setAdapter(new ProductAdapter(getContext(), newProducts));
+//            binding.pbNew.setVisibility(View.GONE);
+//            binding.rvNew.setVisibility(View.VISIBLE);
+//        } else {
+//            binding.rvNew.setVisibility(View.GONE);
+//            binding.pbNew.setVisibility(View.VISIBLE);
+//        }
+//    }
+//
+//    @Override
+//    public void saleProductSuccess(List<Product> saleProducts) {
+//        if (saleProducts != null) {
+//            binding.rvSale.setHasFixedSize(true);
+//            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+//            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+//            binding.rvSale.setLayoutManager(layoutManager);
+//
+//            binding.rvSale.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+//                @Override
+//                public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+//                    int action = e.getAction();
+//
+//                    switch (action) {
+//                        case MotionEvent.ACTION_DOWN:
+//                            rv.getParent().requestDisallowInterceptTouchEvent(true);
+//                            break;
+//                    }
+//                    return false;
+//                }
+//
+//                @Override
+//                public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+//
+//                }
+//
+//                @Override
+//                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+//
+//                }
+//            });
+//            binding.rvSale.setAdapter(new ProductAdapter(getContext(), saleProducts));
+//            binding.pbSale.setVisibility(View.GONE);
+//            binding.rvSale.setVisibility(View.VISIBLE);
+//        } else {
+//            binding.rvSale.setVisibility(View.GONE);
+//            binding.pbSale.setVisibility(View.VISIBLE);
+//        }
+//    }
+//
+//    @Override
+//    public void productFail(String error) {
+//        binding.rvSale.setVisibility(View.GONE);
+//        binding.pbSale.setVisibility(View.VISIBLE);
+//    }
 
     @Override
     public void sliderSuccess(List<Slider> sliderList) {

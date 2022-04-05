@@ -1,4 +1,6 @@
 package com.thanguit.tiushop.viewmodel;
 
-public class CartModel {
+import androidx.lifecycle.ViewModel;
+
+public class CartModel extends ViewModel {
 }

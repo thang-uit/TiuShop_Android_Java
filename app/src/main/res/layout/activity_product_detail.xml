@@ -1,269 +1,276 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlRoot"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.ProductDetailActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.core.widget.NestedScrollView
+    <data>
+
+        <variable
+            name="view"
+            type="com.thanguit.tiushop.viewmodel.ShopViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rlRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/flAction"
-        android:fillViewport="true">
+        tools:context=".activities.ProductDetailActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/flAction"
+            android:fillViewport="true">
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/vpgProductImage"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="550dp"
-                android:background="?attr/color_main_2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabIndicatorImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@android:color/transparent"
-                android:elevation="0dp"
-                app:layout_constraintBottom_toBottomOf="@+id/vpgProductImage"
-                app:layout_constraintEnd_toEndOf="@+id/vpgProductImage"
-                app:layout_constraintStart_toStartOf="@+id/vpgProductImage"
-                app:tabBackground="@drawable/bg_indicator_intro_selector"
-                app:tabGravity="start"
-                app:tabIndicator="@null" />
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vpgProductImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="550dp"
+                    android:background="?attr/color_main_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/llSale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:background="?attr/color_main_5"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                app:layout_constraintBottom_toTopOf="@+id/llContent"
-                app:layout_constraintEnd_toEndOf="@+id/llContent">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/ic_sale_1" />
-
-                <TextView
-                    android:id="@+id/tvSale"
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabIndicatorImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/tvSale"
-                    android:textAlignment="center"
-                    android:textColor="?attr/color_main_3"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:color/transparent"
+                    android:elevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/vpgProductImage"
+                    app:layout_constraintEnd_toEndOf="@+id/vpgProductImage"
+                    app:layout_constraintStart_toStartOf="@+id/vpgProductImage"
+                    app:tabBackground="@drawable/bg_indicator_intro_selector"
+                    app:tabGravity="start"
+                    app:tabIndicator="@null" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:background="?attr/color_2"
-                android:elevation="10dp"
-                app:backgroundTint="?attr/color_2"
-                app:fabSize="mini"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_back"
-                app:tint="@null" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabCart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="?attr/color_2"
-                android:elevation="10dp"
-                app:backgroundTint="?attr/color_2"
-                app:fabSize="mini"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_cart"
-                app:tint="@null" />
-
-            <RelativeLayout
-                android:id="@+id/llContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_corner_gradient_20dp_topleft_topright"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tabIndicatorImage">
-
-                <TextView
-                    android:id="@+id/tvProductName"
+                <LinearLayout
+                    android:id="@+id/llSale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toStartOf="@+id/fabWishList"
-                    android:text="@string/tvName"
-                    android:textAlignment="textStart"
-                    android:textColor="?attr/color_3"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:layout_marginEnd="20dp"
+                    android:background="?attr/color_main_5"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/llContent"
+                    app:layout_constraintEnd_toEndOf="@+id/llContent">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_sale_1" />
+
+                    <TextView
+                        android:id="@+id/tvSale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{view.product.sale}"
+                        android:textAlignment="center"
+                        android:textColor="?attr/color_main_3"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabWishList"
+                    android:id="@+id/fabBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="?attr/color_2"
+                    android:elevation="10dp"
+                    app:backgroundTint="?attr/color_2"
+                    app:fabSize="mini"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_back"
+                    app:tint="@null" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabCart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:background="?attr/color_2"
                     android:elevation="10dp"
                     app:backgroundTint="?attr/color_2"
-                    app:fabSize="normal"
-                    app:srcCompat="@drawable/ic_wishlist"
+                    app:fabSize="mini"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_cart"
                     app:tint="@null" />
 
-
-                <LinearLayout
-                    android:id="@+id/llPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvProductName"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="marquee"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
-                        android:text="@string/tvPrice"
-                        android:textColor="?attr/color_7"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tvFinalPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
-                        android:text="@string/tvFinalPrice"
-                        android:textColor="?attr/color_main_5"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <Spinner
-                    android:id="@+id/snSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/fabWishList"
-                    android:layout_alignEnd="@+id/fabWishList"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_btn_gradient_corner_10dp"
-                    android:padding="10dp"
-                    android:textAlignment="center"
-                    android:tooltipText="Size" />
-
-                <TextView
-                    android:id="@+id/tvDescription"
+                <RelativeLayout
+                    android:id="@+id/llContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/snSize"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="10dp"
-                    android:textSize="14sp" />
+                    android:background="@drawable/bg_corner_gradient_20dp_topleft_topright"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tabIndicatorImage">
 
-            </RelativeLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                    <TextView
+                        android:id="@+id/tvProductName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toStartOf="@+id/fabWishList"
+                        android:text="@{view.product.name}"
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/color_3"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
 
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabWishList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="?attr/color_2"
+                        android:elevation="10dp"
+                        app:backgroundTint="?attr/color_2"
+                        app:fabSize="normal"
+                        app:tint="@null" />
 
-    <FrameLayout
-        android:id="@+id/flAction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+                    <LinearLayout
+                        android:id="@+id/llPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvProductName"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-        <LinearLayout
+                        <TextView
+                            android:id="@+id/tvPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:text="@{view.product.price}"
+                            android:textColor="?attr/color_7"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tvFinalPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:text="@{view.product.finalPrice}"
+                            android:textColor="?attr/color_main_5"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/snSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fabWishList"
+                        android:layout_alignEnd="@+id/fabWishList"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/bg_btn_gradient_corner_10dp"
+                        android:padding="10dp"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tvDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/snSize"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@{view.product.description}"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <FrameLayout
+            android:id="@+id/flAction"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/color_main_2"
-                android:gravity="center">
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabDecrease"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/color_main_1"
-                    android:elevation="5dp"
-                    app:backgroundTint="?attr/color_main_1"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_minus"
-                    app:tint="@null" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/color_main_2"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tvQuantity"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:maxWidth="30dp"
-                    android:text="@string/tvQuantity"
-                    android:textColor="?attr/color_3"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabDecrease"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/color_main_1"
+                        android:elevation="5dp"
+                        app:backgroundTint="?attr/color_main_1"
+                        app:fabSize="mini"
+                        app:srcCompat="@drawable/ic_minus"
+                        app:tint="@null" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabIncrease"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/color_main_1"
-                    android:elevation="5dp"
-                    app:backgroundTint="?attr/color_main_1"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_plus"
-                    app:tint="@null" />
+                    <TextView
+                        android:id="@+id/tvQuantity"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:maxWidth="30dp"
+                        android:text="@string/tvQuantity"
+                        android:textColor="?attr/color_3"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabIncrease"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/color_main_1"
+                        android:elevation="5dp"
+                        app:backgroundTint="?attr/color_main_1"
+                        app:fabSize="mini"
+                        app:srcCompat="@drawable/ic_plus"
+                        app:tint="@null" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddToCart"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_gradient"
+                    android:drawableEnd="@drawable/ic_cart_full"
+                    android:text="@string/btnAddToCart"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="?attr/color_main_4"
+                    app:backgroundTint="@null" />
             </LinearLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddToCart"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/bg_btn_gradient"
-                android:drawableEnd="@drawable/ic_cart_full"
-                android:text="@string/btnAddToCart"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textColor="?attr/color_main_4"
-                app:backgroundTint="@null" />
-        </LinearLayout>
-    </FrameLayout>
-</RelativeLayout>
+        </FrameLayout>
+    </RelativeLayout>
+</layout>
