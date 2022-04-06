@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Product {
     @SerializedName("productID")
@@ -205,5 +206,34 @@ public class Product {
 
     public void setBought(boolean bought) {
         isBought = bought;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return isWishList() == product.isWishList() && isBought() == product.isBought() && Objects.equals(getProductID(), product.getProductID()) && Objects.equals(getName(), product.getName()) && Objects.equals(getImage(), product.getImage()) && Objects.equals(getPrice(), product.getPrice()) && Objects.equals(getSale(), product.getSale()) && Objects.equals(getIsSale(), product.getIsSale()) && Objects.equals(getFinalPrice(), product.getFinalPrice()) && Objects.equals(getDescription(), product.getDescription()) && Objects.equals(getDate(), product.getDate()) && Objects.equals(getGender(), product.getGender()) && Objects.equals(getCategoryID(), product.getCategoryID()) && Objects.equals(getCollectionID(), product.getCollectionID()) && Objects.equals(getStock(), product.getStock());
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productID='" + productID + '\'' +
+                ", name='" + name + '\'' +
+                ", image=" + image +
+                ", price='" + price + '\'' +
+                ", sale='" + sale + '\'' +
+                ", isSale='" + isSale + '\'' +
+                ", finalPrice='" + finalPrice + '\'' +
+                ", description='" + description + '\'' +
+                ", date='" + date + '\'' +
+                ", gender='" + gender + '\'' +
+                ", categoryID='" + categoryID + '\'' +
+                ", collectionID='" + collectionID + '\'' +
+                ", stock='" + stock + '\'' +
+                ", isWishList=" + isWishList +
+                ", isBought=" + isBought +
+                '}';
     }
 }

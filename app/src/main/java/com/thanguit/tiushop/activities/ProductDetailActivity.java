@@ -4,39 +4,21 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.thanguit.tiushop.R;
-import com.thanguit.tiushop.base.MyToast;
 import com.thanguit.tiushop.base.SwipeToBackActivity;
 import com.thanguit.tiushop.databinding.ActivityProductDetailBinding;
 import com.thanguit.tiushop.local.DataLocalManager;
-import com.thanguit.tiushop.model.APIResponse;
-import com.thanguit.tiushop.model.repository.Cart;
-import com.thanguit.tiushop.model.repository.CartModel;
 import com.thanguit.tiushop.model.repository.Product;
-import com.thanguit.tiushop.retrofit.APIClient;
-import com.thanguit.tiushop.retrofit.DataClient;
 import com.thanguit.tiushop.util.Common;
 import com.thanguit.tiushop.util.LoadingDialog;
 import com.thanguit.tiushop.viewmodel.ShopViewModel;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.HashMap;
-import java.util.List;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ProductDetailActivity extends SwipeToBackActivity {
     private static final String TAG = "ProductDetailActivity";
@@ -91,19 +73,25 @@ public class ProductDetailActivity extends SwipeToBackActivity {
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.hasExtra(Common.PRODUCT_ID)) {
-//                loadingDialog.startLoading(this, false);
+                loadingDialog.startLoading(this, false);
                 String productID = intent.getStringExtra(Common.PRODUCT_ID);
 
                 //    private ProductDetailPresenter productDetailPresenter;
-                ShopViewModel shopViewModel = new ViewModelProvider(this).get(ShopViewModel.class);
+                ShopViewModel shopViewModel = new ViewModelProvider(ProductDetailActivity.this).get(ShopViewModel.class);
                 shopViewModel.getProductDetail(productID, DataLocalManager.getUserID()).observe(this, new Observer<Product>() {
                     @Override
                     public void onChanged(Product product) {
-//                        shopViewModel.setProduct(product);
-//                        loadingDialog.cancelLoading();
+                        activityProductDetailBinding.setShopViewModel(shopViewModel);
+                        loadingDialog.cancelLoading();
                     }
                 });
-                activityProductDetailBinding.setView(shopViewModel);
+
+                shopViewModel.handleQuantity().observe(this, new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer integer) {
+                        activityProductDetailBinding.tvQuantity.setText(String.valueOf(integer));
+                    }
+                });
 
 //                productDetailPresenter.handleProduct(intent.getStringExtra(Common.PRODUCT_ID), DataLocalManager.getUserID());
             }
@@ -184,31 +172,31 @@ public class ProductDetailActivity extends SwipeToBackActivity {
 //            }
 //        });
 
-        activityProductDetailBinding.fabDecrease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Integer.parseInt(activityProductDetailBinding.tvQuantity.getText().toString()) == 1) {
-                    quantity = 1;
-                } else {
-                    quantity = quantity - 1;
-                }
-
-                activityProductDetailBinding.tvQuantity.setText(String.valueOf(quantity));
-            }
-        });
-
-        activityProductDetailBinding.fabIncrease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Integer.parseInt(activityProductDetailBinding.tvQuantity.getText().toString()) == 10) {
-                    quantity = 10;
-                } else {
-                    quantity = quantity + 1;
-                }
-
-                activityProductDetailBinding.tvQuantity.setText(String.valueOf(quantity));
-            }
-        });
+//        activityProductDetailBinding.fabDecrease.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (Integer.parseInt(activityProductDetailBinding.tvQuantity.getText().toString()) == 1) {
+//                    quantity = 1;
+//                } else {
+//                    quantity = quantity - 1;
+//                }
+//
+//                activityProductDetailBinding.tvQuantity.setText(String.valueOf(quantity));
+//            }
+//        });
+//
+//        activityProductDetailBinding.fabIncrease.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (Integer.parseInt(activityProductDetailBinding.tvQuantity.getText().toString()) == 10) {
+//                    quantity = 10;
+//                } else {
+//                    quantity = quantity + 1;
+//                }
+//
+//                activityProductDetailBinding.tvQuantity.setText(String.valueOf(quantity));
+//            }
+//        });
 
 //        binding.btnAddToCart.setOnClickListener(new View.OnClickListener() {
 //            @Override

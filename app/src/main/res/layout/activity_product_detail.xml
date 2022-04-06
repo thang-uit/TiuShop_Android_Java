@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
-            name="view"
+            name="shopViewModel"
             type="com.thanguit.tiushop.viewmodel.ShopViewModel" />
+
     </data>
 
     <RelativeLayout
@@ -33,7 +34,8 @@
                     android:background="?attr/color_main_2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    adapter="@{shopViewModel.product.image}"/>
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabIndicatorImage"
@@ -47,7 +49,8 @@
                     app:layout_constraintStart_toStartOf="@+id/vpgProductImage"
                     app:tabBackground="@drawable/bg_indicator_intro_selector"
                     app:tabGravity="start"
-                    app:tabIndicator="@null" />
+                    app:tabIndicator="@null"
+                    app:setupWithViewPager="@{vpgProductImage}"/>
 
                 <LinearLayout
                     android:id="@+id/llSale"
@@ -57,6 +60,7 @@
                     android:background="?attr/color_main_5"
                     android:orientation="horizontal"
                     android:padding="5dp"
+                    android:visibility="@{shopViewModel.product.isSale.equals(`True`) ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toTopOf="@+id/llContent"
                     app:layout_constraintEnd_toEndOf="@+id/llContent">
 
@@ -71,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{view.product.sale}"
+                        android:text="@{shopViewModel.product.sale}"
                         android:textAlignment="center"
                         android:textColor="?attr/color_main_3"
                         android:textSize="14sp" />
@@ -125,7 +129,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_toStartOf="@+id/fabWishList"
-                        android:text="@{view.product.name}"
+                        android:text="@{shopViewModel.product.name}"
                         android:textAlignment="textStart"
                         android:textColor="?attr/color_3"
                         android:textSize="22sp"
@@ -140,8 +144,10 @@
                         android:layout_marginEnd="10dp"
                         android:background="?attr/color_2"
                         android:elevation="10dp"
+                        android:src="@{shopViewModel.product.wishList ? @drawable/ic_wishlist_full : @drawable/ic_wishlist}"
                         app:backgroundTint="?attr/color_2"
                         app:fabSize="normal"
+
                         app:tint="@null" />
 
                     <LinearLayout
@@ -162,9 +168,10 @@
                             android:marqueeRepeatLimit="marquee_forever"
                             android:scrollHorizontally="true"
                             android:singleLine="true"
-                            android:text="@{view.product.price}"
+                            android:text="@{shopViewModel.product.price}"
                             android:textColor="?attr/color_7"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:visibility="@{shopViewModel.product.isSale.equals(`True`) ? View.VISIBLE : View.GONE}"/>
 
                         <TextView
                             android:id="@+id/tvFinalPrice"
@@ -173,7 +180,7 @@
                             android:marqueeRepeatLimit="marquee_forever"
                             android:scrollHorizontally="true"
                             android:singleLine="true"
-                            android:text="@{view.product.finalPrice}"
+                            android:text="@{shopViewModel.product.finalPrice}"
                             android:textColor="?attr/color_main_5"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -198,7 +205,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="10dp"
-                        android:text="@{view.product.description}"
+                        android:text="@{shopViewModel.product.description}"
                         android:textSize="14sp" />
 
                 </RelativeLayout>
@@ -233,7 +240,9 @@
                         app:backgroundTint="?attr/color_main_1"
                         app:fabSize="mini"
                         app:srcCompat="@drawable/ic_minus"
-                        app:tint="@null" />
+                        android:onClick="@={(view)-> shopViewModel.decrease()}"
+                        app:tint="@null"
+                        tools:ignore="UsingOnClickInXml" />
 
                     <TextView
                         android:id="@+id/tvQuantity"
@@ -255,7 +264,9 @@
                         app:backgroundTint="?attr/color_main_1"
                         app:fabSize="mini"
                         app:srcCompat="@drawable/ic_plus"
-                        app:tint="@null" />
+                        android:onClick="@={(view)-> shopViewModel.increase()}"
+                        app:tint="@null"
+                        tools:ignore="UsingOnClickInXml" />
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton

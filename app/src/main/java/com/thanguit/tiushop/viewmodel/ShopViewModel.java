@@ -2,11 +2,15 @@ package com.thanguit.tiushop.viewmodel;
 
 import android.util.Log;
 
+import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.thanguit.tiushop.R;
+import com.thanguit.tiushop.adapter.ImageProductDetailAdapter;
 import com.thanguit.tiushop.application.MyApplication;
 import com.thanguit.tiushop.model.APIResponse;
 import com.thanguit.tiushop.model.repository.Product;
@@ -27,6 +31,16 @@ public class ShopViewModel extends ViewModel {
     private static final String TAG = "ShopViewModel";
     private MutableLiveData<List<Product>> newProducts, saleProducts;
     private MutableLiveData<Product> productDetail;
+
+    private MutableLiveData<Integer> quantity;
+
+    public LiveData<Integer> handleQuantity(){
+        if(quantity == null){
+            quantity = new MutableLiveData<>();
+            quantity.setValue(1);
+        }
+        return quantity;
+    }
 
     public LiveData<List<Product>> getNewProduct(int amount) {
         if (newProducts == null) {
@@ -110,7 +124,7 @@ public class ShopViewModel extends ViewModel {
                     public void onNext(@NonNull APIResponse<Product> productAPIResponse) {
                         if (productAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
                             productDetail.setValue(productAPIResponse.getData());
-                            Log.d(TAG, productDetail.toString());
+                            Log.d(TAG, productAPIResponse.getData().getName());
                         }
                     }
 
@@ -123,5 +137,35 @@ public class ShopViewModel extends ViewModel {
                     public void onComplete() {
                     }
                 });
+    }
+
+    @BindingAdapter("adapter")
+    public static void setViewPagerFragments(ViewPager viewPager, List<String> images){
+        viewPager.setAdapter(new ImageProductDetailAdapter(images));
+    }
+
+    @BindingAdapter("setUpWithViewpager")
+    public static void setUpWithViewpager(final TabLayout tabLayout, ViewPager viewPager) {
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public void addToWishList(){
+
+    }
+
+    public void decrease(){
+        if (quantity.getValue().intValue() == 1) {
+            quantity.setValue(1);
+        } else {
+            quantity.setValue(quantity.getValue().intValue() - 1);
+        }
+    }
+
+    public void increase(){
+        if (quantity.getValue().intValue() == 10) {
+            quantity.setValue(10);
+        } else {
+            quantity.setValue(quantity.getValue().intValue() + 1);
+        }
     }
 }
