@@ -4,21 +4,27 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.thanguit.tiushop.R;
+import com.thanguit.tiushop.base.MyToast;
 import com.thanguit.tiushop.base.SwipeToBackActivity;
 import com.thanguit.tiushop.databinding.ActivityProductDetailBinding;
 import com.thanguit.tiushop.local.DataLocalManager;
+import com.thanguit.tiushop.model.repository.Cart;
 import com.thanguit.tiushop.model.repository.Product;
 import com.thanguit.tiushop.util.Common;
 import com.thanguit.tiushop.util.LoadingDialog;
+import com.thanguit.tiushop.viewmodel.CartViewModel;
 import com.thanguit.tiushop.viewmodel.ShopViewModel;
+
+import java.util.List;
 
 public class ProductDetailActivity extends SwipeToBackActivity {
     private static final String TAG = "ProductDetailActivity";
@@ -26,9 +32,7 @@ public class ProductDetailActivity extends SwipeToBackActivity {
 
     private LoadingDialog loadingDialog;
 
-    private int quantity = 1;
-
-    private String[] size = {"M", "L", "XL", "XXL", "XXL"};
+    private int amount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,17 @@ public class ProductDetailActivity extends SwipeToBackActivity {
 
                 //    private ProductDetailPresenter productDetailPresenter;
                 ShopViewModel shopViewModel = new ViewModelProvider(ProductDetailActivity.this).get(ShopViewModel.class);
+                CartViewModel cartViewModel = new ViewModelProvider(ProductDetailActivity.this).get(CartViewModel.class);
+
+                cartViewModel.getCart(DataLocalManager.getUserID()).observe(ProductDetailActivity.this, new Observer<List<Cart>>() {
+                    @Override
+                    public void onChanged(List<Cart> cartList) {
+                        if(cartList != null) {
+                            amount = cartList.size();
+                        }
+                    }
+                });
+
                 shopViewModel.getProductDetail(productID, DataLocalManager.getUserID()).observe(this, new Observer<Product>() {
                     @Override
                     public void onChanged(Product product) {
@@ -93,14 +108,58 @@ public class ProductDetailActivity extends SwipeToBackActivity {
                     }
                 });
 
+                shopViewModel.handleStatusWishList().observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean status) {
+                        if(status != null) {
+                            if(status) {
+                                activityProductDetailBinding.fabWishList.setImageResource(R.drawable.ic_wishlist_full);
+                                MyToast.makeText(ProductDetailActivity.this, MyToast.TYPE.SUCCESS, getString(R.string.toast2), Toast.LENGTH_LONG).show();
+                            } else {
+                                activityProductDetailBinding.fabWishList.setImageResource(R.drawable.ic_wishlist);
+                                MyToast.makeText(ProductDetailActivity.this, MyToast.TYPE.SUCCESS, getString(R.string.toast3), Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Log.d(TAG, "Status Add to wishlist null");
+                        }
+                    }
+                });
+
+                shopViewModel.handleStatusAddToCart().observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean status) {
+                        if(status != null) {
+                            if(status) {
+
+                                CartViewModel cartViewModel = new ViewModelProvider(ProductDetailActivity.this).get(CartViewModel.class);
+                                cartViewModel.getCart(DataLocalManager.getUserID()).observe(ProductDetailActivity.this, new Observer<List<Cart>>() {
+                                    @Override
+                                    public void onChanged(List<Cart> cartList) {
+                                        if(cartList != null) {
+                                            amount = cartList.size();
+                                        }
+                                    }
+                                });
+
+                                MyToast.makeText(ProductDetailActivity.this, MyToast.TYPE.SUCCESS, getString(R.string.toast4), Toast.LENGTH_LONG).show();
+                            } else {
+                                MyToast.makeText(ProductDetailActivity.this, MyToast.TYPE.ERROR, getString(R.string.tvError0), Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Log.d(TAG, "Status Add to cart null");
+                        }
+                    }
+                });
+
 //                productDetailPresenter.handleProduct(intent.getStringExtra(Common.PRODUCT_ID), DataLocalManager.getUserID());
             }
         }
 
-        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.size, android.R.layout.simple_spinner_item);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        activityProductDetailBinding.snSize.setAdapter(arrayAdapter);
+//        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.size, android.R.layout.simple_spinner_item);
+//        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        activityProductDetailBinding.snSize.setAdapter(arrayAdapter);
 
+        activityProductDetailBinding.tvAmount.setText(String.valueOf(amount));
         activityProductDetailBinding.tvPrice.setPaintFlags(activityProductDetailBinding.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     }
 

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import okhttp3.RequestBody;
 
 public class Common {
-    public static final String ipUrl = "http://192.168.1.51";
+    public static final String ipUrl = "http://192.168.1.26";
 //    public static final String ipUrl = "http://192.168.0.212";
 
     // https://mkyong.com/regular-expressions/how-to-validate-username-with-regular-expression/

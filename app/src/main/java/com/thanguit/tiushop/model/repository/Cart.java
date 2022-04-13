@@ -1,6 +1,7 @@
 package com.thanguit.tiushop.model.repository;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -168,4 +169,16 @@ public class Cart {
         Cart cart = (Cart) o;
         return getQuantity() == cart.getQuantity() && getCartID().equals(cart.getCartID()) && getProductID().equals(cart.getProductID()) && getName().equals(cart.getName()) && getImage().equals(cart.getImage()) && getPrice().equals(cart.getPrice()) && getSale().equals(cart.getSale()) && getIsSale().equals(cart.getIsSale()) && getFinalPrice().equals(cart.getFinalPrice()) && getSize().equals(cart.getSize());
     }
+
+//    public static DiffUtil.ItemCallback<Cart> itemCallback = new DiffUtil.ItemCallback<Cart>() {
+//        @Override
+//        public boolean areItemsTheSame(@NonNull Cart oldItem, @NonNull Cart newItem) {
+//            return oldItem.getProductID().equals(newItem.productID);
+//        }
+//
+//        @Override
+//        public boolean areContentsTheSame(@NonNull Cart oldItem, @NonNull Cart newItem) {
+//            return oldItem.equals(newItem);
+//        }
+//    };
 }

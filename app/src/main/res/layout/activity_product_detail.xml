@@ -96,20 +96,49 @@
                     app:srcCompat="@drawable/ic_back"
                     app:tint="@null" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabCart"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cslCart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:background="?attr/color_2"
-                    android:elevation="10dp"
-                    app:backgroundTint="?attr/color_2"
-                    app:fabSize="mini"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_cart"
-                    app:tint="@null" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabCart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/color_2"
+                        android:elevation="10dp"
+                        app:backgroundTint="?attr/color_2"
+                        app:fabSize="mini"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_cart"
+                        app:tint="@null" />
+
+                    <LinearLayout
+                        android:id="@+id/llAmount"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:background="@drawable/bg_amount_cart_circle"
+                        android:gravity="center"
+                        app:layout_constraintEnd_toEndOf="@+id/fabCart"
+                        app:layout_constraintTop_toTopOf="@+id/fabCart">
+
+                        <TextView
+                            android:id="@+id/tvAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/tvAmount"
+                            android:textColor="?attr/color_main_3"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:id="@+id/llContent"
@@ -144,10 +173,10 @@
                         android:layout_marginEnd="10dp"
                         android:background="?attr/color_2"
                         android:elevation="10dp"
+                        android:onClick="@{() -> shopViewModel.addToWishList(shopViewModel.product)}"
                         android:src="@{shopViewModel.product.wishList ? @drawable/ic_wishlist_full : @drawable/ic_wishlist}"
                         app:backgroundTint="?attr/color_2"
                         app:fabSize="normal"
-
                         app:tint="@null" />
 
                     <LinearLayout
@@ -194,6 +223,8 @@
                         android:layout_alignEnd="@+id/fabWishList"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/bg_btn_gradient_corner_10dp"
+                        android:entries="@array/size"
+                        android:onItemSelected="@{(parent,view,pos,id)->shopViewModel.onSelectItem(parent,view,pos,id)}"
                         android:padding="10dp"
                         android:textAlignment="center" />
 
@@ -240,7 +271,7 @@
                         app:backgroundTint="?attr/color_main_1"
                         app:fabSize="mini"
                         app:srcCompat="@drawable/ic_minus"
-                        android:onClick="@={(view)-> shopViewModel.decrease()}"
+                        android:onClick="@{() -> shopViewModel.decrease()}"
                         app:tint="@null"
                         tools:ignore="UsingOnClickInXml" />
 
@@ -264,7 +295,7 @@
                         app:backgroundTint="?attr/color_main_1"
                         app:fabSize="mini"
                         app:srcCompat="@drawable/ic_plus"
-                        android:onClick="@={(view)-> shopViewModel.increase()}"
+                        android:onClick="@{() -> shopViewModel.increase()}"
                         app:tint="@null"
                         tools:ignore="UsingOnClickInXml" />
                 </LinearLayout>
@@ -280,6 +311,7 @@
                     android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textColor="?attr/color_main_4"
+                    android:onClick="@{() -> shopViewModel.addToCart(shopViewModel.product)}"
                     app:backgroundTint="@null" />
             </LinearLayout>
         </FrameLayout>

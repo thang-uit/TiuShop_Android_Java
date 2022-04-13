@@ -3,6 +3,8 @@ package com.thanguit.tiushop.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -14,24 +16,27 @@ import com.thanguit.tiushop.local.DataLocalManager;
 import com.thanguit.tiushop.model.repository.Cart;
 import com.thanguit.tiushop.presenter.CartPresenter;
 import com.thanguit.tiushop.presenter.listener.CartListener;
+import com.thanguit.tiushop.viewmodel.CartViewModel;
 
 import java.util.List;
 
-public class CartActivity extends SwipeToBackActivity implements CartListener.View {
+public class CartActivity extends SwipeToBackActivity {
     private static final String TAG = "CartActivity";
-    private ActivityCartBinding binding;
+    private ActivityCartBinding activityCartBinding;
 
-    private CartPresenter cartPresenter;
+//    private CartPresenter cartPresenter;
+
+    private CartViewModel cartViewModel;
     private CartAdapter cartAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityCartBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        activityCartBinding = ActivityCartBinding.inflate(getLayoutInflater());
+        setContentView(activityCartBinding.getRoot());
 
         DataLocalManager.init(this);
-        cartPresenter = new CartPresenter(this);
+//        cartPresenter = new CartPresenter(this);
 
         initializeViews();
         listeners();
@@ -45,52 +50,77 @@ public class CartActivity extends SwipeToBackActivity implements CartListener.Vi
     }
 
     private void initializeViews() {
-        cartPresenter.handleCart(DataLocalManager.getUserID());
+//        cartPresenter.handleCart(DataLocalManager.getUserID());
+
+        cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        cartViewModel.getCart(DataLocalManager.getUserID()).observe(this, new Observer<List<Cart>>() {
+            @Override
+            public void onChanged(List<Cart> cartList) {
+                if (cartList != null) {
+                    if (cartList.size() > 0) {
+                        activityCartBinding.rvCart.setHasFixedSize(true);
+                        activityCartBinding.rvCart.setLayoutManager(new LinearLayoutManager(CartActivity.this));
+                        activityCartBinding.rvCart.addItemDecoration(new DividerItemDecoration(CartActivity.this, DividerItemDecoration.VERTICAL));
+                        cartAdapter = new CartAdapter(CartActivity.this, cartList);
+                        activityCartBinding.rvCart.setAdapter(cartAdapter);
+
+                        activityCartBinding.lavAnimation.setVisibility(View.GONE);
+                        activityCartBinding.rvCart.setVisibility(View.VISIBLE);
+                    } else {
+                        activityCartBinding.rvCart.setVisibility(View.GONE);
+                        activityCartBinding.lavAnimation.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    activityCartBinding.rvCart.setVisibility(View.GONE);
+                    activityCartBinding.lavAnimation.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private void listeners() {
-        binding.tbCart.setNavigationOnClickListener(view -> finish());
+        activityCartBinding.tbCart.setNavigationOnClickListener(view -> finish());
 
-        binding.srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        activityCartBinding.srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 //                cartPresenter.handleCart(DataLocalManager.getUserID());
-                binding.srlRefresh.setRefreshing(false);
+                activityCartBinding.srlRefresh.setRefreshing(false);
             }
         });
 
-        binding.cbAll.setOnClickListener(new View.OnClickListener() {
+        activityCartBinding.cbAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             }
         });
     }
 
-    @Override
-    public void cartSuccess(List<Cart> cartList) {
-        if (cartList != null) {
-            if (cartList.size() > 0) {
-                binding.rvCart.setHasFixedSize(true);
-                binding.rvCart.setLayoutManager(new LinearLayoutManager(this));
-                binding.rvCart.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-                cartAdapter = new CartAdapter(this, cartList, binding.tvTotalPrice, false);
-                binding.rvCart.setAdapter(cartAdapter);
-
-                binding.lavAnimation.setVisibility(View.GONE);
-                binding.rvCart.setVisibility(View.VISIBLE);
-            } else {
-                binding.rvCart.setVisibility(View.GONE);
-                binding.lavAnimation.setVisibility(View.VISIBLE);
-            }
-        } else {
-            binding.rvCart.setVisibility(View.GONE);
-            binding.lavAnimation.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void cartFail(String error) {
-        binding.rvCart.setVisibility(View.GONE);
-        binding.lavAnimation.setVisibility(View.VISIBLE);
-    }
+//    @Override
+//    public void cartSuccess(List<Cart> cartList) {
+//        if (cartList != null) {
+//            if (cartList.size() > 0) {
+//                activityCartBinding.rvCart.setHasFixedSize(true);
+//                activityCartBinding.rvCart.setLayoutManager(new LinearLayoutManager(this));
+//                activityCartBinding.rvCart.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//                cartAdapter = new CartAdapter(this, cartList, activityCartBinding.tvTotalPrice, false);
+//                activityCartBinding.rvCart.setAdapter(cartAdapter);
+//
+//                activityCartBinding.lavAnimation.setVisibility(View.GONE);
+//                activityCartBinding.rvCart.setVisibility(View.VISIBLE);
+//            } else {
+//                activityCartBinding.rvCart.setVisibility(View.GONE);
+//                activityCartBinding.lavAnimation.setVisibility(View.VISIBLE);
+//            }
+//        } else {
+//            activityCartBinding.rvCart.setVisibility(View.GONE);
+//            activityCartBinding.lavAnimation.setVisibility(View.VISIBLE);
+//        }
+//    }
+//
+//    @Override
+//    public void cartFail(String error) {
+//        activityCartBinding.rvCart.setVisibility(View.GONE);
+//        activityCartBinding.lavAnimation.setVisibility(View.VISIBLE);
+//    }
 }

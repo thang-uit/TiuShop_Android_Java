@@ -76,6 +76,7 @@
     <string name="tvAlertButton2">Cancel</string>
     <string name="tvAlertButton3">Delete</string>
     <string name="tvAmount">0</string>
+    <string name="tvAmountOverSize">99+</string>
     <!-- MainActivity screen -->
 
     <!-- Fragment Home -->

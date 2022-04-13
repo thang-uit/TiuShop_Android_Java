@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.ViewBinderHelper;
@@ -35,49 +37,48 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+//public class CartAdapter extends ListAdapter<Cart, CartAdapter.ViewHolder> {
+//    public CartAdapter() {
+//        super(Cart.itemCallback);
+//    }
+//
+//    @NonNull
+//    @Override
+//    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        ItemCartBinding itemCartBinding = ItemCartBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+//        return new ViewHolder(itemCartBinding);
+//    }
+//
+//    @Override
+//    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+//        holder.itemCartBinding.setCartViewModel();
+//    }
+//
+//    static class ViewHolder extends RecyclerView.ViewHolder {
+//        ItemCartBinding itemCartBinding;
+//
+//        public ViewHolder(@NonNull ItemCartBinding itemCartBinding) {
+//            super(itemCartBinding.getRoot());
+//
+//            this.itemCartBinding = itemCartBinding;
+//
+//            itemCartBinding.tvProductName.setSelected(true);
+//            itemCartBinding.tvProductPrice.setPaintFlags(itemCartBinding.tvProductPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//        }
+//    }
+//}
+
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private static final String TAG = "CartAdapter";
 
-    private int quantity = 0;
-    private int totalPrice = 0;
-
     private Context context;
     private List<Cart> cartList;
-    private TextView tvTotalPrice;
-    private boolean isCheckAll = false;
-
-    private OnClickCheckOutListener onClickCheckOutListener;
 
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-//    public CartAdapter(Context context, List<Cart> cartList) {
-//        this.context = context;
-//        this.cartList = cartList;
-//    }
-
-    public CartAdapter(Context context, List<Cart> cartList, TextView tvTotalPrice, boolean isCheckAll) {
+    public CartAdapter(Context context, List<Cart> cartList) {
         this.context = context;
         this.cartList = cartList;
-        this.tvTotalPrice = tvTotalPrice;
-        this.isCheckAll = isCheckAll;
-
-//        try {
-//            this.onClickCheckOutListener = ((OnClickCheckOutListener) context);
-//        } catch (Exception e) {
-//            throw new ClassCastException(e.getMessage());
-//        }
-    }
-
-    public boolean isCheckAll() {
-        return isCheckAll;
-    }
-
-    public void setCheckAll(boolean checkAll) {
-        isCheckAll = checkAll;
-    }
-
-    interface OnClickCheckOutListener {
-        void onCheckOutListener(List<Cart> cartList);
     }
 
     @NonNull
@@ -109,134 +110,134 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 holder.binding.llSale.setVisibility(View.GONE);
             }
 
-            holder.binding.cbProductCart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int money = Integer.parseInt(holder.binding.tvQuantity.getText().toString()) * Integer.parseInt(holder.binding.tvProductFinalPrice.getText().toString().replace(".", ""));
-                    boolean check = holder.binding.cbProductCart.isChecked();
-                    if (check) {
-                        totalPrice = totalPrice + money;
-                    } else {
-                        totalPrice = totalPrice - money;
-                    }
+//            holder.binding.cbProductCart.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    int money = Integer.parseInt(holder.binding.tvQuantity.getText().toString()) * Integer.parseInt(holder.binding.tvProductFinalPrice.getText().toString().replace(".", ""));
+//                    boolean check = holder.binding.cbProductCart.isChecked();
+//                    if (check) {
+//                        totalPrice = totalPrice + money;
+//                    } else {
+//                        totalPrice = totalPrice - money;
+//                    }
+//
+//                    tvTotalPrice.setText(String.valueOf(totalPrice));
+//                }
+//            });
 
-                    tvTotalPrice.setText(String.valueOf(totalPrice));
-                }
-            });
+//            holder.binding.fabDecrease.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    quantity = Integer.parseInt(holder.binding.tvQuantity.getText().toString());
+//
+//                    if (Integer.parseInt(holder.binding.tvQuantity.getText().toString()) == 1) {
+//                        quantity = 1;
+//                    } else {
+//                        quantity = quantity - 1;
+//
+//                        loadingDialog.startLoading(context, false);
+//
+//                        HashMap<String, Object> jsonBody = new HashMap<>();
+//                        jsonBody.put("cartID", cartList.get(holder.getLayoutPosition()).getCartID());
+//                        jsonBody.put("quantity", quantity);
+//
+//                        DataClient dataClient = APIClient.getData();
+//                        dataClient.updateCart(Common.getRequestBody(jsonBody))
+//                                .subscribeOn(Schedulers.io())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribe(new Observer<APIResponse<Cart>>() {
+//                                    @Override
+//                                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+//                                    }
+//
+//                                    @Override
+//                                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<Cart> cartAPIResponse) {
+//                                        if (cartAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
+//                                            holder.binding.tvQuantity.setText(String.valueOf(quantity));
+//
+//                                            boolean check = holder.binding.cbProductCart.isChecked();
+//
+//                                            if (check) {
+//                                                cartList.remove(holder.getLayoutPosition());
+//                                                cartList.add(cart);
+//
+//                                                refreshTotalPrice();
+//                                            }
+//                                        }
+//                                        loadingDialog.cancelLoading();
+//                                    }
+//
+//                                    @Override
+//                                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+//                                        Log.d(TAG, e.getMessage());
+//
+//                                        loadingDialog.cancelLoading();
+//                                        MyToast.makeText(context, MyToast.TYPE.ERROR, context.getString(R.string.tvError0), Toast.LENGTH_LONG).show();
+//                                    }
+//
+//                                    @Override
+//                                    public void onComplete() {
+//                                    }
+//                                });
+//                    }
+//                }
+//            });
 
-            holder.binding.fabDecrease.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    quantity = Integer.parseInt(holder.binding.tvQuantity.getText().toString());
-
-                    if (Integer.parseInt(holder.binding.tvQuantity.getText().toString()) == 1) {
-                        quantity = 1;
-                    } else {
-                        quantity = quantity - 1;
-
-                        loadingDialog.startLoading(context, false);
-
-                        HashMap<String, Object> jsonBody = new HashMap<>();
-                        jsonBody.put("cartID", cartList.get(holder.getLayoutPosition()).getCartID());
-                        jsonBody.put("quantity", quantity);
-
-                        DataClient dataClient = APIClient.getData();
-                        dataClient.updateCart(Common.getRequestBody(jsonBody))
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Observer<APIResponse<Cart>>() {
-                                    @Override
-                                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                                    }
-
-                                    @Override
-                                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<Cart> cartAPIResponse) {
-                                        if (cartAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
-                                            holder.binding.tvQuantity.setText(String.valueOf(quantity));
-
-                                            boolean check = holder.binding.cbProductCart.isChecked();
-
-                                            if (check) {
-                                                cartList.remove(holder.getLayoutPosition());
-                                                cartList.add(cart);
-
-                                                refreshTotalPrice();
-                                            }
-                                        }
-                                        loadingDialog.cancelLoading();
-                                    }
-
-                                    @Override
-                                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                                        Log.d(TAG, e.getMessage());
-
-                                        loadingDialog.cancelLoading();
-                                        MyToast.makeText(context, MyToast.TYPE.ERROR, context.getString(R.string.tvError0), Toast.LENGTH_LONG).show();
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-                                    }
-                                });
-                    }
-                }
-            });
-
-            holder.binding.fabIncrease.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    quantity = Integer.parseInt(holder.binding.tvQuantity.getText().toString());
-
-                    if (Integer.parseInt(holder.binding.tvQuantity.getText().toString()) == 10) {
-                        quantity = 10;
-                    } else {
-                        quantity = quantity + 1;
-
-                        loadingDialog.startLoading(context, false);
-
-                        HashMap<String, Object> jsonBody = new HashMap<>();
-                        jsonBody.put("cartID", cartList.get(holder.getLayoutPosition()).getCartID());
-                        jsonBody.put("quantity", quantity);
-
-                        DataClient dataClient = APIClient.getData();
-                        dataClient.updateCart(Common.getRequestBody(jsonBody))
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Observer<APIResponse<Cart>>() {
-                                    @Override
-                                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                                    }
-
-                                    @Override
-                                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<Cart> cartAPIResponse) {
-                                        if (cartAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
-                                            holder.binding.tvQuantity.setText(String.valueOf(quantity));
-
-                                            boolean check = holder.binding.cbProductCart.isChecked();
-                                            if (check) {
-                                                cartList.remove(holder.getLayoutPosition());
-                                                cartList.add(cart);
-                                                refreshTotalPrice();
-                                            }
-                                        }
-                                        loadingDialog.cancelLoading();
-                                    }
-
-                                    @Override
-                                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                                        Log.d(TAG, e.getMessage());
-
-                                        loadingDialog.cancelLoading();
-                                        MyToast.makeText(context, MyToast.TYPE.ERROR, context.getString(R.string.tvError0), Toast.LENGTH_LONG).show();
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-                                    }
-                                });
-                    }
-                }
-            });
+//            holder.binding.fabIncrease.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    quantity = Integer.parseInt(holder.binding.tvQuantity.getText().toString());
+//
+//                    if (Integer.parseInt(holder.binding.tvQuantity.getText().toString()) == 10) {
+//                        quantity = 10;
+//                    } else {
+//                        quantity = quantity + 1;
+//
+//                        loadingDialog.startLoading(context, false);
+//
+//                        HashMap<String, Object> jsonBody = new HashMap<>();
+//                        jsonBody.put("cartID", cartList.get(holder.getLayoutPosition()).getCartID());
+//                        jsonBody.put("quantity", quantity);
+//
+//                        DataClient dataClient = APIClient.getData();
+//                        dataClient.updateCart(Common.getRequestBody(jsonBody))
+//                                .subscribeOn(Schedulers.io())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribe(new Observer<APIResponse<Cart>>() {
+//                                    @Override
+//                                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+//                                    }
+//
+//                                    @Override
+//                                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<Cart> cartAPIResponse) {
+//                                        if (cartAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
+//                                            holder.binding.tvQuantity.setText(String.valueOf(quantity));
+//
+//                                            boolean check = holder.binding.cbProductCart.isChecked();
+//                                            if (check) {
+//                                                cartList.remove(holder.getLayoutPosition());
+//                                                cartList.add(cart);
+//                                                refreshTotalPrice();
+//                                            }
+//                                        }
+//                                        loadingDialog.cancelLoading();
+//                                    }
+//
+//                                    @Override
+//                                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+//                                        Log.d(TAG, e.getMessage());
+//
+//                                        loadingDialog.cancelLoading();
+//                                        MyToast.makeText(context, MyToast.TYPE.ERROR, context.getString(R.string.tvError0), Toast.LENGTH_LONG).show();
+//                                    }
+//
+//                                    @Override
+//                                    public void onComplete() {
+//                                    }
+//                                });
+//                    }
+//                }
+//            });
 
             holder.binding.sdvProductImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -250,85 +251,85 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             holder.binding.flProductInfo.setOnClickListener(view -> {
             });
 
-            holder.binding.flDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    new AlertDialog.Builder(context)
-                            .setTitle(context.getString(R.string.tvAlertTitle))
-                            .setMessage(context.getString(R.string.tvAlertMessage1))
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setCancelable(true)
-                            .setPositiveButton(context.getString(R.string.tvAlertButton3), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    loadingDialog.startLoading(context, false);
-
-                                    HashMap<String, Object> jsonBody = new HashMap<>();
-                                    jsonBody.put("cartID", cartList.get(holder.getLayoutPosition()).getCartID());
-
-                                    DataClient dataClient = APIClient.getData();
-                                    dataClient.deleteCart(Common.getRequestBody(jsonBody))
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(new Observer<APIResponse<Cart>>() {
-                                                @Override
-                                                public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                                                }
-
-                                                @Override
-                                                public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<Cart> cartAPIResponse) {
-                                                    if (cartAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
-                                                        dialogInterface.dismiss();
-                                                        loadingDialog.cancelLoading();
-
-                                                        cartList.remove(holder.getLayoutPosition());
-                                                        notifyItemRemoved(holder.getLayoutPosition());
-
-                                                        if (holder.binding.cbProductCart.isChecked()) {
-                                                            int money = Integer.parseInt(holder.binding.tvQuantity.getText().toString()) * Integer.parseInt(holder.binding.tvProductFinalPrice.getText().toString().replace(".", ""));
-                                                            totalPrice = totalPrice - money;
-                                                            tvTotalPrice.setText(String.valueOf(totalPrice));
-                                                        }
-                                                    } else {
-                                                        dialogInterface.dismiss();
-                                                        loadingDialog.cancelLoading();
-                                                        MyToast.makeText(context, MyToast.TYPE.ERROR, context.getString(R.string.tvError0), Toast.LENGTH_LONG).show();
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                                                    Log.d(TAG, e.getMessage());
-
-                                                    dialogInterface.dismiss();
-                                                    loadingDialog.cancelLoading();
-                                                    MyToast.makeText(context, MyToast.TYPE.ERROR, context.getString(R.string.tvError0), Toast.LENGTH_LONG).show();
-                                                }
-
-                                                @Override
-                                                public void onComplete() {
-                                                }
-                                            });
-                                }
-                            })
-                            .setNegativeButton(context.getString(R.string.tvAlertButton2), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                }
-                            }).show();
-                }
-            });
+//            holder.binding.flDelete.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    new AlertDialog.Builder(context)
+//                            .setTitle(context.getString(R.string.tvAlertTitle))
+//                            .setMessage(context.getString(R.string.tvAlertMessage1))
+//                            .setIcon(android.R.drawable.ic_dialog_alert)
+//                            .setCancelable(true)
+//                            .setPositiveButton(context.getString(R.string.tvAlertButton3), new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    loadingDialog.startLoading(context, false);
+//
+//                                    HashMap<String, Object> jsonBody = new HashMap<>();
+//                                    jsonBody.put("cartID", cartList.get(holder.getLayoutPosition()).getCartID());
+//
+//                                    DataClient dataClient = APIClient.getData();
+//                                    dataClient.deleteCart(Common.getRequestBody(jsonBody))
+//                                            .subscribeOn(Schedulers.io())
+//                                            .observeOn(AndroidSchedulers.mainThread())
+//                                            .subscribe(new Observer<APIResponse<Cart>>() {
+//                                                @Override
+//                                                public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+//                                                }
+//
+//                                                @Override
+//                                                public void onNext(@io.reactivex.rxjava3.annotations.NonNull APIResponse<Cart> cartAPIResponse) {
+//                                                    if (cartAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
+//                                                        dialogInterface.dismiss();
+//                                                        loadingDialog.cancelLoading();
+//
+//                                                        cartList.remove(holder.getLayoutPosition());
+//                                                        notifyItemRemoved(holder.getLayoutPosition());
+//
+//                                                        if (holder.binding.cbProductCart.isChecked()) {
+//                                                            int money = Integer.parseInt(holder.binding.tvQuantity.getText().toString()) * Integer.parseInt(holder.binding.tvProductFinalPrice.getText().toString().replace(".", ""));
+//                                                            totalPrice = totalPrice - money;
+//                                                            tvTotalPrice.setText(String.valueOf(totalPrice));
+//                                                        }
+//                                                    } else {
+//                                                        dialogInterface.dismiss();
+//                                                        loadingDialog.cancelLoading();
+//                                                        MyToast.makeText(context, MyToast.TYPE.ERROR, context.getString(R.string.tvError0), Toast.LENGTH_LONG).show();
+//                                                    }
+//                                                }
+//
+//                                                @Override
+//                                                public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+//                                                    Log.d(TAG, e.getMessage());
+//
+//                                                    dialogInterface.dismiss();
+//                                                    loadingDialog.cancelLoading();
+//                                                    MyToast.makeText(context, MyToast.TYPE.ERROR, context.getString(R.string.tvError0), Toast.LENGTH_LONG).show();
+//                                                }
+//
+//                                                @Override
+//                                                public void onComplete() {
+//                                                }
+//                                            });
+//                                }
+//                            })
+//                            .setNegativeButton(context.getString(R.string.tvAlertButton2), new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    dialogInterface.dismiss();
+//                                }
+//                            }).show();
+//                }
+//            });
         }
     }
 
-    private void refreshTotalPrice() {
-        int refreshTotalPrice = 0;
-        for (Cart cart : cartList) {
-            refreshTotalPrice = refreshTotalPrice + (cart.getQuantity() * Integer.parseInt(cart.getFinalPrice().replace(".", "")));
-        }
-        this.tvTotalPrice.setText(String.valueOf(refreshTotalPrice));
-    }
+//    private void refreshTotalPrice() {
+//        int refreshTotalPrice = 0;
+//        for (Cart cart : cartList) {
+//            refreshTotalPrice = refreshTotalPrice + (cart.getQuantity() * Integer.parseInt(cart.getFinalPrice().replace(".", "")));
+//        }
+//        this.tvTotalPrice.setText(String.valueOf(refreshTotalPrice));
+//    }
 
     @Override
     public int getItemCount() {
