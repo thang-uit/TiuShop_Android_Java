@@ -5,40 +5,26 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.thanguit.tiushop.R;
 import com.thanguit.tiushop.activities.ProductDetailActivity;
-import com.thanguit.tiushop.base.MyToast;
 import com.thanguit.tiushop.databinding.ItemCartBinding;
-import com.thanguit.tiushop.model.APIResponse;
 import com.thanguit.tiushop.model.repository.Cart;
-import com.thanguit.tiushop.retrofit.APIClient;
-import com.thanguit.tiushop.retrofit.DataClient;
 import com.thanguit.tiushop.util.Common;
 import com.thanguit.tiushop.util.LoadingDialog;
 
-import java.util.HashMap;
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 //public class CartAdapter extends ListAdapter<Cart, CartAdapter.ViewHolder> {
-//    public CartAdapter() {
+//
+//    protected CartAdapter(@NonNull DiffUtil.ItemCallback<Cart> diffCallback) {
 //        super(Cart.itemCallback);
 //    }
 //
@@ -51,7 +37,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 //
 //    @Override
 //    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.itemCartBinding.setCartViewModel();
+//        holder.itemCartBinding.setCartViewModel(getItem(holder.getLayoutPosition()));
+//        holder.itemCartBinding.executePendingBindings();
 //    }
 //
 //    static class ViewHolder extends RecyclerView.ViewHolder {
@@ -73,12 +60,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     private Context context;
     private List<Cart> cartList;
+    private IOnclickListener iOnclickListener;
 
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public CartAdapter(Context context, List<Cart> cartList) {
+    public CartAdapter(Context context, List<Cart> cartList, IOnclickListener iOnclickListener) {
         this.context = context;
         this.cartList = cartList;
+        this.iOnclickListener = iOnclickListener;
+    }
+
+    public interface IOnclickListener {
+        void onClickCheck(boolean status, Cart cart);
+        void onClickDelete(Cart cart);
+        void onClickDecrease(Cart cart);
+        void onClickIncrease(Cart cart);
     }
 
     @NonNull
@@ -109,6 +105,37 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 holder.binding.tvProductPrice.setVisibility(View.GONE);
                 holder.binding.llSale.setVisibility(View.GONE);
             }
+
+            holder.binding.cbProductCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    iOnclickListener.onClickCheck(holder.binding.cbProductCart.isChecked(), cart);
+                }
+            });
+
+            holder.binding.flDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new AlertDialog.Builder(context)
+                            .setTitle(context.getString(R.string.tvAlertTitle))
+                            .setMessage(context.getString(R.string.tvAlertMessage1))
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setCancelable(true)
+                            .setPositiveButton(context.getString(R.string.tvAlertButton3), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    iOnclickListener.onClickDelete(cart);
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .setNegativeButton(context.getString(R.string.tvAlertButton2), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            }).show();
+                }
+            });
 
 //            holder.binding.cbProductCart.setOnClickListener(new View.OnClickListener() {
 //                @Override

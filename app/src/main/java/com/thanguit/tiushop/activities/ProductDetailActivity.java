@@ -32,8 +32,6 @@ public class ProductDetailActivity extends SwipeToBackActivity {
 
     private LoadingDialog loadingDialog;
 
-    private int amount = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +86,13 @@ public class ProductDetailActivity extends SwipeToBackActivity {
                     @Override
                     public void onChanged(List<Cart> cartList) {
                         if(cartList != null) {
-                            amount = cartList.size();
+                            if(cartList.size() >= 100) {
+                                activityProductDetailBinding.tvAmount.setText(getString(R.string.tvAmountOverSize));
+                            } else {
+                                activityProductDetailBinding.tvAmount.setText(String.valueOf(cartList.size()));
+                            }
+                        } else {
+                            activityProductDetailBinding.tvAmount.setText("0");
                         }
                     }
                 });
@@ -130,13 +134,12 @@ public class ProductDetailActivity extends SwipeToBackActivity {
                     public void onChanged(Boolean status) {
                         if(status != null) {
                             if(status) {
-
-                                CartViewModel cartViewModel = new ViewModelProvider(ProductDetailActivity.this).get(CartViewModel.class);
                                 cartViewModel.getCart(DataLocalManager.getUserID()).observe(ProductDetailActivity.this, new Observer<List<Cart>>() {
                                     @Override
                                     public void onChanged(List<Cart> cartList) {
                                         if(cartList != null) {
-                                            amount = cartList.size();
+//                                            activityProductDetailBinding.tvAmount.setText(String.valueOf(cartList.size()));
+                                            Log.d("AMOUMT", String.valueOf(cartList.size()));
                                         }
                                     }
                                 });
@@ -159,7 +162,6 @@ public class ProductDetailActivity extends SwipeToBackActivity {
 //        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        activityProductDetailBinding.snSize.setAdapter(arrayAdapter);
 
-        activityProductDetailBinding.tvAmount.setText(String.valueOf(amount));
         activityProductDetailBinding.tvPrice.setPaintFlags(activityProductDetailBinding.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     }
 

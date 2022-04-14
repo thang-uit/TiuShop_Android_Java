@@ -20,7 +20,7 @@ import com.thanguit.tiushop.viewmodel.CartViewModel;
 
 import java.util.List;
 
-public class CartActivity extends SwipeToBackActivity {
+public class CartActivity extends SwipeToBackActivity implements CartAdapter.IOnclickListener{
     private static final String TAG = "CartActivity";
     private ActivityCartBinding activityCartBinding;
 
@@ -61,7 +61,7 @@ public class CartActivity extends SwipeToBackActivity {
                         activityCartBinding.rvCart.setHasFixedSize(true);
                         activityCartBinding.rvCart.setLayoutManager(new LinearLayoutManager(CartActivity.this));
                         activityCartBinding.rvCart.addItemDecoration(new DividerItemDecoration(CartActivity.this, DividerItemDecoration.VERTICAL));
-                        cartAdapter = new CartAdapter(CartActivity.this, cartList);
+                        cartAdapter = new CartAdapter(CartActivity.this, cartList, CartActivity.this);
                         activityCartBinding.rvCart.setAdapter(cartAdapter);
 
                         activityCartBinding.lavAnimation.setVisibility(View.GONE);
@@ -89,11 +89,31 @@ public class CartActivity extends SwipeToBackActivity {
             }
         });
 
-        activityCartBinding.cbAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
+//        activityCartBinding.cbAll.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//            }
+//        });
+    }
+
+    @Override
+    public void onClickCheck(boolean status, Cart cart) {
+
+    }
+
+    @Override
+    public void onClickDelete(Cart cart) {
+        cartViewModel.deleteCart(cart);
+    }
+
+    @Override
+    public void onClickDecrease(Cart cart) {
+
+    }
+
+    @Override
+    public void onClickIncrease(Cart cart) {
+
     }
 
 //    @Override

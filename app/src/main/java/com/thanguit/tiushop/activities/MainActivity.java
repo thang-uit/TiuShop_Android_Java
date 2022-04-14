@@ -2,7 +2,6 @@ package com.thanguit.tiushop.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -23,7 +22,7 @@ import com.thanguit.tiushop.viewmodel.CartViewModel;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding binding;
+    private ActivityMainBinding activityMainBinding;
     private FragmentPagerAdapter fragmentPagerAdapter;
 
     private CartViewModel cartViewModel;
@@ -32,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(activityMainBinding.getRoot());
 
         initializeViews();
         listeners();
@@ -49,12 +48,9 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    private void initializeViews() {
-        DataLocalManager.init(this);
-
-        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), getLifecycle());
-        binding.vpgMain.setCurrentItem(0);
-        binding.vpgMain.setAdapter(fragmentPagerAdapter);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         cartViewModel.getCart(DataLocalManager.getUserID()).observe(this, new Observer<List<Cart>>() {
@@ -62,21 +58,28 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(List<Cart> cartList) {
                 if(cartList != null) {
                     if(cartList.size() >= 100) {
-                        binding.tvAmount.setText(getString(R.string.tvAmountOverSize));
+                        activityMainBinding.tvAmount.setText(getString(R.string.tvAmountOverSize));
                     } else {
-                        binding.tvAmount.setText(String.valueOf(cartList.size()));
+                        activityMainBinding.tvAmount.setText(String.valueOf(cartList.size()));
                     }
                 } else {
-                    binding.tvAmount.setText("0");
+                    activityMainBinding.tvAmount.setText("0");
                 }
-
-                Log.d("CART_MAIN", "" + cartList.size());
             }
         });
     }
 
+    private void initializeViews() {
+        DataLocalManager.init(this);
+
+        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), getLifecycle());
+        activityMainBinding.vpgMain.setCurrentItem(0);
+        activityMainBinding.vpgMain.setAdapter(fragmentPagerAdapter);
+
+    }
+
     private void listeners() {
-        binding.vpgMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        activityMainBinding.vpgMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -88,15 +91,15 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (position) {
                     case 0: {
-                        binding.bnvNav.getMenu().findItem(R.id.menuActionShop).setChecked(true);
+                        activityMainBinding.bnvNav.getMenu().findItem(R.id.menuActionShop).setChecked(true);
                         break;
                     }
                     case 1: {
-                        binding.bnvNav.getMenu().findItem(R.id.menuActionCollection).setChecked(true);
+                        activityMainBinding.bnvNav.getMenu().findItem(R.id.menuActionCollection).setChecked(true);
                         break;
                     }
                     case 2: {
-                        binding.bnvNav.getMenu().findItem(R.id.menuActionUser).setChecked(true);
+                        activityMainBinding.bnvNav.getMenu().findItem(R.id.menuActionUser).setChecked(true);
                         break;
                     }
                 }
@@ -108,21 +111,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        binding.bnvNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        activityMainBinding.bnvNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.menuActionShop) {
-                    binding.vpgMain.setCurrentItem(0);
+                    activityMainBinding.vpgMain.setCurrentItem(0);
                 } else if (item.getItemId() == R.id.menuActionCollection) {
-                    binding.vpgMain.setCurrentItem(1);
+                    activityMainBinding.vpgMain.setCurrentItem(1);
                 } else if (item.getItemId() == R.id.menuActionUser) {
-                    binding.vpgMain.setCurrentItem(2);
+                    activityMainBinding.vpgMain.setCurrentItem(2);
                 }
                 return false;
             }
         });
 
-        binding.ivCart.setOnClickListener(new View.OnClickListener() {
+        activityMainBinding.ivCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, CartActivity.class));
