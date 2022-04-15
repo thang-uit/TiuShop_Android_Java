@@ -14,6 +14,7 @@ import com.thanguit.tiushop.util.Common;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -26,6 +27,8 @@ public class CartViewModel extends ViewModel {
     private MutableLiveData<List<Cart>> cartList;
     private MutableLiveData<Integer> totalPrice;
 
+    private MutableLiveData<Integer> removePosition;
+
 //    private MutableLiveData<String> cartAmount;
 
     public LiveData<List<Cart>> getCart(String userID) {
@@ -36,13 +39,21 @@ public class CartViewModel extends ViewModel {
         return cartList;
     }
 
+    public LiveData<Integer> removePosition() {
+        if(removePosition == null) {
+            removePosition = new MutableLiveData<>();
+            removePosition.setValue(-1);
+        }
+        return removePosition;
+    }
+
     public LiveData<List<Cart>> getCartList() {
         return cartList;
     }
 
-//    public void setCartList(List<Cart> cartList) {
-//        this.cartList.postValue(cartList);
-//    }
+    public void setCartList(List<Cart> cartList) {
+        this.cartList.setValue(cartList);
+    }
 
     private void loadCart(String userID) {
         HashMap<String, Object> jsonBody = new HashMap<>();
@@ -75,7 +86,7 @@ public class CartViewModel extends ViewModel {
                 });
     }
 
-    public void deleteCart(Cart cart) {
+    public void deleteCart(Cart cart, int position) {
         HashMap<String, Object> jsonBody = new HashMap<>();
         jsonBody.put("cartID", cart.getCartID());
         DataClient dataClient = APIClient.getData();
@@ -89,17 +100,9 @@ public class CartViewModel extends ViewModel {
 
                     @Override
                     public void onNext(@NonNull APIResponse<Cart> cartAPIResponse) {
-//                        if (cartAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
-//                            if (holder.binding.cbProductCart.isChecked()) {
-//                                int money = Integer.parseInt(holder.binding.tvQuantity.getText().toString()) * Integer.parseInt(holder.binding.tvProductFinalPrice.getText().toString().replace(".", ""));
-//                                totalPrice = totalPrice - money;
-//                                tvTotalPrice.setText(String.valueOf(totalPrice));
-//                            }
-//                        } else {
-//                            dialogInterface.dismiss();
-//                            loadingDialog.cancelLoading();
-//                            MyToast.makeText(context, MyToast.TYPE.ERROR, context.getString(R.string.tvError0), Toast.LENGTH_LONG).show();
-//                        }
+                        if (cartAPIResponse.getStatus().equals(Common.STATUS_SUCCESS)) {
+                            removePosition.setValue(position);
+                        }
                     }
 
                     @Override

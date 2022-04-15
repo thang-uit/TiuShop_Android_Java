@@ -19,6 +19,7 @@ import com.thanguit.tiushop.databinding.ItemCartBinding;
 import com.thanguit.tiushop.model.repository.Cart;
 import com.thanguit.tiushop.util.Common;
 import com.thanguit.tiushop.util.LoadingDialog;
+import com.thanguit.tiushop.viewmodel.CartViewModel;
 
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     private Context context;
     private List<Cart> cartList;
-    private IOnclickListener iOnclickListener;
+    private final IOnclickListener iOnclickListener;
 
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
@@ -72,7 +73,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public interface IOnclickListener {
         void onClickCheck(boolean status, Cart cart);
-        void onClickDelete(Cart cart);
+        void onClickDelete(Cart cart, int position);
         void onClickDecrease(Cart cart);
         void onClickIncrease(Cart cart);
     }
@@ -124,7 +125,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                             .setPositiveButton(context.getString(R.string.tvAlertButton3), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    iOnclickListener.onClickDelete(cart);
+                                    iOnclickListener.onClickDelete(cart, holder.getLayoutPosition());
                                     dialogInterface.dismiss();
                                 }
                             })
@@ -364,6 +365,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             return cartList.size();
         }
         return 0;
+    }
+
+    public void removeItemCart(int position) {
+        cartList.remove(position);
+        notifyItemRemoved(position);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

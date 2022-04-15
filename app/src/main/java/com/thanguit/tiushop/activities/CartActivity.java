@@ -53,6 +53,7 @@ public class CartActivity extends SwipeToBackActivity implements CartAdapter.IOn
 //        cartPresenter.handleCart(DataLocalManager.getUserID());
 
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+
         cartViewModel.getCart(DataLocalManager.getUserID()).observe(this, new Observer<List<Cart>>() {
             @Override
             public void onChanged(List<Cart> cartList) {
@@ -73,6 +74,15 @@ public class CartActivity extends SwipeToBackActivity implements CartAdapter.IOn
                 } else {
                     activityCartBinding.rvCart.setVisibility(View.GONE);
                     activityCartBinding.lavAnimation.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        cartViewModel.removePosition().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer != -1) {
+                    cartAdapter.removeItemCart(integer);
                 }
             }
         });
@@ -102,8 +112,8 @@ public class CartActivity extends SwipeToBackActivity implements CartAdapter.IOn
     }
 
     @Override
-    public void onClickDelete(Cart cart) {
-        cartViewModel.deleteCart(cart);
+    public void onClickDelete(Cart cart, int position) {
+        cartViewModel.deleteCart(cart, position);
     }
 
     @Override

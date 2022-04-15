@@ -52,6 +52,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+    }
+
+    private void initializeViews() {
+        DataLocalManager.init(this);
+
+        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), getLifecycle());
+        activityMainBinding.vpgMain.setCurrentItem(0);
+        activityMainBinding.vpgMain.setAdapter(fragmentPagerAdapter);
+
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         cartViewModel.getCart(DataLocalManager.getUserID()).observe(this, new Observer<List<Cart>>() {
             @Override
@@ -67,14 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void initializeViews() {
-        DataLocalManager.init(this);
-
-        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), getLifecycle());
-        activityMainBinding.vpgMain.setCurrentItem(0);
-        activityMainBinding.vpgMain.setAdapter(fragmentPagerAdapter);
 
     }
 
